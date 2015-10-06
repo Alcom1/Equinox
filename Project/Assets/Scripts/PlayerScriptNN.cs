@@ -7,6 +7,7 @@ public class PlayerScriptNN : MonoBehaviour
     public Rigidbody rb;        //Rigidbody of player
     public GameObject projectile;
     public GameObject firingPoint;
+    public float firingRate;
     private int bulletSpeed = 20;
     private const int STARTING_HEALTH = 10;
     private int health = 10;
@@ -80,7 +81,7 @@ public class PlayerScriptNN : MonoBehaviour
         }
 
         //player sometimes rotates - not sure why
-        else if (Input.GetKey("space"))
+        else if (Input.GetKey("space") && firingRate <= 0)
         {
             // Instantiate the projectile at the position and rotation of this transform
             GameObject clone;
@@ -92,7 +93,12 @@ public class PlayerScriptNN : MonoBehaviour
             // Give the cloned object an initial velocity along the current
             // object's Z axis
             clone.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * bulletSpeed);
+
+            firingRate = 0.4f;
         }
+
+        //Decrement firing rate
+        firingRate -= Time.deltaTime;
         
         //Drag
         rb.AddTorque(-rb.angularVelocity * .75f);
