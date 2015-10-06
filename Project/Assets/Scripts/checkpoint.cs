@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class checkpoint : MonoBehaviour
+public class Checkpoint : MonoBehaviour
 {
     public int checkNum;
 
@@ -19,6 +19,6 @@ public class checkpoint : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        other.transform.parent.gameObject.GetComponent<player_script_nn>().CheckCheckPoint(checkNum);
+        other.transform.parent.gameObject.GetComponent<PlayerScriptNN>().CheckCheckPoint(checkNum);
     }
 }

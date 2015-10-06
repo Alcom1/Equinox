@@ -2,9 +2,14 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class player_script_nn : MonoBehaviour
+public class PlayerScriptNN : MonoBehaviour
 {
     public Rigidbody rb;        //Rigidbody of player
+    public Rigidbody projectile;
+    private int bulletSpeed = 20;
+    private const int STARTING_HEALTH = 10;
+    private int health = 10;
+
     private float lerpRate;     //Scale (0-1) of lerping rigidbody velocity to forward
     private int lap;            //Current lap
     public int Lap
@@ -16,7 +21,7 @@ public class player_script_nn : MonoBehaviour
     {
         get { return cp; }
     }
-    public int cpCount;         //Current checkpoint index
+    public int cpCount;         //Current Checkpoint index
 
     //HUD elements
     private Text displayLap;
@@ -73,6 +78,18 @@ public class player_script_nn : MonoBehaviour
             rb.AddForce(-rb.velocity * .8f);
         }
 
+        //player sometimes rotates - not sure why
+        else if (Input.GetKey("space"))
+        {
+            // Instantiate the projectile at the position and rotation of this transform
+            Rigidbody clone;
+            //bullets are being made in the WRONG SPOT right now, also wrong rotation
+            clone = (Rigidbody)Instantiate(projectile, transform.position+Vector3.forward*20, transform.rotation);
+            // Give the cloned object an initial velocity along the current
+            // object's Z axis
+            clone.velocity = transform.TransformDirection(Vector3.forward * bulletSpeed);
+        }
+        
         //Drag
         rb.AddTorque(-rb.angularVelocity * .75f);
         rb.AddForce(-rb.velocity * .2f);
@@ -95,10 +112,10 @@ public class player_script_nn : MonoBehaviour
     //Checkpoint checking for checkpoints and lap incrementing
     public void CheckCheckPoint(int checkNum)
     {
-        //If the met checkpoint meets the current checkpoint index
+        //If the met Checkpoint meets the current Checkpoint index
         if (cp == checkNum)
         {
-            //If checkpoint index is 0, that's the finish line, increment and displa lap
+            //If Checkpoint index is 0, that's the finish line, increment and displa lap
             if (cp == 0)
             {
                 lap++;
@@ -106,12 +123,24 @@ public class player_script_nn : MonoBehaviour
                 GetComponent<PlayerSyncLap>().TransmitLap(lap); //Transmit lap to other player
             }
 
-            //Increment checkpoint
+            //Increment Checkpoint
             cp++;
             if(cp >= cpCount)
             {
                 cp = 0;
             }
+        }
+    }
+
+    public void LoseHealth()
+    {
+        health--;
+        print("lost health!");
+        if(health <= 0)
+        {
+            //do something
+            print("respawn");
+            health = STARTING_HEALTH;
         }
     }
 }

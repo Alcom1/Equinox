@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class PlayerSyncPosition : NetworkBehaviour
+public class BulletScript : NetworkBehaviour
 {
 	[SerializeField]
 	private bool useHistoricalLerping = true;
@@ -15,6 +15,7 @@ public class PlayerSyncPosition : NetworkBehaviour
 	private float lerpRate;
 	private float normalLerpRate = 16;
 	private float fasterLerpRate = 27;
+    private float lifetime = 30; // this is a total guess
 
 	//variables to only send data when it's changed beyond a threshold.
 	private Vector3 lastPosition;
@@ -30,10 +31,25 @@ public class PlayerSyncPosition : NetworkBehaviour
 	void Update ()
 	{
 		LerpPosition ();
+        lifetime -= lerpRate/10;
+        if(lifetime <= 0)
+        {
+            Destroy(gameObject);
+        }
 	}
 
+    //Kills bullet on hit, hurts player(s) if they were hit
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<PlayerScriptNN>().LoseHealth();
+        }
+        Destroy(gameObject);
+    }
+
     //Updates at constant rate.
-	void FixedUpdate ()
+    void FixedUpdate ()
 	{
 		TransmitPosition ();
     }
@@ -97,14 +113,10 @@ public class PlayerSyncPosition : NetworkBehaviour
 	[Client]
 	void TransmitPosition ()
 	{
-		// This is where we (the client) send out our position.
-		if (isLocalPlayer && Vector3.Distance (lastPosition, transform.position) > positionThreshold)
-        {
-		    // Send a command to the server to update our position, and 
-		    // it will update a SyncVar, which then automagically updates on everyone's game instance
-		    CmdSendPositionToServer (transform.position);
-		    lastPosition = transform.position;
-		}
+		// Send a command to the server to update bullet position, and 
+		// it will update a SyncVar, which then automagically updates on everyone's game instance
+		CmdSendPositionToServer (transform.position);
+		lastPosition = transform.position;
 	}
 
 	//Sync position
