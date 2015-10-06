@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class PlayerScriptNN : MonoBehaviour
 {
     public Rigidbody rb;        //Rigidbody of player
-    public Rigidbody projectile;
+    public GameObject projectile;
+    public GameObject firingPoint;
     private int bulletSpeed = 20;
     private const int STARTING_HEALTH = 10;
     private int health = 10;
@@ -82,12 +83,15 @@ public class PlayerScriptNN : MonoBehaviour
         else if (Input.GetKey("space"))
         {
             // Instantiate the projectile at the position and rotation of this transform
-            Rigidbody clone;
+            GameObject clone;
             //bullets are being made in the WRONG SPOT right now, also wrong rotation
-            clone = (Rigidbody)Instantiate(projectile, transform.position+Vector3.forward*20, transform.rotation);
+            clone = (GameObject)Instantiate(
+                projectile, 
+                firingPoint.transform.position, 
+                transform.rotation);
             // Give the cloned object an initial velocity along the current
             // object's Z axis
-            clone.velocity = transform.TransformDirection(Vector3.forward * bulletSpeed);
+            clone.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * bulletSpeed);
         }
         
         //Drag
