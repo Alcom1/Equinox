@@ -20,7 +20,7 @@ public class PlayerSyncHealth : NetworkBehaviour
     //Changes the Opponent's health display to be the opponent's health.
     void DisplayHealth()
     {
-        if (!isLocalPlayer)
+        if (isLocalPlayer)
         {
             GameObject.Find("TextHealthOpponent").GetComponent<Text>().text = "Opponent's Health: " + health;
         }
@@ -37,7 +37,7 @@ public class PlayerSyncHealth : NetworkBehaviour
     [Client]
     public void TransmitHealth(int newHealth)
     {
-        if (isLocalPlayer && CheckIfNewHealth(aHealth, newHealth))
+        if (!isLocalPlayer && CheckIfNewHealth(aHealth, newHealth))
         {
             aHealth = newHealth;
             CmdSendNewHealthToServer(newHealth);
