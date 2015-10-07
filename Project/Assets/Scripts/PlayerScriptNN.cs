@@ -8,7 +8,7 @@ public class PlayerScriptNN : MonoBehaviour
     public GameObject projectile;
     public GameObject firingPoint;
     public float firingRate;
-    private int bulletSpeed = 20;
+    public float bulletSpeed;
     private const int STARTING_HEALTH = 10;
     private int health = 10;
 
@@ -71,7 +71,7 @@ public class PlayerScriptNN : MonoBehaviour
         }
 
         //Key input for accelerate and deaccelerate
-        if (Input.GetKey("w") && rb.velocity.magnitude < 60)
+        if (Input.GetKey("w") && rb.velocity.magnitude < 20)
         {
             rb.AddRelativeForce(Vector3.forward * Time.deltaTime * 60 * 20);
         }
