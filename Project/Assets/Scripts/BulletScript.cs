@@ -21,5 +21,15 @@ public class BulletScript : MonoBehaviour
         lifeTime -= Time.deltaTime;
         if (lifeTime < 0)
             Destroy(this.gameObject);
-	}
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            col.gameObject.transform.parent.gameObject.GetComponent<PlayerScriptNN>().LoseHealth();
+        }
+
+        Destroy(this.gameObject);
+    }
 }
