@@ -27,7 +27,7 @@ public class BulletScript : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            col.gameObject.transform.parent.gameObject.GetComponent<PlayerScriptNN>().LoseHealth();
+            col.gameObject.GetComponent<PlayerScriptNN>().LoseHealth();
         }
 
         Destroy(this.gameObject);
