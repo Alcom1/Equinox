@@ -23,13 +23,13 @@ public class BulletScript : MonoBehaviour
             Destroy(this.gameObject);
     }
 
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider other)
     {
-        if (col.gameObject.tag == "Player")
+        if (other.tag == "Player")
         {
-            col.gameObject.GetComponent<PlayerScriptNN>().LoseHealth();
+            other.GetComponent<PlayerScriptNN>().LoseHealth();
         }
 
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
     }
 }
