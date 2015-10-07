@@ -92,16 +92,19 @@ public class PlayerScriptNN : MonoBehaviour
     //Lose and display health
     public void LoseHealth()
     {
-        health--;
-        print("lost health!");
-        if(health <= 0)
+        if (isLocalPlayer)
         {
-            //do something
-            print("respawn");
-            health = STARTING_HEALTH;
-        }
+            health--;
+            print("lost health!");
+            if (health <= 0)
+            {
+                //do something
+                print("respawn");
+                health = STARTING_HEALTH;
+            }
 
-        displayHealth.text = "Health: " + health;                //UI display
-        GetComponent<PlayerSyncHealth>().TransmitHealth(health);       //Transmit lap to other player
+            displayHealth.text = "Health: " + health;                //UI display
+            //GetComponent<PlayerSyncHealth>().TransmitHealth(health);       //Transmit lap to other player
+        }
     }
 }
