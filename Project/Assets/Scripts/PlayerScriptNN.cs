@@ -4,20 +4,19 @@ using UnityEngine.UI;
 
 public class PlayerScriptNN : MonoBehaviour
 {
-    public Rigidbody rb;        //Rigidbody of player
-    public GameObject projectile;
-    public GameObject firingPoint;
-    public float firingRate;
-    public float bulletSpeed;
-    private const int STARTING_HEALTH = 10;
-    private int health = 10;
+    public Rigidbody rb;                        //Rigidbody of player
+    public bool isLocalPlayer;                  //If player is local
+    private const int STARTING_HEALTH = 10;     //Starting health
+    private int health = 10;                    //Current health
 
     private float lerpRate;     //Scale (0-1) of lerping rigidbody velocity to forward
+
     private int lap;            //Current lap
     public int Lap
     {
         get{ return lap; }
     }
+
     private int cp;
     public int Cp
     {
@@ -79,26 +78,6 @@ public class PlayerScriptNN : MonoBehaviour
         {
             rb.AddForce(-rb.velocity * .8f);
         }
-
-        //player sometimes rotates - not sure why
-        else if (Input.GetKey("space") && firingRate <= 0)
-        {
-            // Instantiate the projectile at the position and rotation of this transform
-            GameObject clone;
-            //bullets are being made in the WRONG SPOT right now, also wrong rotation
-            clone = (GameObject)Instantiate(
-                projectile, 
-                firingPoint.transform.position, 
-                transform.rotation);
-            // Give the cloned object an initial velocity along the current
-            // object's Z axis
-            clone.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * bulletSpeed);
-
-            firingRate = 0.4f;
-        }
-
-        //Decrement firing rate
-        firingRate -= Time.deltaTime;
         
         //Drag
         rb.AddTorque(-rb.angularVelocity * .75f);

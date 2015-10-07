@@ -20,8 +20,6 @@ public class Chat : NetworkBehaviour
 	Text
 		chatWindow;
 	
-
-
 //	 Use this for initialization
 	void Start ()
 	{
@@ -92,7 +90,4 @@ public class Chat : NetworkBehaviour
 	{
 		chatWindow.text += chatLog [chatLog.Count - 1] + "\n";
 	}
-
-
-
 }

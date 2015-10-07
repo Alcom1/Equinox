@@ -16,12 +16,17 @@ public class PlayerNetStartup : NetworkBehaviour
 		 * 
 		 * So here we turn them all back on IF IT'S US. 
 		 * */
-
+        
 		if (isLocalPlayer)
         {
             cam.enabled = true;
             rb.isKinematic = false;
-		}
+            GetComponent<PlayerScriptNN>().isLocalPlayer = true;
+        }
+        else
+        {
+            GetComponent<PlayerScriptNN>().isLocalPlayer = false;
+        }
 	}
 
 }
