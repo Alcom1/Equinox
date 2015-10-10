@@ -44,5 +44,4 @@ public class PlayerNetFire : NetworkBehaviour
 
         NetworkServer.Spawn(bullet);
     }
-
 }

@@ -7,12 +7,15 @@ using System.Collections.Generic;
 public class BulletScript : MonoBehaviour
 {
     public float lifeTime;
+    private float maxLifeTime;
+    public float armTime;
     public float speed;
     public Rigidbody rb;
 
 	void Start ()
 	{
         rb.velocity = transform.TransformDirection(Vector3.forward * speed);
+        maxLifeTime = lifeTime;
     }
 
     //Updates every frame.
@@ -25,11 +28,13 @@ public class BulletScript : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && maxLifeTime - lifeTime > armTime)
         {
-            other.GetComponent<PlayerScriptNN>().LoseHealth();
+            other.GetComponent<PlayerScriptNN>().LoseHealth(this);
         }
-
-        //Destroy(this.gameObject);
+        else 
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

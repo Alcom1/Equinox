@@ -90,8 +90,10 @@ public class PlayerScriptNN : MonoBehaviour
     }
 
     //Lose and display health
-    public void LoseHealth()
+    public void LoseHealth(Component bulletScript)
     {
+        Destroy(bulletScript.gameObject);
+
         if (isLocalPlayer)
         {
             health--;
