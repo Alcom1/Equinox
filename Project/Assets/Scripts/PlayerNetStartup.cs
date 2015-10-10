@@ -21,11 +21,11 @@ public class PlayerNetStartup : NetworkBehaviour
         {
             cam.enabled = true;
             rb.isKinematic = false;
-            GetComponent<PlayerScriptNN>().isLocalPlayer = true;
+            GetComponent<PlayerScriptNN>().IsLocalPlayer = true;
         }
         else
         {
-            GetComponent<PlayerScriptNN>().isLocalPlayer = false;
+            GetComponent<PlayerScriptNN>().IsLocalPlayer = false;
         }
 	}
 

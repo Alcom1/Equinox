@@ -5,16 +5,24 @@ using UnityEngine.UI;
 public class PlayerScriptNN : MonoBehaviour
 {
     public Rigidbody rb;                        //Rigidbody of player
-    public bool isLocalPlayer;                  //If player is local
-    public int STARTING_HEALTH = 10;            //Starting health
+    private bool isLocalPlayer;                  //if player is local
+    public bool IsLocalPlayer
+    {
+        get { return isLocalPlayer; }
+        set { isLocalPlayer = value; }
+    }
+
+    public float maxRotateX;                    //maximum X axis rotation
+    public float maxRotateY;                    //maximum Y axis rotation
+    public int sensetivityRotateX;              //X axis rotation sensetivity
+    public int sensetivityRotateY;              //Y axis rotation sensetivity
+    public int maxSpeed;                        //Maximum speed
+    public int accelRate;                       //Acceleration strength
+    public float deaccelRate;                   //Active deacceleration magnitude
+    public int health;                          //Current health
+    private int STARTING_HEALTH;                //Starting health
 
     private float lerpRate;                     //Scale (0-1) of lerping rigidbody velocity to forward
-
-    private int health = 10;                    //Current health
-    public int Health
-    {
-        get { return health; }
-    }
 
     //HUD elements
     private Text displayHealth;
@@ -30,7 +38,8 @@ public class PlayerScriptNN : MonoBehaviour
         //Lerp rate
         lerpRate = 1;
 
-        //Assign lap display and set it to 0.
+        //Health and health display
+        STARTING_HEALTH = health;
         displayHealth = GameObject.Find("TextHealth").GetComponent<Text>();
         displayHealth.text = "Health: " + health;
 	}
@@ -39,15 +48,20 @@ public class PlayerScriptNN : MonoBehaviour
 	void Update ()
     {
         //Mouse x-axis yaw
-        float rotate = Input.GetAxisRaw("Mouse X") * Time.deltaTime * 120;
-        if (rotate > 3)
-            rotate = 3f;    //max rotate x
+        float rotate = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensetivityRotateX;
+        if (rotate > maxRotateX)    //Limit rotation
+            rotate = maxRotateX;
+        else if (rotate < -maxRotateX)
+            rotate = -maxRotateX;
         rb.AddRelativeTorque(Vector3.up * rotate);
+        print(rotate);
 
         //Mouse y-axis pitch
-        rotate = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * 120;
-        if (rotate > 3)
-            rotate = 3f;    //max rotate y
+        rotate = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensetivityRotateY;
+        if (rotate > maxRotateY)    //Limit rotation
+            rotate = maxRotateY;
+        else if (rotate < -maxRotateY)
+            rotate = -maxRotateY;
         rb.AddRelativeTorque(Vector3.right * rotate);
 
         //Mouse click roll
@@ -61,13 +75,13 @@ public class PlayerScriptNN : MonoBehaviour
         }
 
         //Key input for accelerate and deaccelerate
-        if (Input.GetKey("w") && rb.velocity.magnitude < 20)
+        if (Input.GetKey("w") && rb.velocity.magnitude < maxSpeed)
         {
-            rb.AddRelativeForce(Vector3.forward * Time.deltaTime * 60 * 20);
+            rb.AddRelativeForce(Vector3.forward * Time.deltaTime * accelRate);
         }
         else if (Input.GetKey("s"))
         {
-            rb.AddForce(-rb.velocity * .8f);
+            rb.AddForce(-rb.velocity * deaccelRate);
         }
         
         //Drag

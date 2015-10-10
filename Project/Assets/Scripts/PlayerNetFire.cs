@@ -21,7 +21,7 @@ public class PlayerNetFire : NetworkBehaviour
         //Firing
         if (Input.GetKey("space") && firingRate <= 0 && isLocalPlayer)
         {
-            CmdSpawnBullet();
+            CntSpawnBullet();
             firingRate = firingRateRecord;
         }
         if (firingRate > 0)
@@ -34,13 +34,19 @@ public class PlayerNetFire : NetworkBehaviour
         }
     }
 
+    [Client]
+    void CntSpawnBullet()
+    {
+        CmdSpawnBullet(firingPoint.transform.position, transform.rotation);
+    }
+
     [Command]
-    void CmdSpawnBullet()
+    void CmdSpawnBullet(Vector3 position, Quaternion rotation)
     {
         GameObject bullet = (GameObject)Instantiate(
             projectile,
-            firingPoint.transform.position,
-            transform.rotation);
+            position,
+            rotation);
 
         NetworkServer.Spawn(bullet);
     }
