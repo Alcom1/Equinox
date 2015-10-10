@@ -6,9 +6,10 @@ using System.Collections.Generic;
 
 public class BulletScript : MonoBehaviour
 {
-    public float lifeTime;  //Duration of the bullet.
-    public float speed;     //Speed of the bullet.
-    public Rigidbody rb;    //Bullet rigidbody
+    public float lifeTime;          //Duration of the bullet.
+    public float speed;             //Speed of the bullet.
+    public Rigidbody rb;            //Bullet rigidbody
+    private bool isColliding;       //True while colliding. Prevents double collisions.
 
 	void Start ()
 	{
@@ -18,6 +19,8 @@ public class BulletScript : MonoBehaviour
     //Updates every frame.
 	void Update ()
 	{
+        isColliding = false;
+
         lifeTime -= Time.deltaTime;
         if (lifeTime < 0)
             Destroy(this.gameObject);
@@ -25,13 +28,14 @@ public class BulletScript : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (isColliding)    //Do nothing if a collision is already in progress
+            return;
+
+        isColliding = true;
+
         if (other.tag == "Player")
-        {
-            other.GetComponent<PlayerScriptNN>().LoseHealth(this);
-        }
-        else if (other.tag != "Player")
-        {
+            other.GetComponent<PlayerScriptNN>().LoseHealth(this);  //Bullet destruction happens in the lose health method to prevent hit failures.
+        else
             Destroy(this.gameObject);
-        }
     }
 }

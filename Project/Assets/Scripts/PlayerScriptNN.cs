@@ -92,8 +92,6 @@ public class PlayerScriptNN : MonoBehaviour
     //Lose and display health
     public void LoseHealth(Component bulletScript)
     {
-        Destroy(bulletScript.gameObject);
-
         if (isLocalPlayer)
         {
             health--;
@@ -107,6 +105,8 @@ public class PlayerScriptNN : MonoBehaviour
 
             displayHealth.text = "Health: " + health;                //UI display
             //GetComponent<PlayerSyncHealth>().TransmitHealth(health);       //Transmit lap to other player
+            
+            Destroy(bulletScript.gameObject);
         }
     }
 }
