@@ -19,10 +19,12 @@ public class ScriptWeap_Default : NetworkBehaviour
     void Update()
     {
         //Firing
-        if (Input.GetKey("space") && firingRate <= 0 && isLocalPlayer)
+        if (Input.GetKey("space") && firingRate <= 0)
         {
-
-            CntSpawnBullet();
+            transform.parent.GetComponent<ScriptCore>().CntSpawnBullet(
+                firingPoint.transform.position,
+                transform.rotation,
+                projectile);
             firingRate = firingRateRecord;
         }
         if (firingRate > 0)
@@ -33,22 +35,5 @@ public class ScriptWeap_Default : NetworkBehaviour
         {
             firingRate = 0;
         }
-    }
-
-    [Client]
-    void CntSpawnBullet()
-    {
-        CmdSpawnBullet(firingPoint.transform.position, transform.rotation);
-    }
-
-    [Command]
-    void CmdSpawnBullet(Vector3 position, Quaternion rotation)
-    {
-        GameObject bullet = (GameObject)Instantiate(
-            projectile,
-            position,
-            rotation);
-
-        NetworkServer.Spawn(bullet);
     }
 }

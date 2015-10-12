@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class ScriptCore : MonoBehaviour
+public class ScriptCore : NetworkBehaviour
 {
     public Rigidbody rb;
 
@@ -77,5 +78,23 @@ public class ScriptCore : MonoBehaviour
             if (child.tag == "Engi")
                 child.GetComponent<ScriptEngi_Default>().Disorient();
         }
+    }
+
+    [Client]
+    public void CntSpawnBullet(Vector3 position, Quaternion rotation, GameObject projectilePrefab)
+    {
+        if(isLocalPlayer)
+            CmdSpawnBullet(position, rotation, projectilePrefab);
+    }
+
+    [Command]
+    public void CmdSpawnBullet(Vector3 position, Quaternion rotation, GameObject projectilePrefab)
+    {
+        GameObject bullet = (GameObject)Instantiate(
+            projectilePrefab,
+            position,
+            rotation);
+
+        NetworkServer.Spawn(bullet);
     }
 }
