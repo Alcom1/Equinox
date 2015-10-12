@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class ScriptBody_Default : NetworkBehaviour
 {
+    public bool isLocalPlayerDerived;           //True if the parent player is a local player.
+    public Camera cam;                          //Camera of body
+
     public int health;                          //Current health
     private int STARTING_HEALTH;                //Starting health
 
@@ -20,10 +23,18 @@ public class ScriptBody_Default : NetworkBehaviour
         displayHealth.text = "Health: " + health;
     }
 
+    public void CheckCamera()
+    {
+        if(!isLocalPlayerDerived)
+        {
+            cam.enabled = false;
+        }
+    }
+
     //Lose and display health
     public void LoseHealth(Component bulletScript)
     {
-        if (isLocalPlayer)
+        if (isLocalPlayerDerived)
         {
             health--;
             print("lost health!");

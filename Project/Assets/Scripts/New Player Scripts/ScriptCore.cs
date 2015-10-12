@@ -13,7 +13,11 @@ public class ScriptCore : NetworkBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        print("LOL");
+        //Disable collision forces on all non-local players.
+        if (isLocalPlayer)
+        {
+            rb.isKinematic = false;
+        }
 
         //Stops the rigidbody from automatically generating things that makes the physics weird.
         rb.inertiaTensor = rb.inertiaTensor;
@@ -41,6 +45,8 @@ public class ScriptCore : NetworkBehaviour
                 Destroy(child.transform);
         }
         GameObject newBody = (GameObject)Instantiate(_bodyPrefab);
+        newBody.GetComponent<ScriptBody_Default>().isLocalPlayerDerived = isLocalPlayer;
+        newBody.GetComponent<ScriptBody_Default>().CheckCamera();
         newBody.transform.parent = this.transform;
     }
 
@@ -83,18 +89,20 @@ public class ScriptCore : NetworkBehaviour
     [Client]
     public void CntSpawnBullet(Vector3 position, Quaternion rotation, GameObject projectilePrefab)
     {
-        if(isLocalPlayer)
-            CmdSpawnBullet(position, rotation, projectilePrefab);
+        if (isLocalPlayer)
+        {
+            GameObject bullet = (GameObject)Instantiate(
+                projectilePrefab,
+                position,
+                rotation);
+        
+            CmdSpawnBullet(bullet);
+        }
     }
 
     [Command]
-    public void CmdSpawnBullet(Vector3 position, Quaternion rotation, GameObject projectilePrefab)
+    public void CmdSpawnBullet(GameObject bullet)
     {
-        GameObject bullet = (GameObject)Instantiate(
-            projectilePrefab,
-            position,
-            rotation);
-
         NetworkServer.Spawn(bullet);
     }
 }
