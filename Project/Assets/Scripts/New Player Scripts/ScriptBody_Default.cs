@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class ScriptBody_Default : NetworkBehaviour
 {
-    public Rigidbody rb;                        //Rigidbody of player
-
     public int health;                          //Current health
     private int STARTING_HEALTH;                //Starting health
 

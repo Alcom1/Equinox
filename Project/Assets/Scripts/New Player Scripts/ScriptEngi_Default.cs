@@ -18,11 +18,6 @@ public class ScriptEngi_Default : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //Random spawning
-        Vector3 start = GameObject.Find("start").transform.position;
-        transform.position = new Vector3(start.x, start.y + Random.Range(-10, 10), start.z + Random.Range(-10, 10));
-        transform.rotation = Quaternion.Euler(0, 90, 0);
-
         //Lerp rate
         lerpRate = 1;
     }
@@ -31,21 +26,20 @@ public class ScriptEngi_Default : MonoBehaviour
     void Update()
     {
         //Mouse x-axis yaw
-        float rotate = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensetivityRotateX;
+        float rotate = Input.GetAxisRaw("Mouse X") * sensetivityRotateX;
         if (rotate > maxRotateX)    //Limit rotation
             rotate = maxRotateX;
         else if (rotate < -maxRotateX)
             rotate = -maxRotateX;
-        rb.AddRelativeTorque(Vector3.up * rotate);
-        print(rotate);
+        rb.AddRelativeTorque(Vector3.up * rotate * Time.deltaTime);
 
         //Mouse y-axis pitch
-        rotate = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensetivityRotateY;
+        rotate = Input.GetAxisRaw("Mouse Y")* sensetivityRotateY;
         if (rotate > maxRotateY)    //Limit rotation
             rotate = maxRotateY;
         else if (rotate < -maxRotateY)
             rotate = -maxRotateY;
-        rb.AddRelativeTorque(Vector3.right * rotate);
+        rb.AddRelativeTorque(Vector3.right * rotate * Time.deltaTime);
 
         //Mouse click roll
         if (Input.GetMouseButton(0))
@@ -60,7 +54,7 @@ public class ScriptEngi_Default : MonoBehaviour
         //Key input for accelerate and deaccelerate
         if (Input.GetKey("w") && rb.velocity.magnitude < maxSpeed)
         {
-            rb.AddRelativeForce(Vector3.forward * Time.deltaTime * accelRate);
+            rb.AddForce(transform.forward * Time.deltaTime * accelRate);
         }
         else if (Input.GetKey("s"))
         {
@@ -68,8 +62,8 @@ public class ScriptEngi_Default : MonoBehaviour
         }
 
         //Drag
-        rb.AddTorque(-rb.angularVelocity * .75f);
-        rb.AddForce(-rb.velocity * .2f);
+        rb.AddTorque(-rb.angularVelocity * 45 * Time.deltaTime);
+        rb.AddForce(-rb.velocity * 12 * Time.deltaTime);
 
         //Increase lerprate back to 1f
         lerpRate += .4f * Time.deltaTime;
@@ -80,10 +74,9 @@ public class ScriptEngi_Default : MonoBehaviour
         rb.velocity = Vector3.Lerp(rb.velocity, transform.forward * rb.velocity.magnitude, .5f * lerpRate);
     }
 
-    //Stop lerping after collision.
-    void OnCollisionEnter(Collision collision)
+    //Sets lerping to zero to cause collision disorientation.
+    public void Disorient()
     {
-        print("Engi Collide");
         lerpRate = 0;
     }
 }

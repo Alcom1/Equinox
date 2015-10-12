@@ -21,6 +21,7 @@ public class ScriptWeap_Default : NetworkBehaviour
         //Firing
         if (Input.GetKey("space") && firingRate <= 0 && isLocalPlayer)
         {
+
             CntSpawnBullet();
             firingRate = firingRateRecord;
         }
