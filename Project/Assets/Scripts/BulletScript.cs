@@ -33,9 +33,22 @@ public class BulletScript : MonoBehaviour
 
         isColliding = true;
 
-        if (other.tag == "Player")
-            other.GetComponent<PlayerScriptNN>().LoseHealth(this);  //Bullet destruction happens in the lose health method to prevent hit failures.
+        if (
+            other.tag == "Body" ||
+            other.tag == "Engi" ||
+            other.tag == "Weap")
+        {
+            foreach (Transform child in other.transform.parent)
+            {
+                if (child.tag == "Body")
+                {
+                    child.GetComponent<ScriptBody_Default>().LoseHealth(this);
+                }
+            }
+        }
         else
+        {
             Destroy(this.gameObject);
+        }
     }
 }
