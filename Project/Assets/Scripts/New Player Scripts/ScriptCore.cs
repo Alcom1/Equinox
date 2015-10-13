@@ -69,10 +69,15 @@ public class ScriptCore : NetworkBehaviour
             if (child.tag == "Body")
                 Destroy(child.transform);
         }
-        GameObject newBody = (GameObject)Instantiate(_bodyPrefab);
+        GameObject newBody = (GameObject)Instantiate(
+            _bodyPrefab,
+            this.transform.position,
+            this.transform.rotation);
         newBody.GetComponent<ScriptBody_Default>().isLocalPlayerDerived = isLocalPlayer;
         newBody.GetComponent<ScriptBody_Default>().CheckCamera();
         newBody.transform.parent = this.transform;
+        newBody.transform.localPosition = Vector3.zero;
+        newBody.transform.localRotation = Quaternion.identity;
     }
 
     //Generates a new engi module
@@ -83,7 +88,10 @@ public class ScriptCore : NetworkBehaviour
             if (child.tag == "Engi")
                 Destroy(child.transform);
         }
-        GameObject newEngi = (GameObject)Instantiate(_engiPrefab);
+        GameObject newEngi = (GameObject)Instantiate(
+            _engiPrefab,
+            this.transform.position,
+            this.transform.rotation);
         newEngi.GetComponent<ScriptEngi_Default>().rb = this.GetComponent<Rigidbody>();
         newEngi.transform.parent = this.transform;
     }
@@ -96,7 +104,10 @@ public class ScriptCore : NetworkBehaviour
             if (child.tag == "Weap")
                 Destroy(child.transform);
         }
-        GameObject newWeap = (GameObject)Instantiate(_weapPrefab);
+        GameObject newWeap = (GameObject)Instantiate(
+            _weapPrefab,
+            this.transform.position,
+            this.transform.rotation);
         firingPoint = newWeap.transform.Find("FiringPoint").gameObject;
         newWeap.transform.parent = this.transform;
     }
