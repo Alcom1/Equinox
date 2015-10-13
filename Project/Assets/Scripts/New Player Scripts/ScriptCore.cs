@@ -4,6 +4,13 @@ using UnityEngine.Networking;
 
 public class ScriptCore : NetworkBehaviour
 {
+    //~~
+    public GameObject projectile;
+    public GameObject firingPoint;              //Firing point
+    public float firingRate;                    //Firing rate
+    private float firingRateRecord;             //Firing rate returns to this after firing.
+    //~~
+
     public Rigidbody rb;
 
     public GameObject bodyPrefab;
@@ -13,6 +20,10 @@ public class ScriptCore : NetworkBehaviour
 	// Use this for initialization
 	void Start ()
     {
+        //~~
+        firingRateRecord = firingRate;
+        //~~
+
         //Disable collision forces on all non-local players.
         if (isLocalPlayer)
         {
@@ -33,8 +44,22 @@ public class ScriptCore : NetworkBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-	    
-	}
+        //~~
+        if (Input.GetKey("space") && firingRate <= 0 && isLocalPlayer)
+        {
+            CntSpawnBullet();
+            firingRate = firingRateRecord;
+        }
+        if (firingRate > 0)
+        {
+            firingRate -= Time.deltaTime;
+        }
+        else
+        {
+            firingRate = 0;
+        }
+        //~~ 
+    }
 
     //Generates a new body module
     void GenerateBody(GameObject _bodyPrefab)
@@ -72,6 +97,7 @@ public class ScriptCore : NetworkBehaviour
                 Destroy(child.transform);
         }
         GameObject newWeap = (GameObject)Instantiate(_weapPrefab);
+        firingPoint = newWeap.transform.Find("FiringPoint").gameObject;
         newWeap.transform.parent = this.transform;
     }
 
@@ -87,22 +113,19 @@ public class ScriptCore : NetworkBehaviour
     }
 
     [Client]
-    public void CntSpawnBullet(Vector3 position, Quaternion rotation, GameObject projectilePrefab)
+    void CntSpawnBullet()
     {
-        if (isLocalPlayer)
-        {
-            GameObject bullet = (GameObject)Instantiate(
-                projectilePrefab,
-                position,
-                rotation);
-        
-            CmdSpawnBullet(bullet);
-        }
+        CmdSpawnBullet(firingPoint.transform.position, transform.rotation);
     }
 
     [Command]
-    public void CmdSpawnBullet(GameObject bullet)
+    void CmdSpawnBullet(Vector3 position, Quaternion rotation)
     {
+        GameObject bullet = (GameObject)Instantiate(
+            projectile,
+            position,
+            rotation);
+
         NetworkServer.Spawn(bullet);
     }
 }

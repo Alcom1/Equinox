@@ -7,17 +7,18 @@ public class ScriptWeap_Default : NetworkBehaviour
     public GameObject projectile;
     public GameObject firingPoint;              //Firing point
     public float firingRate;                    //Firing rate
-    private float firingRateRecord;             //Firing rate returns to this after firing.
+    //private float firingRateRecord;             //Firing rate returns to this after firing.
 
     // Use this for initialization
     void Start()
     {
-        firingRateRecord = firingRate;
+        //firingRateRecord = firingRate;
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
         //Firing
         if (Input.GetKey("space") && firingRate <= 0)
         {
@@ -35,5 +36,6 @@ public class ScriptWeap_Default : NetworkBehaviour
         {
             firingRate = 0;
         }
+        */
     }
 }
