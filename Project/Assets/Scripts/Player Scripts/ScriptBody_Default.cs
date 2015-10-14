@@ -51,7 +51,7 @@ public class ScriptBody_Default : NetworkBehaviour
             }
 
             displayHealth.text = "Health: " + health;                //UI display
-            Destroy(bulletScript.gameObject);
+            NetworkServer.Destroy(bulletScript.gameObject);
         }
     }
 }

@@ -48,7 +48,7 @@ public class BulletScript : MonoBehaviour
         }
         else
         {
-            Destroy(this.gameObject);
+            NetworkServer.Destroy(this.gameObject);
         }
     }
 }
