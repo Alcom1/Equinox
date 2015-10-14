@@ -10,7 +10,7 @@ public class ScriptCore : NetworkBehaviour
     public GameObject engiPrefab;           //Engi prefab of the player.
     public GameObject weapPrefab;           //Weapon prefab of the player.
 
-    public GameObject projectilePrefab;     //Projectile prefab derived from weapon.
+    private GameObject projectilePrefab;     //Projectile prefab derived from weapon.
 
     // Use this for initialization
     void Start()
@@ -53,7 +53,7 @@ public class ScriptCore : NetworkBehaviour
             _bodyPrefab,
             this.transform.position,
             this.transform.rotation);
-        newBody.GetComponent<ScriptBody_Default>().isLocalPlayerDerived = isLocalPlayer;    //Set local player status of new body.
+        newBody.GetComponent<ScriptBody_Default>().IsLocalPlayerDerived = isLocalPlayer;    //Set local player status of new body.
         newBody.GetComponent<ScriptBody_Default>().CheckCamera();                           //Disable camera if new body is not local.
         newBody.transform.parent = this.transform;                                          //Set new module as child of player core.
     }
@@ -92,7 +92,7 @@ public class ScriptCore : NetworkBehaviour
             _weapPrefab,
             this.transform.position,
             this.transform.rotation);
-        newWeap.GetComponent<ScriptWeap_Default>().isLocalPlayerDerived = isLocalPlayer;    //Set local player status of new weapon.
+        newWeap.GetComponent<ScriptWeap_Default>().IsLocalPlayerDerived = isLocalPlayer;    //Set local player status of new weapon.
         projectilePrefab = newWeap.GetComponent<ScriptWeap_Default>().projectile;           //Get projectile prefab from new weapon.
         newWeap.transform.parent = this.transform;                                          //Set new module as child of player core.
     }

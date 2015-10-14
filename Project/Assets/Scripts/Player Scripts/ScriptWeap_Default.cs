@@ -5,6 +5,10 @@ using UnityEngine.Networking;
 public class ScriptWeap_Default : NetworkBehaviour
 {
     public bool isLocalPlayerDerived;           //Local player status derived from player core.
+    public bool IsLocalPlayerDerived
+    {
+        set { isLocalPlayerDerived = value; }
+    }
 
     public GameObject projectile;               //Projectile prefab.
     public GameObject firingPoint;              //Firing point

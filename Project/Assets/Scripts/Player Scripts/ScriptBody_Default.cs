@@ -5,7 +5,12 @@ using UnityEngine.UI;
 
 public class ScriptBody_Default : NetworkBehaviour
 {
-    public bool isLocalPlayerDerived;           //True if the parent player is a local player.
+    private bool isLocalPlayerDerived;           //True if the parent player is a local player.
+    public bool IsLocalPlayerDerived
+    {
+        set { isLocalPlayerDerived = value; }
+    }
+
     public Camera cam;                          //Camera of body
 
     public int health;                          //Current health
