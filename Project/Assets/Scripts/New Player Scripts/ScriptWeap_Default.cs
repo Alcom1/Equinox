@@ -4,9 +4,9 @@ using UnityEngine.Networking;
 
 public class ScriptWeap_Default : NetworkBehaviour
 {
-    public bool isLocalPlayerDerived;
+    public bool isLocalPlayerDerived;           //Local player status derived from player core.
 
-    public GameObject projectile;
+    public GameObject projectile;               //Projectile prefab.
     public GameObject firingPoint;              //Firing point
     public float firingRate;                    //Firing rate
     private float firingRateRecord;             //Firing rate returns to this after firing.
