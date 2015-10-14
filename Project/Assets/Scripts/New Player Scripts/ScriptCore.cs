@@ -4,26 +4,17 @@ using UnityEngine.Networking;
 
 public class ScriptCore : NetworkBehaviour
 {
-    //~~
-    public GameObject projectile;
-    public GameObject firingPoint;              //Firing point
-    public float firingRate;                    //Firing rate
-    private float firingRateRecord;             //Firing rate returns to this after firing.
-    //~~
-
     public Rigidbody rb;
 
     public GameObject bodyPrefab;
     public GameObject engiPrefab;
     public GameObject weapPrefab;
 
-	// Use this for initialization
-	void Start ()
-    {
-        //~~
-        firingRateRecord = firingRate;
-        //~~
+    public GameObject projectilePrefab;
 
+    // Use this for initialization
+    void Start()
+    {
         //Disable collision forces on all non-local players.
         if (isLocalPlayer)
         {
@@ -40,31 +31,17 @@ public class ScriptCore : NetworkBehaviour
         GenerateEngi(engiPrefab);
         GenerateWeap(weapPrefab);
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
-        //~~
-        if (Input.GetKey("space") && firingRate <= 0 && isLocalPlayer)
-        {
-            CntSpawnBullet();
-            firingRate = firingRateRecord;
-        }
-        if (firingRate > 0)
-        {
-            firingRate -= Time.deltaTime;
-        }
-        else
-        {
-            firingRate = 0;
-        }
-        //~~ 
+
     }
 
     //Generates a new body module
     void GenerateBody(GameObject _bodyPrefab)
     {
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
             if (child.tag == "Body")
                 Destroy(child.transform);
@@ -108,7 +85,8 @@ public class ScriptCore : NetworkBehaviour
             _weapPrefab,
             this.transform.position,
             this.transform.rotation);
-        firingPoint = newWeap.transform.Find("FiringPoint").gameObject;
+        newWeap.GetComponent<ScriptWeap_Default>().isLocalPlayerDerived = isLocalPlayer;
+        projectilePrefab = newWeap.GetComponent<ScriptWeap_Default>().projectile;
         newWeap.transform.parent = this.transform;
     }
 
@@ -123,17 +101,18 @@ public class ScriptCore : NetworkBehaviour
         }
     }
 
-    [Client]
-    void CntSpawnBullet()
+    //Non-Client/Command call for Bullet spawn to prevent Network permission problems.
+    public void Boop(Vector3 position, Quaternion rotation)
     {
-        CmdSpawnBullet(firingPoint.transform.position, transform.rotation);
+        CmdSpawnBullet(position, rotation);
     }
 
+    //Spawns a bullet at a given position and direction.
     [Command]
-    void CmdSpawnBullet(Vector3 position, Quaternion rotation)
+    private void CmdSpawnBullet(Vector3 position, Quaternion rotation)
     {
         GameObject bullet = (GameObject)Instantiate(
-            projectile,
+            projectilePrefab,
             position,
             rotation);
 

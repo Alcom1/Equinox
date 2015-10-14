@@ -4,28 +4,28 @@ using UnityEngine.Networking;
 
 public class ScriptWeap_Default : NetworkBehaviour
 {
+    public bool isLocalPlayerDerived;
+
     public GameObject projectile;
     public GameObject firingPoint;              //Firing point
     public float firingRate;                    //Firing rate
-    //private float firingRateRecord;             //Firing rate returns to this after firing.
+    private float firingRateRecord;             //Firing rate returns to this after firing.
 
     // Use this for initialization
     void Start()
     {
-        //firingRateRecord = firingRate;
+        firingRateRecord = firingRate;
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*
         //Firing
-        if (Input.GetKey("space") && firingRate <= 0)
+        if (Input.GetKey("space") && firingRate <= 0 && isLocalPlayerDerived)
         {
-            transform.parent.GetComponent<ScriptCore>().CntSpawnBullet(
+            transform.parent.GetComponent<ScriptCore>().Boop(
                 firingPoint.transform.position,
-                transform.rotation,
-                projectile);
+                transform.rotation);
             firingRate = firingRateRecord;
         }
         if (firingRate > 0)
@@ -36,6 +36,5 @@ public class ScriptWeap_Default : NetworkBehaviour
         {
             firingRate = 0;
         }
-        */
     }
 }
