@@ -46,7 +46,7 @@ public class ScriptBody_Default : NetworkBehaviour
             if (health <= 0)
             {
                 //do something
-                print("respawn");
+                this.transform.parent.gameObject.GetComponent<ScriptCore>().Spawn();
                 health = STARTING_HEALTH;
             }
 

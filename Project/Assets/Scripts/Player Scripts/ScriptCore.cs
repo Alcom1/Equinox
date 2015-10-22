@@ -41,7 +41,7 @@ public class ScriptCore : NetworkBehaviour
     }
 
     //Spawn or be at spawning position
-    private void Spawn()
+    public void Spawn()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
