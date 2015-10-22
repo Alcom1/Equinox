@@ -19,6 +19,8 @@ public class ScriptCore : NetworkBehaviour
         if (isLocalPlayer)
         {
             rb.isKinematic = false;
+
+            Spawn();
         }
 
         //Stops the rigidbody from automatically generating things that makes the physics weird.
@@ -36,6 +38,20 @@ public class ScriptCore : NetworkBehaviour
     void Update()
     {
 
+    }
+
+    //Spawn or be at spawning position
+    private void Spawn()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (GameObject player in players)
+        {
+            if (!player.GetComponent<ScriptCore>().isLocalPlayer)
+            {
+                print("Player Existing!");
+            }
+        }
     }
 
     //Generates a new body module
