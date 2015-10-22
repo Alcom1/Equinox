@@ -45,12 +45,35 @@ public class ScriptCore : NetworkBehaviour
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
-        foreach (GameObject player in players)
+        if (players.Length > 1)
         {
-            if (!player.GetComponent<ScriptCore>().isLocalPlayer)
+            foreach (GameObject player in players)
             {
-                print("Player Existing!");
+                if (!player.GetComponent<ScriptCore>().isLocalPlayer)
+                {
+                    GameObject[] spawns = GameObject.FindGameObjectsWithTag("Spawn");
+                    float distance = 0;
+                    float newDistance = 0;
+                    int index = 0;
+                    for (int i = 0; i < spawns.Length; i++)
+                    {
+                        newDistance = (player.transform.position - spawns[i].transform.position).magnitude;
+                        if (newDistance > distance)
+                        {
+                            distance = 0;
+                            index = i;
+                        }
+                    }
+                    this.transform.position = spawns[index].transform.position;
+                    this.transform.rotation = spawns[index].transform.rotation;
+                }
             }
+        }
+        else
+        {
+            GameObject[] spawns = GameObject.FindGameObjectsWithTag("Spawn");
+            this.transform.position = spawns[0].transform.position;
+            this.transform.rotation = spawns[0].transform.rotation;
         }
     }
 
