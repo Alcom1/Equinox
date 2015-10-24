@@ -191,6 +191,11 @@ public class ScriptCore : NetworkBehaviour
     [Client]
     void SyncPrefabs(SyncListString prefabs)
     {
+        //check for changes
+
+        //if there are changes, generate as necessary
+
+        //set equal
         body = prefabs;
     }
 }
