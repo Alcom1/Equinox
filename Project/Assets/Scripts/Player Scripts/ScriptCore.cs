@@ -6,6 +6,8 @@ public class ScriptCore : NetworkBehaviour
 {
     public Rigidbody rb;                    //Single rigidbody of the player.
 
+    public SyncListString body = new SyncListString();
+
     public GameObject bodyPrefab;           //Body prefab of the player.
     public GameObject engiPrefab;           //Engi prefab of the player.
     public GameObject weapPrefab;           //Weapon prefab of the player.
@@ -163,5 +165,32 @@ public class ScriptCore : NetworkBehaviour
             rotation);
 
         NetworkServer.Spawn(bullet);
+    }
+
+    //Server set model
+    [Command]
+    void CmdSendPrefabsToServer(SyncListString prefabs)
+    {
+        //runs on server, we call on client
+        body = prefabs;
+    }
+
+    [Client]
+    void TransmitPrefabs()
+    {
+        // This is where we (the client) send out our prefabs.
+        if (isLocalPlayer)
+        {
+            // Send a command to the server to update our health, and 
+            // it will update a SyncVar, which then automagically updates on everyone's game instance
+            CmdSendPrefabsToServer(body);
+        }
+    }
+
+    //Sync position
+    [Client]
+    void SyncPrefabs(SyncListString prefabs)
+    {
+        body = prefabs;
     }
 }

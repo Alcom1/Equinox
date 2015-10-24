@@ -14,6 +14,7 @@ public class ScriptBody_Default : NetworkBehaviour
     public Camera cam;                          //Camera of body
 
     public int health;                          //Current health
+    public int aHealth;                          //Current health
     private int STARTING_HEALTH;                //Starting health
 
     //HUD elements
@@ -49,9 +50,54 @@ public class ScriptBody_Default : NetworkBehaviour
                 this.transform.parent.gameObject.GetComponent<ScriptCore>().Spawn();
                 health = STARTING_HEALTH;
             }
-
             displayHealth.text = "Health: " + health;                //UI display
             NetworkServer.Destroy(bulletScript.gameObject);
         }
+        else
+        {
+            health--;
+            print("lost health!");
+            if (health <= 0)
+            {
+                //do something
+                this.transform.parent.gameObject.GetComponent<ScriptCore>().Spawn();
+                health = STARTING_HEALTH;
+            }
+            GameObject.Find("TextHealthOpponent").GetComponent<Text>().text = "Opponent's Health: " + health;
+        }
+    }
+    //Server set new health
+    [Command]
+    void CmdSendNewHealthToServer(int newHealth)
+    {
+        health = newHealth;
+    }
+
+    //Transmit new health to server
+    [Client]
+    public void TransmitHealth(int newHealth)
+    {
+        if (!isLocalPlayer && CheckIfNewHealth(aHealth, newHealth))
+        {
+            aHealth = newHealth;
+            CmdSendNewHealthToServer(newHealth);
+        }
+    }
+
+    //Check if new health is different from old
+    bool CheckIfNewHealth(int health1, int health2)
+    {
+        if (health1 == health2)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    //Sync healths
+    [Client]
+    void OnPlayerHealthSynced(int aHealth)
+    {
+        health = aHealth;
     }
 }
