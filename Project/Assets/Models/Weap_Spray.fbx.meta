@@ -1,22 +1,15 @@
 fileFormatVersion: 2
-guid: e68e0b92455fe8e4aa28e26ec92baea5
-timeCreated: 1445717113
-licenseType: Pro
+guid: 9ff99a0cc2066ac439ba3112749c0c52
+timeCreated: 1445735247
+licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Main_Body
-    100004: pasted__polySurface5_pasted__polySurface1_group_pasted__polySurface7_group5
     400000: //RootNode
-    400002: Main_Body
-    400004: pasted__polySurface5_pasted__polySurface1_group_pasted__polySurface7_group5
-    2300000: Main_Body
-    2300002: pasted__polySurface5_pasted__polySurface1_group_pasted__polySurface7_group5
-    3300000: Main_Body
-    3300002: pasted__polySurface5_pasted__polySurface1_group_pasted__polySurface7_group5
-    4300000: Main_Body
-    4300002: pasted__polySurface5_pasted__polySurface1_group_pasted__polySurface7_group5
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Weap_Spray
   materials:
     importMaterials: 1
     materialName: 0
@@ -73,8 +66,10 @@ ModelImporter:
     legStretch: .0500000007
     feetSpacing: 0
     rootMotionBoneName: 
+    hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 0
+  humanoidOversampling: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

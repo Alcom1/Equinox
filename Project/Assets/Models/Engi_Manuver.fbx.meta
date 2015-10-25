@@ -1,32 +1,15 @@
 fileFormatVersion: 2
-guid: 44d7860d37badc1469fb2a0f6508a77c
-timeCreated: 1445717113
-licenseType: Pro
+guid: 6d7bd9e745eff7346b7c29e57dadc9bb
+timeCreated: 1445735382
+licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: pCube2_pCube3_group4
-    100002: pCube4
-    100004: polySurface1_polySurface4_group2
-    100006: pPipe1
-    100008: //RootNode
-    400000: pCube2_pCube3_group4
-    400002: pCube4
-    400004: polySurface1_polySurface4_group2
-    400006: pPipe1
-    400008: //RootNode
-    2300000: pCube2_pCube3_group4
-    2300002: pCube4
-    2300004: polySurface1_polySurface4_group2
-    2300006: pPipe1
-    3300000: pCube2_pCube3_group4
-    3300002: pCube4
-    3300004: polySurface1_polySurface4_group2
-    3300006: pPipe1
-    4300000: pCube2_pCube3_group4
-    4300002: pCube4
-    4300004: polySurface1_polySurface4_group2
-    4300006: pPipe1
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Engi_Manuv
   materials:
     importMaterials: 1
     materialName: 0
@@ -83,8 +66,10 @@ ModelImporter:
     legStretch: .0500000007
     feetSpacing: 0
     rootMotionBoneName: 
+    hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 0
+  humanoidOversampling: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

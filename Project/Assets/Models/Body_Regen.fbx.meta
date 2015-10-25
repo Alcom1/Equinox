@@ -1,17 +1,15 @@
 fileFormatVersion: 2
-guid: 164e8d008c3caa8458ff1c5123863e15
-timeCreated: 1445716417
-licenseType: Pro
+guid: 075dcb841f7c5b1469220d2b18c88420
+timeCreated: 1445735161
+licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Thruster
     400000: //RootNode
-    400002: Thruster
-    2300000: Thruster
-    3300000: Thruster
-    4300000: Thruster
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Body_Regen
   materials:
     importMaterials: 1
     materialName: 0
@@ -68,8 +66,10 @@ ModelImporter:
     legStretch: .0500000007
     feetSpacing: 0
     rootMotionBoneName: 
+    hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 0
+  humanoidOversampling: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
