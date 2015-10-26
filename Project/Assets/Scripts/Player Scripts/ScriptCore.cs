@@ -6,7 +6,14 @@ public class ScriptCore : NetworkBehaviour
 {
     public Rigidbody rb;                    //Single rigidbody of the player.
 
-    public SyncListString body = new SyncListString();
+    [SyncVar]
+    string bodyName;
+
+    [SyncVar]
+    string engiName;
+
+    [SyncVar]
+    string weapName;
 
     public GameObject bodyPrefab;           //Body prefab of the player.
     public GameObject engiPrefab;           //Engi prefab of the player.
@@ -80,7 +87,7 @@ public class ScriptCore : NetworkBehaviour
     }
 
     //Generates a new body module
-    void GenerateBody(GameObject _bodyPrefab)
+    public void GenerateBody(GameObject _bodyPrefab)
     {
         //Destroy old module.
         foreach (Transform child in transform)
@@ -100,7 +107,7 @@ public class ScriptCore : NetworkBehaviour
     }
 
     //Generates a new engi module
-    void GenerateEngi(GameObject _engiPrefab)
+    public void GenerateEngi(GameObject _engiPrefab)
     {
         //Destroy old module.
         foreach (Transform child in transform)
@@ -119,7 +126,7 @@ public class ScriptCore : NetworkBehaviour
     }
 
     //Generates a new weap module
-    void GenerateWeap(GameObject _weapPrefab)
+    public void GenerateWeap(GameObject _weapPrefab)
     {
         //Destroy old module.
         foreach (Transform child in transform)
@@ -141,6 +148,8 @@ public class ScriptCore : NetworkBehaviour
     //Physics effects on collision.
     void OnCollisionEnter(Collision collision)
     {
+        //this isn't running, no clue why
+        Debug.Log("Colliding on script");
         //Find engine and trigger disorientation.
         foreach (Transform child in transform)
         {
@@ -169,33 +178,48 @@ public class ScriptCore : NetworkBehaviour
 
     //Server set model
     [Command]
-    void CmdSendPrefabsToServer(SyncListString prefabs)
+    void CmdSendNamesToServer(string body, string engi, string weap)
     {
         //runs on server, we call on client
-        body = prefabs;
+        bodyName = body;
+        engiName = engi;
+        weapName = weap;
     }
 
     [Client]
-    void TransmitPrefabs()
+    void TransmitNames()
     {
         // This is where we (the client) send out our prefabs.
         if (isLocalPlayer)
         {
             // Send a command to the server to update our health, and 
             // it will update a SyncVar, which then automagically updates on everyone's game instance
-            CmdSendPrefabsToServer(body);
+            CmdSendNamesToServer(bodyName,engiName,weapName);
         }
     }
 
     //Sync position
     [Client]
-    void SyncPrefabs(SyncListString prefabs)
+    void SyncBody(string body, string engi, string weap)
     {
-        //check for changes
-
         //if there are changes, generate as necessary
-
-        //set equal
-        body = prefabs;
+        if (!body.Equals(bodyName))
+        {
+            //generate based on name
+            //GenerateBody();
+            bodyName = body;
+        }
+        if (!engi.Equals(engiName))
+        {
+            //generate based on name
+            //GenerateEngi();
+            engiName = engi;
+        }
+        if (!weap.Equals(weapName))
+        {
+            //generate based on name
+            //GenerateWeap();
+            bodyName = weap;
+        }
     }
 }

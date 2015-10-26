@@ -22,5 +22,7 @@ public class Provider_Body : MonoBehaviour
     {
         //Substitute action.
         //other.
+        //these ALSO aren't working
+        Debug.Log("name: " + objectName.ToString());
     }
 }

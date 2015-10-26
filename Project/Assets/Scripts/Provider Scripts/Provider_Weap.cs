@@ -21,5 +21,7 @@ public class Provider_Weap : MonoBehaviour
     {
         //Substitute action.
         //other.
+        //these ALSO aren't working
+        Debug.Log("name: " + objectName.ToString());
     }
 }
