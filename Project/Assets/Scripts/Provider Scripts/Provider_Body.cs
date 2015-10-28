@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class Provider_Body : MonoBehaviour
+public class Provider_Body : NetworkBehaviour
 {
     public GameObject visualPrefab;
     public string objectName;
+    private bool isColliding;       //True while colliding. Prevents double collisions.
 
     // Use this for initialization
     void Start()
@@ -18,11 +20,24 @@ public class Provider_Body : MonoBehaviour
         visual.transform.parent = this.transform;
     }
 
+    void Update()
+    {
+        isColliding = false;
+    }
+
     void OnTriggerEnter(Collider other)
     {
-        //Substitute action.
-        //other.
-        //these ALSO aren't working
-        Debug.Log("name: " + objectName.ToString());
+        if (isColliding)    //Do nothing if a collision is already in progress
+            return;
+
+        isColliding = true;
+
+        if (
+            other.tag == "Body" ||
+            other.tag == "Engi" ||
+            other.tag == "Weap")
+        {
+            other.transform.parent.GetComponent<ScriptCore>().engiResource = objectName;
+        }
     }
 }

@@ -14,10 +14,7 @@ public class ScriptCore : NetworkBehaviour
 
     [SyncVar]
     string weapName;
-
-    public GameObject bodyPrefab;           //Body prefab of the player.
-    public GameObject engiPrefab;           //Engi prefab of the player.
-    public GameObject weapPrefab;           //Weapon prefab of the player.
+    
 	public string bodyResource;
 	public string engiResource;
 	public string weapResource;
@@ -179,6 +176,7 @@ public class ScriptCore : NetworkBehaviour
         NetworkServer.Spawn(bullet);
     }
 
+    /*
     //Server set model
     [Command]
     void CmdSendNamesToServer(string body, string engi, string weap)
@@ -225,4 +223,5 @@ public class ScriptCore : NetworkBehaviour
             bodyName = weap;
         }
     }
+    */
 }
