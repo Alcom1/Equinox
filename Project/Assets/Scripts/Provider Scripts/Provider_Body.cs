@@ -40,4 +40,9 @@ public class Provider_Body : NetworkBehaviour
             other.transform.parent.GetComponent<ScriptCore>().engiResource = objectName;
         }
     }
+
+    void OnTriggerExit(Collider other)
+    {
+        isColliding = false;
+    }
 }

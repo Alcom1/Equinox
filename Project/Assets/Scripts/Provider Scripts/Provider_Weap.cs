@@ -39,4 +39,9 @@ public class Provider_Weap : NetworkBehaviour
             other.transform.parent.GetComponent<ScriptCore>().engiResource = objectName;
         }
     }
+
+    void OnTriggerExit(Collider other)
+    {
+        isColliding = false;
+    }
 }
