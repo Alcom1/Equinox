@@ -37,7 +37,7 @@ public class Provider_Body : NetworkBehaviour
             other.tag == "Engi" ||
             other.tag == "Weap")
         {
-            other.transform.parent.GetComponent<ScriptCore>().engiResource = objectName;
+            other.transform.parent.GetComponent<ScriptCore>().bodyResource = objectName;
         }
     }
 
