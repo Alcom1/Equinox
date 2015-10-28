@@ -98,7 +98,7 @@ public class ScriptCore : NetworkBehaviour
 
         //Instantiate new module.
         GameObject newBody = (GameObject)Instantiate(
-            Resources.Load(_bodyResource, typeof(GameObject)),
+            Resources.Load("modules/" + _bodyResource, typeof(GameObject)),
             this.transform.position,
             this.transform.rotation);
         newBody.GetComponent<ScriptBody_Default>().IsLocalPlayerDerived = isLocalPlayer;    //Set local player status of new body.
@@ -118,7 +118,7 @@ public class ScriptCore : NetworkBehaviour
 
         //Instantiate new module.
         GameObject newEngi = (GameObject)Instantiate(
-            Resources.Load(_engiResource, typeof(GameObject)),
+            Resources.Load("modules/" + _engiResource, typeof(GameObject)),
             this.transform.position,
             this.transform.rotation);
         newEngi.GetComponent<ScriptEngi_Default>().rb = this.GetComponent<Rigidbody>();     //Assign player core rigidbody to new engine.
@@ -137,7 +137,7 @@ public class ScriptCore : NetworkBehaviour
 
         //Instantiate new module.
         GameObject newWeap = (GameObject)Instantiate(
-            Resources.Load(_weapResource, typeof(GameObject)),
+            Resources.Load("modules/" + _weapResource, typeof(GameObject)),
             this.transform.position,
             this.transform.rotation);
         newWeap.GetComponent<ScriptWeap_Default>().IsLocalPlayerDerived = isLocalPlayer;    //Set local player status of new weapon.
