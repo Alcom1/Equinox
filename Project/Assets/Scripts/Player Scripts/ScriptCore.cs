@@ -18,6 +18,9 @@ public class ScriptCore : NetworkBehaviour
     public GameObject bodyPrefab;           //Body prefab of the player.
     public GameObject engiPrefab;           //Engi prefab of the player.
     public GameObject weapPrefab;           //Weapon prefab of the player.
+	public string bodyResource;
+	public string engiResource;
+	public string weapResource;
 
     private GameObject projectilePrefab;     //Projectile prefab derived from weapon.
 
@@ -38,9 +41,9 @@ public class ScriptCore : NetworkBehaviour
         rb.centerOfMass = rb.centerOfMass;
 
         //Generat default modules.
-        GenerateBody(bodyPrefab);
-        GenerateEngi(engiPrefab);
-        GenerateWeap(weapPrefab);
+		GenerateBody(bodyResource);
+		GenerateEngi(engiResource);
+		GenerateWeap(weapResource);
     }
 
     // Update is called once per frame
@@ -87,7 +90,7 @@ public class ScriptCore : NetworkBehaviour
     }
 
     //Generates a new body module
-    public void GenerateBody(GameObject _bodyPrefab)
+	public void GenerateBody(string _bodyResource)
     {
         //Destroy old module.
         foreach (Transform child in transform)
@@ -98,7 +101,7 @@ public class ScriptCore : NetworkBehaviour
 
         //Instantiate new module.
         GameObject newBody = (GameObject)Instantiate(
-            _bodyPrefab,
+            Resources.Load(_bodyResource, typeof(GameObject)),
             this.transform.position,
             this.transform.rotation);
         newBody.GetComponent<ScriptBody_Default>().IsLocalPlayerDerived = isLocalPlayer;    //Set local player status of new body.
@@ -107,7 +110,7 @@ public class ScriptCore : NetworkBehaviour
     }
 
     //Generates a new engi module
-    public void GenerateEngi(GameObject _engiPrefab)
+    public void GenerateEngi(string _engiResource)
     {
         //Destroy old module.
         foreach (Transform child in transform)
@@ -118,7 +121,7 @@ public class ScriptCore : NetworkBehaviour
 
         //Instantiate new module.
         GameObject newEngi = (GameObject)Instantiate(
-            _engiPrefab,
+            Resources.Load(_engiResource, typeof(GameObject)),
             this.transform.position,
             this.transform.rotation);
         newEngi.GetComponent<ScriptEngi_Default>().rb = this.GetComponent<Rigidbody>();     //Assign player core rigidbody to new engine.
@@ -126,7 +129,7 @@ public class ScriptCore : NetworkBehaviour
     }
 
     //Generates a new weap module
-    public void GenerateWeap(GameObject _weapPrefab)
+    public void GenerateWeap(string _weapResource)
     {
         //Destroy old module.
         foreach (Transform child in transform)
@@ -137,7 +140,7 @@ public class ScriptCore : NetworkBehaviour
 
         //Instantiate new module.
         GameObject newWeap = (GameObject)Instantiate(
-            _weapPrefab,
+            Resources.Load(_weapResource, typeof(GameObject)),
             this.transform.position,
             this.transform.rotation);
         newWeap.GetComponent<ScriptWeap_Default>().IsLocalPlayerDerived = isLocalPlayer;    //Set local player status of new weapon.
