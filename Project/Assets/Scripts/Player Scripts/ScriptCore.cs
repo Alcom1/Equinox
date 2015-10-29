@@ -37,6 +37,10 @@ public class ScriptCore : NetworkBehaviour
         rb.inertiaTensorRotation = rb.inertiaTensorRotation;
         rb.centerOfMass = rb.centerOfMass;
 
+        bodyName = bodyPrefab.ToString();
+        engiName = engiPrefab.ToString();
+        weapName = weapPrefab.ToString();
+
         //Generat default modules.
         GenerateBody(bodyPrefab);
         GenerateEngi(engiPrefab);
@@ -87,7 +91,7 @@ public class ScriptCore : NetworkBehaviour
     }
 
     //Generates a new body module
-    public void GenerateBody(GameObject _bodyPrefab)
+    void GenerateBody(GameObject _bodyPrefab)
     {
         //Destroy old module.
         foreach (Transform child in transform)
@@ -107,7 +111,7 @@ public class ScriptCore : NetworkBehaviour
     }
 
     //Generates a new engi module
-    public void GenerateEngi(GameObject _engiPrefab)
+    void GenerateEngi(GameObject _engiPrefab)
     {
         //Destroy old module.
         foreach (Transform child in transform)
@@ -126,7 +130,7 @@ public class ScriptCore : NetworkBehaviour
     }
 
     //Generates a new weap module
-    public void GenerateWeap(GameObject _weapPrefab)
+    void GenerateWeap(GameObject _weapPrefab)
     {
         //Destroy old module.
         foreach (Transform child in transform)
@@ -220,6 +224,40 @@ public class ScriptCore : NetworkBehaviour
             //generate based on name
             //GenerateWeap();
             bodyName = weap;
+        }
+    }
+
+    public void HandleModule(string name)
+    {
+        //get correct prefab base on info
+        GameObject prefab = (GameObject)Instantiate( Resources.Load(name.Substring( name.IndexOf(' ') )) );
+        Debug.Log(name.Substring(name.IndexOf(' ')));
+        if (name.Contains("Body"))
+        {
+            Debug.Log("body");
+            if(!bodyName.Equals(name))
+            {
+                bodyName = name;
+                GenerateBody(prefab);
+            }
+        }
+        if (name.Contains("Engi"))
+        {
+            Debug.Log("engi");
+            if (!engiName.Equals(name))
+            {
+                engiName = name;
+                GenerateEngi(prefab);
+            }
+        }
+        if (name.Contains("Weap"))
+        {
+            Debug.Log("weap");
+            if (!weapName.Equals(name))
+            {
+                weapName = name;
+                GenerateWeap(prefab);
+            }
         }
     }
 }
