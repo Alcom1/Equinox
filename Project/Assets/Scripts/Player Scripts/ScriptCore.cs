@@ -8,9 +8,11 @@ public class ScriptCore : NetworkBehaviour
     
     [SyncVar (hook = "TransmitBody")]
 	public string bodyResource;
-    
+
+    [SyncVar(hook = "TransmitEngi")]
     public string engiResource;
-    
+
+    [SyncVar(hook = "TransmitWeap")]
     public string weapResource;
 
     private GameObject projectilePrefab;     //Projectile prefab derived from weapon.
@@ -171,7 +173,6 @@ public class ScriptCore : NetworkBehaviour
 
         NetworkServer.Spawn(bullet);
     }
-
     
     //Server set model
     [Command]
@@ -193,7 +194,7 @@ public class ScriptCore : NetworkBehaviour
         }
     }
 
-    //Sync position
+    //Sync model
     [Client]
     void SyncBody(string body)
     {
@@ -203,6 +204,72 @@ public class ScriptCore : NetworkBehaviour
             //generate based on name
             GenerateBody(body);
             bodyResource = body;
+        }
+    }
+
+    //Server set model
+    [Command]
+    void CmdSendEngiToServer(string engi)
+    {
+        //runs on server, we call on client
+        bodyResource = engi;
+    }
+
+    [Client]
+    void TransmitEngi(string engi)
+    {
+        // This is where we (the client) send out our prefabs.
+        if (isLocalPlayer)
+        {
+            // Send a command to the server to update our health, and 
+            // it will update a SyncVar, which then automagically updates on everyone's game instance
+            CmdSendEngiToServer(engi);
+        }
+    }
+
+    //Sync model
+    [Client]
+    void SyncEngi(string engi)
+    {
+        //if there are changes, generate as necessary
+        if (!engi.Equals(engiResource))
+        {
+            //generate based on name
+            GenerateBody(engi);
+            engiResource = engi;
+        }
+    }
+
+    //Server set model
+    [Command]
+    void CmdSendWeapToServer(string weap)
+    {
+        //runs on server, we call on client
+        bodyResource = weap;
+    }
+
+    [Client]
+    void TransmitWeap(string weap)
+    {
+        // This is where we (the client) send out our prefabs.
+        if (isLocalPlayer)
+        {
+            // Send a command to the server to update our health, and 
+            // it will update a SyncVar, which then automagically updates on everyone's game instance
+            CmdSendWeapToServer(weap);
+        }
+    }
+
+    //Sync model
+    [Client]
+    void SyncWeap(string weap)
+    {
+        //if there are changes, generate as necessary
+        if (!weap.Equals(weapResource))
+        {
+            //generate based on name
+            GenerateBody(weap);
+            engiResource = weap;
         }
     }
 }
