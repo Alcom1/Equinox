@@ -14,10 +14,10 @@ public class ScriptCore : NetworkBehaviour
 
     [SyncVar]
     string weapName;
-
-    public GameObject bodyPrefab;           //Body prefab of the player.
-    public GameObject engiPrefab;           //Engi prefab of the player.
-    public GameObject weapPrefab;           //Weapon prefab of the player.
+    
+	public string bodyResource;
+	public string engiResource;
+	public string weapResource;
 
     private GameObject projectilePrefab;     //Projectile prefab derived from weapon.
 
@@ -36,15 +36,15 @@ public class ScriptCore : NetworkBehaviour
         rb.inertiaTensor = rb.inertiaTensor;
         rb.inertiaTensorRotation = rb.inertiaTensorRotation;
         rb.centerOfMass = rb.centerOfMass;
-
-        bodyName = bodyPrefab.ToString();
-        engiName = engiPrefab.ToString();
-        weapName = weapPrefab.ToString();
-
+        
+        bodyName = bodyResource;
+        engiName = engiResource;
+        weapName = weapResource;
+        
         //Generat default modules.
-        GenerateBody(bodyPrefab);
-        GenerateEngi(engiPrefab);
-        GenerateWeap(weapPrefab);
+		GenerateBody(bodyResource);
+		GenerateEngi(engiResource);
+		GenerateWeap(weapResource);
     }
 
     // Update is called once per frame
@@ -91,18 +91,20 @@ public class ScriptCore : NetworkBehaviour
     }
 
     //Generates a new body module
-    void GenerateBody(GameObject _bodyPrefab)
+    public void GenerateBody(string _bodyResource)
     {
         //Destroy old module.
         foreach (Transform child in transform)
         {
             if (child.tag == "Body")
-                Destroy(child.transform);
+            {
+                Destroy(child.gameObject);
+            }
         }
 
         //Instantiate new module.
         GameObject newBody = (GameObject)Instantiate(
-            _bodyPrefab,
+            Resources.Load("modules/" + _bodyResource, typeof(GameObject)),
             this.transform.position,
             this.transform.rotation);
         newBody.GetComponent<ScriptBody_Default>().IsLocalPlayerDerived = isLocalPlayer;    //Set local player status of new body.
@@ -111,18 +113,18 @@ public class ScriptCore : NetworkBehaviour
     }
 
     //Generates a new engi module
-    void GenerateEngi(GameObject _engiPrefab)
+    public void GenerateEngi(string _engiResource)
     {
         //Destroy old module.
         foreach (Transform child in transform)
         {
             if (child.tag == "Engi")
-                Destroy(child.transform);
+                Destroy(child.gameObject);
         }
 
         //Instantiate new module.
         GameObject newEngi = (GameObject)Instantiate(
-            _engiPrefab,
+            Resources.Load("modules/" + _engiResource, typeof(GameObject)),
             this.transform.position,
             this.transform.rotation);
         newEngi.GetComponent<ScriptEngi_Default>().rb = this.GetComponent<Rigidbody>();     //Assign player core rigidbody to new engine.
@@ -130,18 +132,18 @@ public class ScriptCore : NetworkBehaviour
     }
 
     //Generates a new weap module
-    void GenerateWeap(GameObject _weapPrefab)
+    public void GenerateWeap(string _weapResource)
     {
         //Destroy old module.
         foreach (Transform child in transform)
         {
             if (child.tag == "Weap")
-                Destroy(child.transform);
+                Destroy(child.gameObject);
         }
 
         //Instantiate new module.
         GameObject newWeap = (GameObject)Instantiate(
-            _weapPrefab,
+            Resources.Load("modules/" + _weapResource, typeof(GameObject)),
             this.transform.position,
             this.transform.rotation);
         newWeap.GetComponent<ScriptWeap_Default>().IsLocalPlayerDerived = isLocalPlayer;    //Set local player status of new weapon.
@@ -180,6 +182,7 @@ public class ScriptCore : NetworkBehaviour
         NetworkServer.Spawn(bullet);
     }
 
+    /*
     //Server set model
     [Command]
     void CmdSendNamesToServer(string body, string engi, string weap)
@@ -259,5 +262,5 @@ public class ScriptCore : NetworkBehaviour
                 GenerateWeap(prefab);
             }
         }
-    }
+    }*/
 }
