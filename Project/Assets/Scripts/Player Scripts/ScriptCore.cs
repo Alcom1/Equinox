@@ -5,19 +5,13 @@ using UnityEngine.Networking;
 public class ScriptCore : NetworkBehaviour
 {
     public Rigidbody rb;                    //Single rigidbody of the player.
-
-    [SyncVar]
-    string bodyName;
-
-    [SyncVar]
-    string engiName;
-
-    [SyncVar]
-    string weapName;
     
+    [SyncVar (hook = "TransmitBody")]
 	public string bodyResource;
-	public string engiResource;
-	public string weapResource;
+    
+    public string engiResource;
+    
+    public string weapResource;
 
     private GameObject projectilePrefab;     //Projectile prefab derived from weapon.
 
@@ -36,10 +30,6 @@ public class ScriptCore : NetworkBehaviour
         rb.inertiaTensor = rb.inertiaTensor;
         rb.inertiaTensorRotation = rb.inertiaTensorRotation;
         rb.centerOfMass = rb.centerOfMass;
-        
-        bodyName = bodyResource;
-        engiName = engiResource;
-        weapName = weapResource;
         
         //Generat default modules.
 		GenerateBody(bodyResource);
@@ -182,85 +172,37 @@ public class ScriptCore : NetworkBehaviour
         NetworkServer.Spawn(bullet);
     }
 
-    /*
+    
     //Server set model
     [Command]
-    void CmdSendNamesToServer(string body, string engi, string weap)
+    void CmdSendBodyToServer(string body)
     {
         //runs on server, we call on client
-        bodyName = body;
-        engiName = engi;
-        weapName = weap;
+        bodyResource = body;
     }
 
     [Client]
-    void TransmitNames()
+    void TransmitBody(string body)
     {
         // This is where we (the client) send out our prefabs.
         if (isLocalPlayer)
         {
             // Send a command to the server to update our health, and 
             // it will update a SyncVar, which then automagically updates on everyone's game instance
-            CmdSendNamesToServer(bodyName,engiName,weapName);
+            CmdSendBodyToServer(body);
         }
     }
 
     //Sync position
     [Client]
-    void SyncBody(string body, string engi, string weap)
+    void SyncBody(string body)
     {
         //if there are changes, generate as necessary
-        if (!body.Equals(bodyName))
+        if (!body.Equals(bodyResource))
         {
             //generate based on name
-            //GenerateBody();
-            bodyName = body;
-        }
-        if (!engi.Equals(engiName))
-        {
-            //generate based on name
-            //GenerateEngi();
-            engiName = engi;
-        }
-        if (!weap.Equals(weapName))
-        {
-            //generate based on name
-            //GenerateWeap();
-            bodyName = weap;
+            GenerateBody(body);
+            bodyResource = body;
         }
     }
-
-    public void HandleModule(string name)
-    {
-        //get correct prefab base on info
-        GameObject prefab = (GameObject)Instantiate( Resources.Load(name.Substring( name.IndexOf(' ') )) );
-        Debug.Log(name.Substring(name.IndexOf(' ')));
-        if (name.Contains("Body"))
-        {
-            Debug.Log("body");
-            if(!bodyName.Equals(name))
-            {
-                bodyName = name;
-                GenerateBody(prefab);
-            }
-        }
-        if (name.Contains("Engi"))
-        {
-            Debug.Log("engi");
-            if (!engiName.Equals(name))
-            {
-                engiName = name;
-                GenerateEngi(prefab);
-            }
-        }
-        if (name.Contains("Weap"))
-        {
-            Debug.Log("weap");
-            if (!weapName.Equals(name))
-            {
-                weapName = name;
-                GenerateWeap(prefab);
-            }
-        }
-    }*/
 }
