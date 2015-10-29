@@ -6,13 +6,13 @@ public class ScriptCore : NetworkBehaviour
 {
     public Rigidbody rb;                    //Single rigidbody of the player.
     
-    [SyncVar (hook = "TransmitBody")]
+    [SyncVar (hook = "SyncBody")]
 	public string bodyResource;
 
-    [SyncVar(hook = "TransmitEngi")]
+    [SyncVar(hook = "SyncEngi")]
     public string engiResource;
 
-    [SyncVar(hook = "TransmitWeap")]
+    [SyncVar(hook = "SyncWeap")]
     public string weapResource;
 
     private GameObject projectilePrefab;     //Projectile prefab derived from weapon.
@@ -102,6 +102,8 @@ public class ScriptCore : NetworkBehaviour
         newBody.GetComponent<ScriptBody_Default>().IsLocalPlayerDerived = isLocalPlayer;    //Set local player status of new body.
         newBody.GetComponent<ScriptBody_Default>().CheckCamera();                           //Disable camera if new body is not local.
         newBody.transform.parent = this.transform;                                          //Set new module as child of player core.
+
+        TransmitBody(bodyResource);
     }
 
     //Generates a new engi module
@@ -121,6 +123,8 @@ public class ScriptCore : NetworkBehaviour
             this.transform.rotation);
         newEngi.GetComponent<ScriptEngi_Default>().rb = this.GetComponent<Rigidbody>();     //Assign player core rigidbody to new engine.
         newEngi.transform.parent = this.transform;                                          //Set new module as child of player core.
+
+        TransmitBody(engiResource);
     }
 
     //Generates a new weap module
@@ -141,6 +145,8 @@ public class ScriptCore : NetworkBehaviour
         newWeap.GetComponent<ScriptWeap_Default>().IsLocalPlayerDerived = isLocalPlayer;    //Set local player status of new weapon.
         projectilePrefab = newWeap.GetComponent<ScriptWeap_Default>().projectile;           //Get projectile prefab from new weapon.
         newWeap.transform.parent = this.transform;                                          //Set new module as child of player core.
+
+        TransmitBody(weapResource);
     }
 
     //Physics effects on collision.
@@ -212,7 +218,7 @@ public class ScriptCore : NetworkBehaviour
     void CmdSendEngiToServer(string engi)
     {
         //runs on server, we call on client
-        bodyResource = engi;
+        engiResource = engi;
     }
 
     [Client]
@@ -235,7 +241,7 @@ public class ScriptCore : NetworkBehaviour
         if (!engi.Equals(engiResource))
         {
             //generate based on name
-            GenerateBody(engi);
+            GenerateEngi(engi);
             engiResource = engi;
         }
     }
@@ -245,7 +251,7 @@ public class ScriptCore : NetworkBehaviour
     void CmdSendWeapToServer(string weap)
     {
         //runs on server, we call on client
-        bodyResource = weap;
+        weapResource = weap;
     }
 
     [Client]
@@ -268,8 +274,8 @@ public class ScriptCore : NetworkBehaviour
         if (!weap.Equals(weapResource))
         {
             //generate based on name
-            GenerateBody(weap);
-            engiResource = weap;
+            GenerateWeap(weap);
+            weapResource = weap;
         }
     }
 }
