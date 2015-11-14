@@ -24,7 +24,8 @@ public class ScriptCore : NetworkBehaviour
         if (isLocalPlayer)
         {
             rb.isKinematic = false;
-
+            UnityEngine.Cursor.visible = false;
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             Spawn();
         }
 

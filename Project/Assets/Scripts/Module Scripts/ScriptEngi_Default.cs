@@ -12,6 +12,8 @@ public class ScriptEngi_Default : MonoBehaviour
     public int maxSpeed;                        //Maximum speed
     public int accelRate;                       //Acceleration strength
     public float deaccelRate;                   //Active deacceleration magnitude
+    public float angleDrag;                     //Angular drag
+    public float moveDrag;                      //Movement drag
 
     private float lerpRate;                     //Scale (0-1) of lerping rigidbody velocity to forward
 
@@ -28,19 +30,28 @@ public class ScriptEngi_Default : MonoBehaviour
         //Mouse x-axis yaw
         float rotate = Input.GetAxisRaw("Mouse X") * sensetivityRotateX;
         if (rotate > maxRotateX)    //Limit rotation
+        {
             rotate = maxRotateX;
+        }
         else if (rotate < -maxRotateX)
+        {
             rotate = -maxRotateX;
+        }
         rb.AddRelativeTorque(Vector3.up * rotate * Time.deltaTime);
 
         //Mouse y-axis pitch
-        rotate = Input.GetAxisRaw("Mouse Y")* sensetivityRotateY;
+        rotate = Input.GetAxisRaw("Mouse Y") * sensetivityRotateY;
         if (rotate > maxRotateY)    //Limit rotation
+        {
             rotate = maxRotateY;
+        }
         else if (rotate < -maxRotateY)
+        {
             rotate = -maxRotateY;
+        }
         rb.AddRelativeTorque(Vector3.right * rotate * Time.deltaTime);
 
+        /*
         //Mouse click roll
         if (Input.GetMouseButton(0))
         {
@@ -49,6 +60,20 @@ public class ScriptEngi_Default : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             rb.AddRelativeTorque(-Vector3.forward * Time.deltaTime * 60);
+        }
+        */
+
+        float temp = transform.parent.transform.rotation.eulerAngles.z;
+        print(temp);
+
+        //Auto roll
+        if (temp > 180 && temp < 360)
+        {
+            rb.AddRelativeTorque(Vector3.forward * Time.deltaTime * 240 * (360 - temp) / 180);
+        }
+        if (temp > 0 && temp < 180)
+        {
+            rb.AddRelativeTorque(-Vector3.forward * Time.deltaTime * 240 * temp / 180);
         }
 
         //Key input for accelerate and deaccelerate
@@ -62,8 +87,8 @@ public class ScriptEngi_Default : MonoBehaviour
         }
 
         //Drag
-        rb.AddTorque(-rb.angularVelocity * 45 * Time.deltaTime);
-        rb.AddForce(-rb.velocity * 12 * Time.deltaTime);
+        rb.AddTorque(-rb.angularVelocity * angleDrag * Time.deltaTime);
+        rb.AddForce(-rb.velocity * moveDrag * Time.deltaTime);
 
         //Increase lerprate back to 1f
         lerpRate += .4f * Time.deltaTime;
