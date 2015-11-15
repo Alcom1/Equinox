@@ -38,11 +38,11 @@ public class ScriptBody_Default : NetworkBehaviour
     }
 
     //Lose and display health
-    public void LoseHealth(Component bulletScript)
+    public void LoseHealth(Component bulletScript, int damage)
     {
         if (isLocalPlayerDerived)
         {
-            health--;
+            health -= damage;
             print("lost health!");
             if (health <= 0)
             {

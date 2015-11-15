@@ -8,6 +8,7 @@ public class BulletScript : MonoBehaviour
 {
     public float lifeTime;          //Duration of the bullet.
     public float speed;             //Speed of the bullet.
+    public int damage;              //Damage dealt by the bullet.
     public Rigidbody rb;            //Bullet rigidbody
     private bool isColliding;       //True while colliding. Prevents double collisions.
 
@@ -42,7 +43,7 @@ public class BulletScript : MonoBehaviour
             {
                 if (child.tag == "Body")
                 {
-                    child.GetComponent<ScriptBody_Default>().LoseHealth(this);
+                    child.GetComponent<ScriptBody_Default>().LoseHealth(this, damage);
                 }
             }
         }
