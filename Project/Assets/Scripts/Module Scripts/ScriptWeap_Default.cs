@@ -13,7 +13,7 @@ public class ScriptWeap_Default : NetworkBehaviour
     public GameObject projectile;               //Projectile prefab.
     public GameObject firingPoint;              //Firing point
     public float firingRate;                    //Firing rate
-    private float firingRateRecord;             //Firing rate returns to this after firing.
+    protected float firingRateRecord;             //Firing rate returns to this after firing.
 
     // Use this for initialization
     void Start()
