@@ -34,6 +34,12 @@ public class NetworkManagerCustom: NetworkManager
 		SetPort ();
 		NetworkManager.singleton.StartClient ();
 	}
+
+	//Button event to navigate to the instructions screen
+	public void LoadMenu (int level)
+	{
+		Application.LoadLevel (level);
+	}
 	
     //Disconnect from a game
 	public void Disconnect ()
@@ -48,7 +54,7 @@ public class NetworkManagerCustom: NetworkManager
         {
 			SetupLoginButtons ();
 		}
-        else
+        else 
         {
 			SetupChatSceneButtons ();
 		}
@@ -62,12 +68,13 @@ public class NetworkManagerCustom: NetworkManager
 		
 		GameObject.Find ("btnJoinGame").GetComponent<Button> ().onClick.RemoveAllListeners ();
 		GameObject.Find ("btnJoinGame").GetComponent<Button> ().onClick.AddListener (JoinGame);
+
 	}
 	
     //Set up chat.
 	void SetupChatSceneButtons ()
 	{
-		GameObject.Find ("btnDisconnect").GetComponent<Button> ().onClick.RemoveAllListeners ();
-		GameObject.Find ("btnDisconnect").GetComponent<Button> ().onClick.AddListener (NetworkManager.singleton.StopHost);
+		//GameObject.Find ("btnDisconnect").GetComponent<Button> ().onClick.RemoveAllListeners ();
+		//GameObject.Find ("btnDisconnect").GetComponent<Button> ().onClick.AddListener (NetworkManager.singleton.StopHost);
 	}
 }
