@@ -12,11 +12,13 @@ public class ScriptBody_Default : NetworkBehaviour
     }
 
     public Camera cam;                          //Camera of body
-
-	[SyncVar (hook="SyncHealth")]
-    public float health;                          //Current health
 	
+	private float health;
     private float STARTING_HEALTH;                //Starting health
+	public float StartingHealth
+	{
+		get { return STARTING_HEALTH; }
+	}
 
     //HUD elements
     private Text displayHealth;
@@ -36,75 +38,5 @@ public class ScriptBody_Default : NetworkBehaviour
         {
             cam.enabled = false;
         }
-    }
-
-    //Lose and display health
-    public void LoseHealth(Component bulletScript, float damage)
-    {
-        if (isLocalPlayerDerived)
-        {
-            health -= damage;
-            print("lost health!");
-            if (health <= 0)
-            {
-                //do something
-                this.transform.parent.gameObject.GetComponent<ScriptCore>().Spawn();
-                health = STARTING_HEALTH;
-            }
-            displayHealth.text = "Health: " + health;                //UI display
-            NetworkServer.Destroy(bulletScript.gameObject);
-			TransmitHealth(health);
-        }
-        /*else
-        {
-            health--;
-            print("lost health!");
-            if (health <= 0)
-            {
-                //do something
-                this.transform.parent.gameObject.GetComponent<ScriptCore>().Spawn();
-                health = STARTING_HEALTH;
-            }
-            GameObject.Find("TextHealthOpponent").GetComponent<Text>().text = "Opponent's Health: " + health;
-        }*/
-    }
-    //Server set new health
-    [Command]
-    void CmdSendNewHealthToServer(float newHealth)
-    {
-        health = newHealth;
-    }
-
-    //Transmit new health to server
-    [Client]
-    public void TransmitHealth(float newHealth)
-    {
-        //if (CheckIfNewHealth(aHealth, newHealth))
-        {
-            CmdSendNewHealthToServer(newHealth);
-        }
-    }
-
-    //Check if new health is different from old
-    bool CheckIfNewHealth(float health1, float health2)
-    {
-        if (health1 == health2)
-        {
-            return false;
-        }
-        return true;
-    }
-
-    //Sync healths
-    [Client]
-    void SyncHealth(float newHealth)
-    {
-		health = newHealth;
-		print(isLocalPlayerDerived);
-		print(health);
-		if (!isLocalPlayerDerived)
-        {
-			GameObject.Find("TextHealthOpponent").GetComponent<Text>().text = "Opponent's Health: " + health;
-		}
     }
 }
