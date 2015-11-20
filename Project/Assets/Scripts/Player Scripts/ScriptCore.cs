@@ -178,6 +178,8 @@ public class ScriptCore : NetworkBehaviour
             position,
             rotation);
 
+        print(this.netId);
+
         NetworkServer.Spawn(bullet);
     }
     
