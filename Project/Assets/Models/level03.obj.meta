@@ -38,7 +38,7 @@ ModelImporter:
     4300008: Middle_Pillar_Middle_Pillar_Top
     4300010: pasted__polySurface13_pasted__Pillars_group_Level01:Base_Pillars
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -93,8 +93,10 @@ ModelImporter:
     legStretch: .0500000007
     feetSpacing: 0
     rootMotionBoneName: 
+    hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 0
+  humanoidOversampling: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
