@@ -8,13 +8,18 @@ using UnityEngine.EventSystems;
 
 public class NetworkManagerCustom: NetworkManager
 {
-	//get input from text input fields
-	void SetIPAddress ()
-	{
-		NetworkManager.singleton.networkAddress = "127.0.0.1";
-	}
-	
-	void SetPort ()
+    //get input from text input fields
+    void SetIPAddress()
+    {
+        string ipAddress = GameObject.Find("txtIP").transform.FindChild("Text").GetComponent<Text>().text;
+        NetworkManager.singleton.networkAddress = "127.0.0.1";  //ipAddress;
+        if(ipAddress != "")
+            NetworkManager.singleton.networkAddress = ipAddress;
+
+        print(NetworkManager.singleton.networkAddress);
+    }
+
+    void SetPort ()
 	{
 		NetworkManager.singleton.networkPort = 11446;
 	}
