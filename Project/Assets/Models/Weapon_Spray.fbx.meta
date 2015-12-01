@@ -1,68 +1,46 @@
 fileFormatVersion: 2
-guid: 986852c805d5942cca0ee490a39cb324
-timeCreated: 1448938338
+guid: e83940467f1d14736a56ef86210ac79b
+timeCreated: 1449010881
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: group4
-    100002: pasted__group1
-    100004: pasted__group2
-    100006: pasted__pCube1
-    100008: pasted__polySurface1
-    100010: pasted__polySurface2
-    100012: pasted__polySurface3
-    100014: pasted__transform1
-    100016: pasted__transform2
-    100018: pasted__transform3
-    100020: pasted__transform4
-    100022: pCube13
-    100024: pCube13 1
-    100026: pCube14
-    100028: pCube14 1
-    100030: pPipe3
-    100032: pPipe4
-    100034: tubes1
-    100036: tubes2
-    100038: //RootNode
-    400000: group4
-    400002: pasted__group1
-    400004: pasted__group2
-    400006: pasted__pCube1
-    400008: pasted__polySurface1
-    400010: pasted__polySurface2
-    400012: pasted__polySurface3
-    400014: pasted__transform1
-    400016: pasted__transform2
-    400018: pasted__transform3
-    400020: pasted__transform4
-    400022: pCube13
-    400024: pCube13 1
-    400026: pCube14
-    400028: pCube14 1
-    400030: pPipe3
-    400032: pPipe4
-    400034: tubes1
-    400036: tubes2
-    400038: //RootNode
+    100000: pCube13
+    100002: pCube13 1
+    100004: pCube14
+    100006: pCube14 1
+    100008: sprayer1
+    100010: sprayer2
+    100012: tubes1
+    100014: tubes2
+    100016: //RootNode
+    400000: pCube13
+    400002: pCube13 1
+    400004: pCube14
+    400006: pCube14 1
+    400008: sprayer1
+    400010: sprayer2
+    400012: tubes1
+    400014: tubes2
+    400016: //RootNode
     2300000: pCube13
     2300002: pCube13 1
     2300004: pCube14
     2300006: pCube14 1
-    2300008: pPipe3
-    2300010: pPipe4
+    2300008: sprayer1
+    2300010: sprayer2
     3300000: pCube13
     3300002: pCube13 1
     3300004: pCube14
     3300006: pCube14 1
-    3300008: pPipe3
-    3300010: pPipe4
-    4300000: pCube13
-    4300002: pCube14
+    3300008: sprayer1
+    3300010: sprayer2
+    4300000: pCube14
+    4300002: pCube13
     4300004: pCube14
     4300006: pCube13
-    4300008: pPipe3
-    4300010: pPipe4
+    4300008: sprayer1
+    4300010: sprayer2
     7400000: Idle
     7400002: Action
     9500000: //RootNode
@@ -112,31 +90,9 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: group4
+      - path: sprayer1
         weight: 1
-      - path: group4/pPipe4
-        weight: 1
-      - path: pasted__group2
-        weight: 1
-      - path: pasted__pCube1
-        weight: 1
-      - path: pasted__pCube1/pasted__group1
-        weight: 1
-      - path: pasted__pCube1/pasted__group1/pasted__polySurface3
-        weight: 1
-      - path: pasted__pCube1/pasted__group1/pasted__polySurface3/pasted__transform2
-        weight: 1
-      - path: pasted__pCube1/pasted__polySurface1
-        weight: 1
-      - path: pasted__pCube1/pasted__polySurface1/pasted__transform4
-        weight: 1
-      - path: pasted__pCube1/pasted__polySurface2
-        weight: 1
-      - path: pasted__pCube1/pasted__polySurface2/pasted__transform3
-        weight: 1
-      - path: pasted__pCube1/pasted__transform1
-        weight: 1
-      - path: pPipe3
+      - path: sprayer2
         weight: 1
       - path: tubes1
         weight: 1
@@ -178,31 +134,9 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: group4
+      - path: sprayer1
         weight: 1
-      - path: group4/pPipe4
-        weight: 1
-      - path: pasted__group2
-        weight: 1
-      - path: pasted__pCube1
-        weight: 1
-      - path: pasted__pCube1/pasted__group1
-        weight: 1
-      - path: pasted__pCube1/pasted__group1/pasted__polySurface3
-        weight: 1
-      - path: pasted__pCube1/pasted__group1/pasted__polySurface3/pasted__transform2
-        weight: 1
-      - path: pasted__pCube1/pasted__polySurface1
-        weight: 1
-      - path: pasted__pCube1/pasted__polySurface1/pasted__transform4
-        weight: 1
-      - path: pasted__pCube1/pasted__polySurface2
-        weight: 1
-      - path: pasted__pCube1/pasted__polySurface2/pasted__transform3
-        weight: 1
-      - path: pasted__pCube1/pasted__transform1
-        weight: 1
-      - path: pPipe3
+      - path: sprayer2
         weight: 1
       - path: tubes1
         weight: 1
@@ -221,7 +155,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 100
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

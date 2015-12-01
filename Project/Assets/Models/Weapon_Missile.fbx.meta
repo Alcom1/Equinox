@@ -1,48 +1,40 @@
 fileFormatVersion: 2
-guid: 8a3de51b2389e4be69b83ab2b6d26a7a
-timeCreated: 1448938338
+guid: 3861602452e95451c898ff0752130585
+timeCreated: 1449010528
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: group1
-    100002: pasted__group1
-    100004: pasted__group2
-    100006: pasted__pCube1
-    100008: pasted__pCube16
-    100010: pasted__pCube16 1
-    100012: pasted__polySurface3
-    100014: pasted__transform2
-    100016: tube1
-    100018: tube2
-    100020: tube3
-    100022: tube4
-    100024: //RootNode
-    400000: group1
-    400002: pasted__group1
-    400004: pasted__group2
-    400006: pasted__pCube1
-    400008: pasted__pCube16
-    400010: pasted__pCube16 1
-    400012: pasted__polySurface3
-    400014: pasted__transform2
-    400016: tube1
-    400018: tube2
-    400020: tube3
-    400022: tube4
-    400024: //RootNode
-    2300000: pasted__pCube16
-    2300002: pasted__pCube16 1
-    2300004: tube3
-    2300006: tube4
-    3300000: pasted__pCube16
-    3300002: pasted__pCube16 1
-    3300004: tube3
-    3300006: tube4
-    4300000: pasted__pCube16
-    4300002: pasted__pCube16
-    4300004: tube4
-    4300006: tube3
+    100000: polySurface1
+    100002: polySurface2
+    100004: transform2
+    100006: transform3
+    100008: tube1
+    100010: tube2
+    100012: tube3
+    100014: tube4
+    100016: //RootNode
+    400000: polySurface1
+    400002: polySurface2
+    400004: transform2
+    400006: transform3
+    400008: tube1
+    400010: tube2
+    400012: tube3
+    400014: tube4
+    400016: //RootNode
+    2300000: polySurface1
+    2300002: polySurface2
+    2300004: tube2
+    2300006: tube3
+    3300000: polySurface1
+    3300002: polySurface2
+    3300004: tube2
+    3300006: tube3
+    4300000: tube2
+    4300002: polySurface2
+    4300004: tube3
+    4300006: polySurface1
     7400000: Idle
     7400002: Action
     9500000: //RootNode
@@ -92,29 +84,21 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: pasted__group2
-        weight: 1
-      - path: pasted__pCube1
-        weight: 1
-      - path: pasted__pCube1/pasted__group1
-        weight: 1
-      - path: pasted__pCube1/pasted__group1/pasted__polySurface3
-        weight: 1
-      - path: pasted__pCube1/pasted__group1/pasted__polySurface3/pasted__transform2
-        weight: 1
       - path: tube1
         weight: 1
-      - path: tube1/pasted__pCube16
+      - path: tube1/polySurface1
+        weight: 1
+      - path: tube1/transform2
         weight: 1
       - path: tube2
-        weight: 1
-      - path: tube2/group1
-        weight: 1
-      - path: tube2/group1/pasted__pCube16 1
         weight: 1
       - path: tube3
         weight: 1
       - path: tube4
+        weight: 1
+      - path: tube4/polySurface2
+        weight: 1
+      - path: tube4/transform3
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
@@ -144,36 +128,28 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: pasted__group2
-        weight: 1
-      - path: pasted__pCube1
-        weight: 1
-      - path: pasted__pCube1/pasted__group1
-        weight: 1
-      - path: pasted__pCube1/pasted__group1/pasted__polySurface3
-        weight: 1
-      - path: pasted__pCube1/pasted__group1/pasted__polySurface3/pasted__transform2
-        weight: 1
       - path: tube1
         weight: 1
-      - path: tube1/pasted__pCube16
+      - path: tube1/polySurface1
+        weight: 1
+      - path: tube1/transform2
         weight: 1
       - path: tube2
-        weight: 1
-      - path: tube2/group1
-        weight: 1
-      - path: tube2/group1/pasted__pCube16 1
         weight: 1
       - path: tube3
         weight: 1
       - path: tube4
+        weight: 1
+      - path: tube4/polySurface2
+        weight: 1
+      - path: tube4/transform3
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 100
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

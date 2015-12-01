@@ -1,54 +1,38 @@
 fileFormatVersion: 2
-guid: a4e5d50050b1a42b2a8793428fdb5b99
-timeCreated: 1448938338
+guid: 9ed262e3bf97b400d89bb6f6f0fa6ea0
+timeCreated: 1449009614
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: engine1
-    100002: engine2
-    100004: Engine_Speed_Boost
-    100006: tip
-    100008: tip 1
-    100010: tipGroup
-    100012: tipGroup1
-    100014: tipGroup2
-    100016: transform1
-    100018: //RootNode
-    100020: wing
-    100022: wing1
-    100024: wing2
-    400000: engine1
-    400002: engine2
-    400004: Engine_Speed_Boost
-    400006: tip
-    400008: tip 1
-    400010: tipGroup
-    400012: tipGroup1
-    400014: tipGroup2
-    400016: transform1
-    400018: //RootNode
-    400020: wing
-    400022: wing1
-    400024: wing2
-    2300000: engine1
-    2300002: engine2
-    2300004: tip
-    2300006: tip 1
-    2300008: wing
-    2300010: wing1
-    3300000: engine1
-    3300002: engine2
-    3300004: tip
-    3300006: tip 1
-    3300008: wing
-    3300010: wing1
-    4300000: engine2
-    4300002: engine1
-    4300004: wing
+    100000: tip
+    100002: tip 1
+    100004: tipGroup
+    100006: tipGroup1
+    100008: transform1
+    100010: //RootNode
+    100012: wing
+    100014: wing1
+    400000: tip
+    400002: tip 1
+    400004: tipGroup
+    400006: tipGroup1
+    400008: transform1
+    400010: //RootNode
+    400012: wing
+    400014: wing1
+    2300000: tip
+    2300002: tip 1
+    2300004: wing
+    2300006: wing1
+    3300000: tip
+    3300002: tip 1
+    3300004: wing
+    3300006: wing1
+    4300000: wing
+    4300002: tip
+    4300004: wing1
     4300006: tip
-    4300008: wing1
-    4300010: tip
     7400000: Idle
     7400002: Action
     9500000: //RootNode
@@ -98,29 +82,19 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: Engine_Speed_Boost
-        weight: 1
-      - path: Engine_Speed_Boost/engine1
-        weight: 1
-      - path: Engine_Speed_Boost/engine2
-        weight: 1
       - path: tipGroup
         weight: 1
       - path: tipGroup/tip
         weight: 1
-      - path: tipGroup2
+      - path: tipGroup1
         weight: 1
-      - path: tipGroup2/tipGroup1
-        weight: 1
-      - path: tipGroup2/tipGroup1/tip 1
+      - path: tipGroup1/tip 1
         weight: 1
       - path: transform1
         weight: 1
       - path: wing
         weight: 1
-      - path: wing2
-        weight: 1
-      - path: wing2/wing1
+      - path: wing1
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
@@ -150,36 +124,26 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: Engine_Speed_Boost
-        weight: 1
-      - path: Engine_Speed_Boost/engine1
-        weight: 1
-      - path: Engine_Speed_Boost/engine2
-        weight: 1
       - path: tipGroup
         weight: 1
       - path: tipGroup/tip
         weight: 1
-      - path: tipGroup2
+      - path: tipGroup1
         weight: 1
-      - path: tipGroup2/tipGroup1
-        weight: 1
-      - path: tipGroup2/tipGroup1/tip 1
+      - path: tipGroup1/tip 1
         weight: 1
       - path: transform1
         weight: 1
       - path: wing
         weight: 1
-      - path: wing2
-        weight: 1
-      - path: wing2/wing1
+      - path: wing1
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 100
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
