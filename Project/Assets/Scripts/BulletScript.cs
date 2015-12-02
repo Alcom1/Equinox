@@ -51,7 +51,7 @@ public class BulletScript : MonoBehaviour
 	            }
 			}
         }
-        else
+		else if(other.tag != "Bullet")
         {
             NetworkServer.Destroy(this.gameObject);
         }
