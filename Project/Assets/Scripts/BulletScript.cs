@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class BulletScript : MonoBehaviour
 {
+	public string senderID;			//ID of the player who fired the bullet.
     public float lifeTime;          //Duration of the bullet.
     public float speed;             //Speed of the bullet.
     public int damage;              //Damage dealt by the bullet.
@@ -39,13 +40,16 @@ public class BulletScript : MonoBehaviour
             other.tag == "Engi" ||
             other.tag == "Weap")
         {
-            foreach (Transform child in other.transform.parent)
-            {
-                if (child.tag == "Body")
-                {
-                    child.GetComponent<ScriptBody_Default>().LoseHealth(this, damage);
-                }
-            }
+			if(other.transform.parent.GetComponent<ScriptCore>().netId.ToString() != senderID)
+			{
+	            foreach (Transform child in other.transform.parent)
+	            {
+	                if (child.tag == "Body")
+	                {
+	                    child.GetComponent<ScriptBody_Default>().LoseHealth(this, damage);
+	                }
+	            }
+			}
         }
         else
         {

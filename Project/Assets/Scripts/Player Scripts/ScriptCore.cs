@@ -178,7 +178,7 @@ public class ScriptCore : NetworkBehaviour
             position,
             rotation);
 
-        print(this.netId);
+		bullet.GetComponent<BulletScript>().senderID = this.netId.ToString();
 
         NetworkServer.Spawn(bullet);
     }
