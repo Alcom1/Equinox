@@ -28,8 +28,6 @@ public class ScriptBody_Default : NetworkBehaviour
     {
         //Health and health display
         STARTING_HEALTH = health;
-        displayHealth = GameObject.Find("TextHealth").GetComponent<Text>();
-        displayHealth.text = "Health: " + health;
     }
 
     public void CheckCamera()

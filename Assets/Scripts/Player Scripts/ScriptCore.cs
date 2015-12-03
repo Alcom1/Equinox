@@ -110,7 +110,11 @@ public class ScriptCore : NetworkBehaviour
         newBody.GetComponent<ScriptBody_Default>().CheckCamera();                           //Disable camera if new body is not local.
         newBody.transform.parent = this.transform;                                          //Set new module as child of player core.
 		maxHealth = newBody.GetComponent<ScriptBody_Default>().StartingHealth;
-        TransmitBody(bodyResource);
+        if( health > maxHealth ) {
+			health = maxHealth;
+			TransmitHealth(health);
+		}
+		TransmitBody(bodyResource);
     }
 
     //Generates a new engi module
@@ -129,9 +133,6 @@ public class ScriptCore : NetworkBehaviour
             this.transform.position,
             this.transform.rotation);
 		ScriptEngi_Default engiScript = newEngi.GetComponent<ScriptEngi_Default>();
-        if(engiScript == null) {
-			engiScript = newEngi.GetComponent<ScriptEngi_Manuver>();
-        }
 		engiScript.rb = rb;//this.GetComponent<Rigidbody>();     //Assign player core rigidbody to new engine.
         newEngi.transform.parent = this.transform;                                          //Set new module as child of player core.
 
@@ -306,11 +307,20 @@ public class ScriptCore : NetworkBehaviour
                 Spawn();
                 health = maxHealth;
             }
-            GameObject.Find("TextHealth").GetComponent<Text>().text = "Health: " + health;                //UI display
             NetworkServer.Destroy(bulletScript.gameObject);
 			TransmitHealth(health);
         }
     }
+	public void GainHealth(float healing)
+    {
+        if (isLocalPlayer)
+        {
+            health += healing;
+            print("gained health!");
+			TransmitHealth(health);
+        }
+    }
+	
     //Server set new health
     [Command]
     void CmdSendNewHealthToServer(float newHealth)
@@ -324,6 +334,7 @@ public class ScriptCore : NetworkBehaviour
     {
         if (isLocalPlayer)// && CheckIfNewHealth(aHealth, newHealth))
         {
+            GameObject.Find("TextHealth").GetComponent<Text>().text = "Health: " + newHealth;                //UI display
             CmdSendNewHealthToServer(newHealth);
         }
     }
