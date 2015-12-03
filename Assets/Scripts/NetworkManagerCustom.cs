@@ -82,4 +82,16 @@ public class NetworkManagerCustom: NetworkManager
 		//GameObject.Find ("btnDisconnect").GetComponent<Button> ().onClick.RemoveAllListeners ();
 		//GameObject.Find ("btnDisconnect").GetComponent<Button> ().onClick.AddListener (NetworkManager.singleton.StopHost);
 	}
+	/* FOR PROVIDER SPAWNING ON DELAY
+	List<ProviderScript> providerScripts = new List<ProviderScript>();
+	private float maxCountdown = 5;
+	private float countdown = 0;
+	void AddScript(ProviderScript providerScript)
+	{
+		providerScripts.Add(providerScript);
+	}
+	void ActivateScript(ProviderScript providerScript)
+	{
+		providerScript.Spawn();
+	}*/
 }

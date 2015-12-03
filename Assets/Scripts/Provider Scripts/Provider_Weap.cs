@@ -2,13 +2,8 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-public class Provider_Weap : NetworkBehaviour
+public class Provider_Weap : ProviderScript
 {
-    public GameObject visualPrefab;
-    public string objectName;
-    private bool isColliding;       //True while colliding. Prevents double collisions.
-	private float maxCountdown = 5;
-	private float countdown = 0;
     // Use this for initialization
     void Start()
     {
@@ -18,18 +13,6 @@ public class Provider_Weap : NetworkBehaviour
             this.transform.rotation);
         visual.transform.localScale = new Vector3(.7f, .7f, .7f);
         visual.transform.parent = this.transform;
-    }
-
-    void Update()
-    {
-        isColliding = false;
-		if(!this.gameObject.activeSelf) {
-			countdown -= Time.deltaTime;
-			if(countdown <= 0) {
-				countdown = 999;
-				//Spawn();
-			}
-		}
     }
 
     void OnTriggerEnter(Collider other)
@@ -46,13 +29,9 @@ public class Provider_Weap : NetworkBehaviour
         {
             other.transform.parent.GetComponent<ScriptCore>().weapResource = objectName;
             other.transform.parent.GetComponent<ScriptCore>().GenerateWeap(objectName);
-			countdown = maxCountdown;
-            this.gameObject.SetActive(false);
+            //GameObject.Find("NetManager").GetComponent<NetworkManagerCustom>().AddScript(this);
+            //this.gameObject.SetActive(false);
+			Spawn();
         }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        isColliding = false;
     }
 }

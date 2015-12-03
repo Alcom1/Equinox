@@ -2,14 +2,8 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-public class Provider_Engi : NetworkBehaviour
+public class Provider_Engi : ProviderScript
 {
-    public GameObject visualPrefab;
-    public string objectName;
-    private bool isColliding;       //True while colliding. Prevents double collisions.
-	private float maxCountdown = 5;
-	private float countdown = 0;
-
     // Use this for initialization
     void Start()
     {
@@ -20,18 +14,6 @@ public class Provider_Engi : NetworkBehaviour
         visual.transform.localScale = new Vector3(2.4f, 2.4f, 2.4f);
         visual.transform.Translate(new Vector3(0, 0, 2.8f));
         visual.transform.parent = this.transform;
-    }
-
-    void Update()
-    {
-        isColliding = false;
-		if(!this.gameObject.activeSelf) {
-			countdown -= Time.deltaTime;
-			if(countdown <= 0) {
-				countdown = 999;
-				//Spawn();
-			}
-		}
     }
 
     void OnTriggerEnter(Collider other)
@@ -48,12 +30,9 @@ public class Provider_Engi : NetworkBehaviour
         {
             other.transform.parent.GetComponent<ScriptCore>().engiResource = objectName;
             other.transform.parent.GetComponent<ScriptCore>().GenerateEngi(objectName);
-            this.gameObject.SetActive(false);
+            //GameObject.Find("NetManager").GetComponent<NetworkManagerCustom>().AddScript(this);
+            //this.gameObject.SetActive(false);
+			Spawn();
         }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        isColliding = false;
     }
 }
