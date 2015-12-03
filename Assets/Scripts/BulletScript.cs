@@ -15,6 +15,17 @@ public class BulletScript : MonoBehaviour
 
 	void Start ()
 	{
+        float distance = float.MaxValue;
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach(GameObject player in players)
+        {
+            float newDistance = (player.transform.position - this.transform.position).magnitude;
+            if ((player.transform.position - this.transform.position).magnitude < distance)
+            {
+                distance = (player.transform.position - this.transform.position).magnitude;
+                senderID = player.GetComponent<ScriptCore>().netId.ToString();
+            }
+        }
         rb.velocity = transform.TransformDirection(Vector3.forward * speed);
     }
 
