@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class ScriptBody_Shield : ScriptBody_Default
 {
@@ -25,6 +26,8 @@ public class ScriptBody_Shield : ScriptBody_Default
 			}
 			
 			shielding -= Time.deltaTime;
+			//sync shield time
+			
 			timeLeft -= cooldown;
 			
 			if( timeLeft <= 0 )
@@ -34,7 +37,7 @@ public class ScriptBody_Shield : ScriptBody_Default
 		}
 	}
 	
-	public override void LoseHealth(Component bulletScript, float damage)
+	public void LoseHealth(Component bulletScript, float damage)
     {
         if (isLocalPlayerDerived && shielding <= 0)
         {

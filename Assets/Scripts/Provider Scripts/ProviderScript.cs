@@ -13,7 +13,6 @@ public class ProviderScript : NetworkBehaviour
         isColliding = false;
     }
 
-	[Server]
 	public void Spawn() {
 		GameObject[] providers = GameObject.FindGameObjectsWithTag("Provider");
 
@@ -31,7 +30,7 @@ public class ProviderScript : NetworkBehaviour
 						open = false;
 						//remove the spawn from the array for efficiency
 						
-						spawn = spawns[(int)(Random.value*(spawns.Length-.00001))];
+						spawn = spawns[(int)(Random.Range(0,spawns.Length-.00001f))];
 						break;
 					}
 				}
@@ -45,10 +44,34 @@ public class ProviderScript : NetworkBehaviour
             this.transform.position = spawns[0].transform.position;
             this.transform.rotation = spawns[0].transform.rotation;
         }
+		//sync position
+		TransmitPosition();
 	}
 
     void OnTriggerExit(Collider other)
     {
         isColliding = false;
     }
+	
+	//Server set position
+	[Command]
+	void CmdSendPositionToServer (Vector3 pos)
+	{
+		//runs on server, we call on client
+		transform.position = pos;
+	}
+	
+	[Client]
+	void TransmitPosition ()
+	{
+		// Send a command to the server to update provider position
+		CmdSendPositionToServer (transform.position);
+	}
+
+	//Sync position
+	[Client]
+	void SyncPositionValues (Vector3 latestPos)
+	{
+		transform.position = latestPos;
+	}
 }

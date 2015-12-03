@@ -31,7 +31,9 @@ public class Provider_Weap : ProviderScript
             other.transform.parent.GetComponent<ScriptCore>().GenerateWeap(objectName);
             //GameObject.Find("NetManager").GetComponent<NetworkManagerCustom>().AddScript(this);
             //this.gameObject.SetActive(false);
-			Spawn();
+			if(other.transform.parent.GetComponent<ScriptCore>().isLocalPlayer) {
+				Spawn();
+			}
         }
     }
 }

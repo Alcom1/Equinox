@@ -32,7 +32,9 @@ public class Provider_Engi : ProviderScript
             other.transform.parent.GetComponent<ScriptCore>().GenerateEngi(objectName);
             //GameObject.Find("NetManager").GetComponent<NetworkManagerCustom>().AddScript(this);
             //this.gameObject.SetActive(false);
-			Spawn();
+			if(other.transform.parent.GetComponent<ScriptCore>().isLocalPlayer) {
+				Spawn();
+			}
         }
     }
 }
