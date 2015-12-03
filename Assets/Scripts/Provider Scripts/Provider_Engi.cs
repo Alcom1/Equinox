@@ -7,6 +7,8 @@ public class Provider_Engi : NetworkBehaviour
     public GameObject visualPrefab;
     public string objectName;
     private bool isColliding;       //True while colliding. Prevents double collisions.
+	private float maxCountdown = 5;
+	private float countdown = 0;
 
     // Use this for initialization
     void Start()
@@ -23,6 +25,13 @@ public class Provider_Engi : NetworkBehaviour
     void Update()
     {
         isColliding = false;
+		if(!this.gameObject.activeSelf) {
+			countdown -= Time.deltaTime;
+			if(countdown <= 0) {
+				countdown = 999;
+				//Spawn();
+			}
+		}
     }
 
     void OnTriggerEnter(Collider other)
@@ -39,6 +48,7 @@ public class Provider_Engi : NetworkBehaviour
         {
             other.transform.parent.GetComponent<ScriptCore>().engiResource = objectName;
             other.transform.parent.GetComponent<ScriptCore>().GenerateEngi(objectName);
+            this.gameObject.SetActive(false);
         }
     }
 

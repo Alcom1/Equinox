@@ -71,7 +71,7 @@ public class ScriptCore : NetworkBehaviour
                         newDistance = (player.transform.position - spawns[i].transform.position).magnitude;
                         if (newDistance > distance)
                         {
-                            distance = 0;
+                            distance = newDistance;
                             index = i;
                         }
                     }

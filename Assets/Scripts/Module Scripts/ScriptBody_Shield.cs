@@ -9,5 +9,5 @@ public class ScriptBody_Shield : ScriptBody_Default
 	private float duration = 1.5f;
 	private float shielding = 0;
 
-	//link shield activation to q/e
+	//link shield activation to Q
 }
