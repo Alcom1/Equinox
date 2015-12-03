@@ -52,7 +52,9 @@ public class BulletScript : MonoBehaviour
             other.tag == "Weap")
         {
             GameObject player = other.transform.parent.gameObject;
-			if (player.tag == "Player")
+			if (
+				player.tag == "Player" &&
+				player.GetComponent<ScriptCore>().netId.ToString() != senderID)
 			{
 				player.GetComponent<ScriptCore>().LoseHealth(this, damage);
 			}
