@@ -18,8 +18,7 @@ public class ScriptCore : NetworkBehaviour
 	
 	[SyncVar (hook="SyncHealth")]
     public float health;                          //Current health
-	
-	private float maxHealth;
+    private float maxHealth;
 
     private GameObject projectilePrefab;     //Projectile prefab derived from weapon.
 
@@ -92,11 +91,13 @@ public class ScriptCore : NetworkBehaviour
     //Generates a new body module
     public void GenerateBody(string _bodyResource)
     {
+		float health = 10;
         //Destroy old module.
         foreach (Transform child in transform)
         {
             if (child.tag == "Body")
             {
+				health = child.GetComponent<ScriptBody_Default>().health;
                 Destroy(child.gameObject);
             }
         }
@@ -112,9 +113,10 @@ public class ScriptCore : NetworkBehaviour
 		maxHealth = newBody.GetComponent<ScriptBody_Default>().StartingHealth;
         if( health > maxHealth ) {
 			health = maxHealth;
-			TransmitHealth(health);
 		}
+		newBody.GetComponent<ScriptBody_Default>().health = health;
 		TransmitBody(bodyResource);
+		TransmitHealth(health);
     }
 
     //Generates a new engi module
@@ -293,35 +295,19 @@ public class ScriptCore : NetworkBehaviour
         }
     }
 	
-	
-    //Lose and display health
-    public void LoseHealth(Component bulletScript, float damage)
+	//pass along to body script
+	public void LoseHealth(Component bulletScript, float damage)
     {
-        if (isLocalPlayer)
+		foreach (Transform child in transform)
         {
-            health -= damage;
-            print("lost health!");
-            if (health <= 0)
+            if (child.tag == "Body")
             {
-                //do something
-                Spawn();
-                health = maxHealth;
+				child.GetComponent<ScriptBody_Default>().LoseHealth(bulletScript,damage);
             }
-            NetworkServer.Destroy(bulletScript.gameObject);
-			TransmitHealth(health);
         }
-    }
-	public void GainHealth(float healing)
-    {
-        if (isLocalPlayer)
-        {
-            health += healing;
-            print("gained health!");
-			TransmitHealth(health);
-        }
-    }
+	}
 	
-    //Server set new health
+	    //Server set new health
     [Command]
     void CmdSendNewHealthToServer(float newHealth)
     {

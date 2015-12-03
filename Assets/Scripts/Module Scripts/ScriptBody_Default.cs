@@ -13,21 +13,23 @@ public class ScriptBody_Default : NetworkBehaviour
 
     public Camera cam;                          //Camera of body
 	
-	protected float health = 10;
-    protected float STARTING_HEALTH = 10;                //Starting health
+	public float health;
+	protected float STARTING_HEALTH = 10;               //Starting health
 	public float StartingHealth
 	{
 		get { return STARTING_HEALTH; }
 	}
 
+	protected ScriptCore parentCore;
     //HUD elements
     protected Text displayHealth;
 
     // Use this for initialization
     void Start()
     {
-        //Health and health display
-        STARTING_HEALTH = health;
+        //set parentCore to Player's ScriptCore
+		parentCore = this.gameObject.transform.parent.GetComponent<ScriptCore>();
+
     }
 
     public void CheckCamera()
@@ -35,6 +37,33 @@ public class ScriptBody_Default : NetworkBehaviour
         if(!isLocalPlayerDerived)
         {
             cam.enabled = false;
+        }
+    }
+	
+	 //Lose and display health
+    public void LoseHealth(Component bulletScript, float damage)
+    {
+        if (isLocalPlayerDerived)
+        {
+            health -= damage;
+            print("lost health!");
+            if (health <= 0)
+            {
+                //do something
+                parentCore.Spawn();
+                health = STARTING_HEALTH;
+            }
+            NetworkServer.Destroy(bulletScript.gameObject);
+			parentCore.TransmitHealth(health);
+        }
+    }
+	protected void GainHealth(float healing)
+    {
+        if (isLocalPlayerDerived)
+        {
+            health += healing;
+            print("gained health!");
+			parentCore.TransmitHealth(health);
         }
     }
 }
