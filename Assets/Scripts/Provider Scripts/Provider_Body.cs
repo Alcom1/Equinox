@@ -40,9 +40,11 @@ public class Provider_Body : NetworkBehaviour
         if (providers.Length > 1)
         {
 			GameObject[] spawns = GameObject.FindGameObjectsWithTag("ProvSpawn");
-			GameObject spawn = spawns[(int)(Random.value*(spawns.Length-.00001)];
+			GameObject spawn = spawns[(int)(Random.value*(spawns.Length-0.00001))];
+			
+			bool open;
 			do {
-				bool open = true;
+				open = true;
 				foreach (GameObject provider in providers)
 				{
 					if (provider != this.gameObject)
@@ -51,7 +53,7 @@ public class Provider_Body : NetworkBehaviour
 							open = false;
 							//remove the spawn from the array for efficiency
 							
-							spawn = spawns[(int)(Random.value*(spawns.Length-.00001)];
+							spawn = spawns[(int)(Random.value*(spawns.Length-.00001))];
 							break;
 						}
 					}
