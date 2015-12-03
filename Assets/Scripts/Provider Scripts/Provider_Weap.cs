@@ -7,7 +7,8 @@ public class Provider_Weap : NetworkBehaviour
     public GameObject visualPrefab;
     public string objectName;
     private bool isColliding;       //True while colliding. Prevents double collisions.
-
+	private float maxCountdown = 5;
+	private float countdown = 0;
     // Use this for initialization
     void Start()
     {
@@ -22,6 +23,13 @@ public class Provider_Weap : NetworkBehaviour
     void Update()
     {
         isColliding = false;
+		if(!this.gameObject.activeSelf) {
+			countdown -= Time.deltaTime;
+			if(countdown <= 0) {
+				countdown = 999;
+				//Spawn();
+			}
+		}
     }
 
     void OnTriggerEnter(Collider other)
@@ -38,6 +46,8 @@ public class Provider_Weap : NetworkBehaviour
         {
             other.transform.parent.GetComponent<ScriptCore>().weapResource = objectName;
             other.transform.parent.GetComponent<ScriptCore>().GenerateWeap(objectName);
+			countdown = maxCountdown;
+            this.gameObject.SetActive(false);
         }
     }
 

@@ -51,15 +51,10 @@ public class BulletScript : MonoBehaviour
             other.tag == "Engi" ||
             other.tag == "Weap")
         {
-			if(other.transform.parent.GetComponent<ScriptCore>().netId.ToString() != senderID)
+            GameObject player = other.transform.parent.gameObject;
+			if (player.tag == "Player")
 			{
-	            foreach (Transform child in other.transform.parent)
-	            {
-	                if (child.tag == "Body")
-	                {
-	                    child.GetComponent<ScriptBody_Default>().LoseHealth(this, damage);
-	                }
-	            }
+				player.GetComponent<ScriptCore>().LoseHealth(this, damage);
 			}
         }
 		else if(other.tag != "Bullet")

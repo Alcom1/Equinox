@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class ScriptCore : NetworkBehaviour
 {
@@ -14,6 +15,10 @@ public class ScriptCore : NetworkBehaviour
 
     [SyncVar(hook = "SyncWeap")]
     public string weapResource;
+	
+	[SyncVar (hook="SyncHealth")]
+    public float health;                          //Current health
+    private float maxHealth;
 
     private GameObject projectilePrefab;     //Projectile prefab derived from weapon.
 
@@ -66,7 +71,7 @@ public class ScriptCore : NetworkBehaviour
                         newDistance = (player.transform.position - spawns[i].transform.position).magnitude;
                         if (newDistance > distance)
                         {
-                            distance = 0;
+                            distance = newDistance;
                             index = i;
                         }
                     }
@@ -86,11 +91,13 @@ public class ScriptCore : NetworkBehaviour
     //Generates a new body module
     public void GenerateBody(string _bodyResource)
     {
+		float health = 10;
         //Destroy old module.
         foreach (Transform child in transform)
         {
             if (child.tag == "Body")
             {
+				health = child.GetComponent<ScriptBody_Default>().health;
                 Destroy(child.gameObject);
             }
         }
@@ -103,8 +110,13 @@ public class ScriptCore : NetworkBehaviour
         newBody.GetComponent<ScriptBody_Default>().IsLocalPlayerDerived = isLocalPlayer;    //Set local player status of new body.
         newBody.GetComponent<ScriptBody_Default>().CheckCamera();                           //Disable camera if new body is not local.
         newBody.transform.parent = this.transform;                                          //Set new module as child of player core.
-
-        TransmitBody(bodyResource);
+		maxHealth = newBody.GetComponent<ScriptBody_Default>().StartingHealth;
+        if( health > maxHealth ) {
+			health = maxHealth;
+		}
+		newBody.GetComponent<ScriptBody_Default>().health = health;
+		TransmitBody(bodyResource);
+		TransmitHealth(health);
     }
 
     //Generates a new engi module
@@ -122,7 +134,8 @@ public class ScriptCore : NetworkBehaviour
             Resources.Load("Modules/" + _engiResource, typeof(GameObject)),
             this.transform.position,
             this.transform.rotation);
-        newEngi.GetComponent<ScriptEngi_Default>().rb = rb;//this.GetComponent<Rigidbody>();     //Assign player core rigidbody to new engine.
+		ScriptEngi_Default engiScript = newEngi.GetComponent<ScriptEngi_Default>();
+		engiScript.rb = rb;//this.GetComponent<Rigidbody>();     //Assign player core rigidbody to new engine.
         newEngi.transform.parent = this.transform;                                          //Set new module as child of player core.
 
         TransmitEngi(engiResource);
@@ -280,5 +293,56 @@ public class ScriptCore : NetworkBehaviour
             GenerateWeap(weap);
             weapResource = weap;
         }
+    }
+	
+	//pass along to body script
+	public void LoseHealth(Component bulletScript, float damage)
+    {
+		foreach (Transform child in transform)
+        {
+            if (child.tag == "Body")
+            {
+				child.GetComponent<ScriptBody_Default>().LoseHealth(bulletScript,damage);
+            }
+        }
+	}
+	
+	    //Server set new health
+    [Command]
+    void CmdSendNewHealthToServer(float newHealth)
+    {
+        health = newHealth;
+    }
+
+    //Transmit new health to server
+    [Client]
+    public void TransmitHealth(float newHealth)
+    {
+        if (isLocalPlayer)// && CheckIfNewHealth(aHealth, newHealth))
+        {
+            GameObject.Find("TextHealth").GetComponent<Text>().text = "Health: " + newHealth;                //UI display
+            CmdSendNewHealthToServer(newHealth);
+        }
+    }
+
+    //Check if new health is different from old
+    bool CheckIfNewHealth(float health1, float health2)
+    {
+        if (health1 == health2)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    //Sync healths
+    [Client]
+    void SyncHealth(float newHealth)
+    {
+		health = newHealth;
+		if (!isLocalPlayer)
+        {
+			GameObject.Find("TextHealthOpponent").GetComponent<Text>().text = "Opponent's Health: " + health;
+		}
     }
 }
