@@ -128,7 +128,11 @@ public class ScriptCore : NetworkBehaviour
             Resources.Load("Modules/" + _engiResource, typeof(GameObject)),
             this.transform.position,
             this.transform.rotation);
-        newEngi.GetComponent<ScriptEngi_Default>().rb = rb;//this.GetComponent<Rigidbody>();     //Assign player core rigidbody to new engine.
+		ScriptEngi_Default engiScript = newEngi.GetComponent<ScriptEngi_Default>();
+        if(engiScript == null) {
+			engiScript = newEngi.GetComponent<ScriptEngi_Manuver>();
+        }
+		engiScript.rb = rb;//this.GetComponent<Rigidbody>();     //Assign player core rigidbody to new engine.
         newEngi.transform.parent = this.transform;                                          //Set new module as child of player core.
 
         TransmitEngi(engiResource);

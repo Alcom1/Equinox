@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ScriptBody_Default : NetworkBehaviour
 {
-    private bool isLocalPlayerDerived;           //True if the parent player is a local player.
+    protected bool isLocalPlayerDerived;           //True if the parent player is a local player.
     public bool IsLocalPlayerDerived
     {
         set { isLocalPlayerDerived = value; }
@@ -13,15 +13,15 @@ public class ScriptBody_Default : NetworkBehaviour
 
     public Camera cam;                          //Camera of body
 	
-	private float health;
-    private float STARTING_HEALTH;                //Starting health
+	protected float health = 10;
+    protected float STARTING_HEALTH = 10;                //Starting health
 	public float StartingHealth
 	{
 		get { return STARTING_HEALTH; }
 	}
 
     //HUD elements
-    private Text displayHealth;
+    protected Text displayHealth;
 
     // Use this for initialization
     void Start()
