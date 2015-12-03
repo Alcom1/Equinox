@@ -8,26 +8,28 @@ public class ScriptBody_Shield : ScriptBody_Default
 	private float timeLeft = 0;
 	private float duration = 1.5f;
 	private float shielding = 0;
-
-	//link shield activation to Q
-	/*
-	void KeyPressed()
-	{
-		//if Q clicked
-		shielding = duration;
-		timeLeft = cooldown;
-	}
-	*/
 	
 	void Update()
 	{
 		if( isLocalPlayerDerived )
 		{
+			//link shield activation to Q
+			if (Input.GetKey("Q") && timeLeft <= 0)
+			{
+				shielding = duration;
+				timeLeft = cooldown;
+			}
+			
+			if( shielding <= Time.deltaTime ) {
+				//shield fade animation
+			}
+			
 			shielding -= Time.deltaTime;
 			timeLeft -= cooldown;
+			
 			if( timeLeft <= 0 )
 			{
-				//make ability active
+				//display ability can be actived
 			}
 		}
 	}

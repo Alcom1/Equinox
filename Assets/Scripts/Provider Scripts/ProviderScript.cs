@@ -13,6 +13,7 @@ public class ProviderScript : NetworkBehaviour
         isColliding = false;
     }
 
+	[Server]
 	public void Spawn() {
 		GameObject[] providers = GameObject.FindGameObjectsWithTag("Provider");
 
@@ -26,15 +27,12 @@ public class ProviderScript : NetworkBehaviour
 				open = true;
 				foreach (GameObject provider in providers)
 				{
-					if (provider != this.gameObject)
-					{
-						if(provider.transform == spawn.transform) {
-							open = false;
-							//remove the spawn from the array for efficiency
-							
-							spawn = spawns[(int)(Random.value*(spawns.Length-.00001))];
-							break;
-						}
+					if(provider.transform == spawn.transform) {
+						open = false;
+						//remove the spawn from the array for efficiency
+						
+						spawn = spawns[(int)(Random.value*(spawns.Length-.00001))];
+						break;
 					}
 				}
 			} while(!open);
