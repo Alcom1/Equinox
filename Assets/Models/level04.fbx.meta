@@ -129,6 +129,9 @@ ModelImporter:
     100242: pasted__Pillars 1
     100244: pasted__polySurface13
     100246: pasted__polySurface13 1
+    100248: Level01:transform1
+    100250: Level01:transform2
+    100252: Level01:transform3
     400000: Level01:Level01:Base_Pillars
     400002: //RootNode
     400004: Middle_Pillar
@@ -253,6 +256,9 @@ ModelImporter:
     400242: pasted__Pillars 1
     400244: pasted__polySurface13
     400246: pasted__polySurface13 1
+    400248: Level01:transform1
+    400250: Level01:transform2
+    400252: Level01:transform3
     2300000: Level01:Level01:Base_Pillars
     2300002: Middle_Pillar_Bot
     2300004: Middle_Pillar_Middle
