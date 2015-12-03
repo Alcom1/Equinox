@@ -11,24 +11,269 @@ ModelImporter:
     100006: Middle_Pillar_Bot
     100008: Middle_Pillar_Middle
     100010: Middle_Pillar_Top
+    100012: group
+    100014: group1
+    100016: Level01:Arena
+    100018: Level01:Base_Pillars
+    100020: Level01:Level01:Arena
+    100022: Level01:Level01:group1
+    100024: Level01:Level01:Inner_Pillars
+    100026: Level01:Level01:Inner_Pillars1
+    100028: Level01:Level01:Level01:Level01:Inner_Pillars
+    100030: Level01:Level01:Level01:Level01:Inner_Pillars1
+    100032: Level01:Level01:Level01:Level01:polySurface80
+    100034: Level01:Level01:Level01:Level01:transform1
+    100036: Level01:Level01:Level01:Level01:transform10
+    100038: Level01:Level01:Level01:Level01:transform11
+    100040: Level01:Level01:Level01:Level01:transform12
+    100042: Level01:Level01:Level01:Level01:transform13
+    100044: Level01:Level01:Level01:Level01:transform14
+    100046: Level01:Level01:Level01:Level01:transform15
+    100048: Level01:Level01:Level01:Level01:transform16
+    100050: Level01:Level01:Level01:Level01:transform17
+    100052: Level01:Level01:Level01:Level01:transform18
+    100054: Level01:Level01:Level01:Level01:transform19
+    100056: Level01:Level01:Level01:Level01:transform2
+    100058: Level01:Level01:Level01:Level01:transform20
+    100060: Level01:Level01:Level01:Level01:transform21
+    100062: Level01:Level01:Level01:Level01:transform22
+    100064: Level01:Level01:Level01:Level01:transform23
+    100066: Level01:Level01:Level01:Level01:transform24
+    100068: Level01:Level01:Level01:Level01:transform25
+    100070: Level01:Level01:Level01:Level01:transform26
+    100072: Level01:Level01:Level01:Level01:transform27
+    100074: Level01:Level01:Level01:Level01:transform28
+    100076: Level01:Level01:Level01:Level01:transform29
+    100078: Level01:Level01:Level01:Level01:transform3
+    100080: Level01:Level01:Level01:Level01:transform30
+    100082: Level01:Level01:Level01:Level01:transform31
+    100084: Level01:Level01:Level01:Level01:transform32
+    100086: Level01:Level01:Level01:Level01:transform33
+    100088: Level01:Level01:Level01:Level01:transform34
+    100090: Level01:Level01:Level01:Level01:transform35
+    100092: Level01:Level01:Level01:Level01:transform36
+    100094: Level01:Level01:Level01:Level01:transform37
+    100096: Level01:Level01:Level01:Level01:transform38
+    100098: Level01:Level01:Level01:Level01:transform39
+    100100: Level01:Level01:Level01:Level01:transform4
+    100102: Level01:Level01:Level01:Level01:transform40
+    100104: Level01:Level01:Level01:Level01:transform41
+    100106: Level01:Level01:Level01:Level01:transform42
+    100108: Level01:Level01:Level01:Level01:transform43
+    100110: Level01:Level01:Level01:Level01:transform44
+    100112: Level01:Level01:Level01:Level01:transform45
+    100114: Level01:Level01:Level01:Level01:transform46
+    100116: Level01:Level01:Level01:Level01:transform47
+    100118: Level01:Level01:Level01:Level01:transform48
+    100120: Level01:Level01:Level01:Level01:transform49
+    100122: Level01:Level01:Level01:Level01:transform5
+    100124: Level01:Level01:Level01:Level01:transform50
+    100126: Level01:Level01:Level01:Level01:transform51
+    100128: Level01:Level01:Level01:Level01:transform6
+    100130: Level01:Level01:Level01:Level01:transform7
+    100132: Level01:Level01:Level01:Level01:transform8
+    100134: Level01:Level01:Level01:Level01:transform9
+    100136: Level01:Level01:polySurface32
+    100138: Level01:Level01:polySurface33
+    100140: Level01:Level01:polySurface34
+    100142: Level01:Level01:polySurface35
+    100144: Level01:Level01:polySurface36
+    100146: Level01:Level01:polySurface37
+    100148: Level01:Level01:polySurface38
+    100150: Level01:Level01:polySurface39
+    100152: Level01:Level01:polySurface40
+    100154: Level01:Level01:polySurface41
+    100156: Level01:Level01:polySurface42
+    100158: Level01:Level01:polySurface43
+    100160: Level01:Level01:polySurface44
+    100162: Level01:Level01:polySurface45
+    100164: Level01:Level01:polySurface46
+    100166: Level01:Level01:polySurface47
+    100168: Level01:Level01:polySurface48
+    100170: Level01:Level01:polySurface49
+    100172: Level01:Level01:polySurface50
+    100174: Level01:Level01:polySurface51
+    100176: Level01:Level01:polySurface52
+    100178: Level01:Level01:polySurface53
+    100180: Level01:Level01:polySurface54
+    100182: Level01:Level01:polySurface55
+    100184: Level01:Level01:polySurface56
+    100186: Level01:Level01:polySurface57
+    100188: Level01:Level01:polySurface58
+    100190: Level01:Level01:polySurface59
+    100192: Level01:Level01:polySurface60
+    100194: Level01:Level01:polySurface61
+    100196: Level01:Level01:polySurface62
+    100198: Level01:Level01:polySurface63
+    100200: Level01:Level01:polySurface64
+    100202: Level01:Level01:polySurface65
+    100204: Level01:Level01:polySurface66
+    100206: Level01:Level01:polySurface67
+    100208: Level01:Level01:polySurface68
+    100210: Level01:Level01:polySurface69
+    100212: Level01:Level01:polySurface70
+    100214: Level01:Level01:polySurface71
+    100216: Level01:Level01:polySurface72
+    100218: Level01:Level01:polySurface73
+    100220: Level01:Level01:polySurface74
+    100222: Level01:Level01:polySurface75
+    100224: Level01:Level01:polySurface76
+    100226: Level01:Level01:polySurface77
+    100228: Level01:Level01:polySurface78
+    100230: Level01:Level01:polySurface79
+    100232: Level01:Level01:polySurface80
+    100234: Level01:Level01:transform1
+    100236: Level01:Level01:transform2
+    100238: Level01:Level01:transform3
+    100240: pasted__Pillars
+    100242: pasted__Pillars 1
+    100244: pasted__polySurface13
+    100246: pasted__polySurface13 1
     400000: Level01:Level01:Base_Pillars
     400002: //RootNode
     400004: Middle_Pillar
     400006: Middle_Pillar_Bot
     400008: Middle_Pillar_Middle
     400010: Middle_Pillar_Top
+    400012: group
+    400014: group1
+    400016: Level01:Arena
+    400018: Level01:Base_Pillars
+    400020: Level01:Level01:Arena
+    400022: Level01:Level01:group1
+    400024: Level01:Level01:Inner_Pillars
+    400026: Level01:Level01:Inner_Pillars1
+    400028: Level01:Level01:Level01:Level01:Inner_Pillars
+    400030: Level01:Level01:Level01:Level01:Inner_Pillars1
+    400032: Level01:Level01:Level01:Level01:polySurface80
+    400034: Level01:Level01:Level01:Level01:transform1
+    400036: Level01:Level01:Level01:Level01:transform10
+    400038: Level01:Level01:Level01:Level01:transform11
+    400040: Level01:Level01:Level01:Level01:transform12
+    400042: Level01:Level01:Level01:Level01:transform13
+    400044: Level01:Level01:Level01:Level01:transform14
+    400046: Level01:Level01:Level01:Level01:transform15
+    400048: Level01:Level01:Level01:Level01:transform16
+    400050: Level01:Level01:Level01:Level01:transform17
+    400052: Level01:Level01:Level01:Level01:transform18
+    400054: Level01:Level01:Level01:Level01:transform19
+    400056: Level01:Level01:Level01:Level01:transform2
+    400058: Level01:Level01:Level01:Level01:transform20
+    400060: Level01:Level01:Level01:Level01:transform21
+    400062: Level01:Level01:Level01:Level01:transform22
+    400064: Level01:Level01:Level01:Level01:transform23
+    400066: Level01:Level01:Level01:Level01:transform24
+    400068: Level01:Level01:Level01:Level01:transform25
+    400070: Level01:Level01:Level01:Level01:transform26
+    400072: Level01:Level01:Level01:Level01:transform27
+    400074: Level01:Level01:Level01:Level01:transform28
+    400076: Level01:Level01:Level01:Level01:transform29
+    400078: Level01:Level01:Level01:Level01:transform3
+    400080: Level01:Level01:Level01:Level01:transform30
+    400082: Level01:Level01:Level01:Level01:transform31
+    400084: Level01:Level01:Level01:Level01:transform32
+    400086: Level01:Level01:Level01:Level01:transform33
+    400088: Level01:Level01:Level01:Level01:transform34
+    400090: Level01:Level01:Level01:Level01:transform35
+    400092: Level01:Level01:Level01:Level01:transform36
+    400094: Level01:Level01:Level01:Level01:transform37
+    400096: Level01:Level01:Level01:Level01:transform38
+    400098: Level01:Level01:Level01:Level01:transform39
+    400100: Level01:Level01:Level01:Level01:transform4
+    400102: Level01:Level01:Level01:Level01:transform40
+    400104: Level01:Level01:Level01:Level01:transform41
+    400106: Level01:Level01:Level01:Level01:transform42
+    400108: Level01:Level01:Level01:Level01:transform43
+    400110: Level01:Level01:Level01:Level01:transform44
+    400112: Level01:Level01:Level01:Level01:transform45
+    400114: Level01:Level01:Level01:Level01:transform46
+    400116: Level01:Level01:Level01:Level01:transform47
+    400118: Level01:Level01:Level01:Level01:transform48
+    400120: Level01:Level01:Level01:Level01:transform49
+    400122: Level01:Level01:Level01:Level01:transform5
+    400124: Level01:Level01:Level01:Level01:transform50
+    400126: Level01:Level01:Level01:Level01:transform51
+    400128: Level01:Level01:Level01:Level01:transform6
+    400130: Level01:Level01:Level01:Level01:transform7
+    400132: Level01:Level01:Level01:Level01:transform8
+    400134: Level01:Level01:Level01:Level01:transform9
+    400136: Level01:Level01:polySurface32
+    400138: Level01:Level01:polySurface33
+    400140: Level01:Level01:polySurface34
+    400142: Level01:Level01:polySurface35
+    400144: Level01:Level01:polySurface36
+    400146: Level01:Level01:polySurface37
+    400148: Level01:Level01:polySurface38
+    400150: Level01:Level01:polySurface39
+    400152: Level01:Level01:polySurface40
+    400154: Level01:Level01:polySurface41
+    400156: Level01:Level01:polySurface42
+    400158: Level01:Level01:polySurface43
+    400160: Level01:Level01:polySurface44
+    400162: Level01:Level01:polySurface45
+    400164: Level01:Level01:polySurface46
+    400166: Level01:Level01:polySurface47
+    400168: Level01:Level01:polySurface48
+    400170: Level01:Level01:polySurface49
+    400172: Level01:Level01:polySurface50
+    400174: Level01:Level01:polySurface51
+    400176: Level01:Level01:polySurface52
+    400178: Level01:Level01:polySurface53
+    400180: Level01:Level01:polySurface54
+    400182: Level01:Level01:polySurface55
+    400184: Level01:Level01:polySurface56
+    400186: Level01:Level01:polySurface57
+    400188: Level01:Level01:polySurface58
+    400190: Level01:Level01:polySurface59
+    400192: Level01:Level01:polySurface60
+    400194: Level01:Level01:polySurface61
+    400196: Level01:Level01:polySurface62
+    400198: Level01:Level01:polySurface63
+    400200: Level01:Level01:polySurface64
+    400202: Level01:Level01:polySurface65
+    400204: Level01:Level01:polySurface66
+    400206: Level01:Level01:polySurface67
+    400208: Level01:Level01:polySurface68
+    400210: Level01:Level01:polySurface69
+    400212: Level01:Level01:polySurface70
+    400214: Level01:Level01:polySurface71
+    400216: Level01:Level01:polySurface72
+    400218: Level01:Level01:polySurface73
+    400220: Level01:Level01:polySurface74
+    400222: Level01:Level01:polySurface75
+    400224: Level01:Level01:polySurface76
+    400226: Level01:Level01:polySurface77
+    400228: Level01:Level01:polySurface78
+    400230: Level01:Level01:polySurface79
+    400232: Level01:Level01:polySurface80
+    400234: Level01:Level01:transform1
+    400236: Level01:Level01:transform2
+    400238: Level01:Level01:transform3
+    400240: pasted__Pillars
+    400242: pasted__Pillars 1
+    400244: pasted__polySurface13
+    400246: pasted__polySurface13 1
     2300000: Level01:Level01:Base_Pillars
     2300002: Middle_Pillar_Bot
     2300004: Middle_Pillar_Middle
     2300006: Middle_Pillar_Top
+    2300008: Level01:Level01:Level01:Level01:Inner_Pillars1
+    2300010: pasted__polySurface13
+    2300012: pasted__polySurface13 1
     3300000: Level01:Level01:Base_Pillars
     3300002: Middle_Pillar_Bot
     3300004: Middle_Pillar_Middle
     3300006: Middle_Pillar_Top
+    3300008: Level01:Level01:Level01:Level01:Inner_Pillars1
+    3300010: pasted__polySurface13
+    3300012: pasted__polySurface13 1
     4300000: Middle_Pillar_Middle
     4300002: Middle_Pillar_Top
     4300004: Middle_Pillar_Bot
     4300006: Level01:Level01:Base_Pillars
+    4300008: pasted__polySurface13
+    4300010: pasted__polySurface13
+    4300012: Level01:Level01:Level01:Level01:Inner_Pillars1
     7400000: Action
     9500000: //RootNode
   materials:
