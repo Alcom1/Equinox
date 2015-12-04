@@ -16,7 +16,7 @@ public class ProviderScript : NetworkBehaviour
     void Update()
     {
         isColliding = false;
-		if() {
+		if(transform.position == new Vector3(0,0,0)) {
 			Spawn();
 		}
     }
