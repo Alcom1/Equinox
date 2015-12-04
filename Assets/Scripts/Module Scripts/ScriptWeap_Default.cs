@@ -11,7 +11,8 @@ public class ScriptWeap_Default : NetworkBehaviour
     }
 
     public GameObject projectile;               //Projectile prefab.
-    public GameObject firingPoint;              //Firing point
+    public GameObject[] firingPoints;              //Firing point
+    protected int firingPointIndex;
     public float firingRate;                    //Firing rate
     protected float firingRateRecord;             //Firing rate returns to this after firing.
 
@@ -19,18 +20,23 @@ public class ScriptWeap_Default : NetworkBehaviour
     void Start()
     {
         firingRateRecord = firingRate;
+        firingPointIndex = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
         //Firing
-        if (Input.GetKey("space") && firingRate <= 0 && isLocalPlayerDerived)
+        if (Input.GetMouseButton(0) && firingRate <= 0 && isLocalPlayerDerived)
         {
             transform.parent.GetComponent<ScriptCore>().Boop(
-                firingPoint.transform.position,
+                firingPoints[firingPointIndex].transform.position,
                 transform.rotation);
             firingRate = firingRateRecord;
+
+            firingPointIndex++;
+            if (firingPointIndex >= firingPoints.Length)
+                firingPointIndex = 0;
         }
         if (firingRate > 0)
         {

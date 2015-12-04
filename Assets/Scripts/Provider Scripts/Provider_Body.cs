@@ -12,7 +12,10 @@ public class Provider_Body : ProviderScript
             this.transform.position,
             this.transform.rotation);
         visual.transform.Translate(new Vector3(0, 0, -.15f));
-        visual.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+        visual.transform.localScale = new Vector3(
+            visual.transform.localScale.x * 1.2f,
+            visual.transform.localScale.y * 1.2f,
+            visual.transform.localScale.z * 1.2f);
         visual.transform.parent = this.transform;
     }
 

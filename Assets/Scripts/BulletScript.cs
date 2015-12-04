@@ -20,7 +20,7 @@ public class BulletScript : MonoBehaviour
         foreach(GameObject player in players)
         {
             float newDistance = (player.transform.position - this.transform.position).magnitude;
-            if ((player.transform.position - this.transform.position).magnitude < distance)
+            if (newDistance < distance)
             {
                 distance = (player.transform.position - this.transform.position).magnitude;
                 senderID = player.GetComponent<ScriptCore>().netId.ToString();

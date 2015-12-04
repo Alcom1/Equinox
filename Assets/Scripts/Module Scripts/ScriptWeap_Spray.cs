@@ -9,12 +9,16 @@ public class ScriptWeap_Spray : ScriptWeap_Default
     void Update()
     {
         //Firing
-        if (Input.GetKey("space") && firingRate <= 0 && isLocalPlayerDerived)
+        if (Input.GetMouseButton(0) && firingRate <= 0 && isLocalPlayerDerived)
         {
             transform.parent.GetComponent<ScriptCore>().Boop(
-                firingPoint.transform.position,
+                firingPoints[firingPointIndex].transform.position,
                 transform.rotation * GetRandomDirection(sprayAngle));
             firingRate = firingRateRecord;
+
+            firingPointIndex++;
+            if (firingPointIndex >= firingPoints.Length)
+                firingPointIndex = 0;
         }
         if (firingRate > 0)
         {
