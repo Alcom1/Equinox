@@ -34,10 +34,10 @@ public class ProviderScript : NetworkBehaviour
 				open = true;
 				foreach (GameObject provider in providers)
 				{
-					if(provider.transform == spawn.transform) {
+					if(provider.transform.position == spawn.transform.position) {
 						open = false;
-						//remove the spawn from the array for efficiency
-						
+
+                        //remove the spawn from the array for efficiency
 						spawn = spawns[(int)(Random.Range(0,spawns.Length-.00001f))];
 						break;
 					}
