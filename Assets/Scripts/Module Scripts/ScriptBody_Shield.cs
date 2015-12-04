@@ -14,6 +14,8 @@ public class ScriptBody_Shield : ScriptBody_Default
 	{
 		if( isLocalPlayerDerived )
 		{
+			RectTransform rectTransform = GameObject.Find("Body Cooldown Bar").GetComponent<RectTransform>();
+			
 			//link shield activation to Q
 			if (Input.GetKey(KeyCode.Q) && timeLeft <= 0)
 			{
@@ -29,12 +31,14 @@ public class ScriptBody_Shield : ScriptBody_Default
 				parentCore.shieldsUp = false;
 			}
 			
-			shielding -= Time.deltaTime;			
-			timeLeft -= cooldown;
+			shielding -= Time.deltaTime;
+			timeLeft -= Time.deltaTime;
+			rectTransform.sizeDelta = new Vector2(1800*(timeLeft/cooldown),rectTransform.sizeDelta.y);
 			
 			if( timeLeft <= 0 )
 			{
 				//display ability can be actived
+				rectTransform.sizeDelta = new Vector2(1800,rectTransform.sizeDelta.y);
 			}
 		}
 	}

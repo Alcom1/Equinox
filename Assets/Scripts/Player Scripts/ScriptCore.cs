@@ -18,7 +18,7 @@ public class ScriptCore : NetworkBehaviour
 	
 	[SyncVar (hook="SyncHealth")]
     public float health;                          //Current health
-    private float maxHealth;
+    public float maxHealth;
 	
 	[SyncVar]
 	public bool shieldsUp = false;
@@ -113,11 +113,18 @@ public class ScriptCore : NetworkBehaviour
         newBody.GetComponent<ScriptBody_Default>().IsLocalPlayerDerived = isLocalPlayer;    //Set local player status of new body.
         newBody.GetComponent<ScriptBody_Default>().CheckCamera();                           //Disable camera if new body is not local.
         newBody.transform.parent = this.transform;                                          //Set new module as child of player core.
+		
+		if(maxHealth == 8) {
+			health += 2;
+		}
 		maxHealth = newBody.GetComponent<ScriptBody_Default>().StartingHealth;
         if( health > maxHealth ) {
 			health = maxHealth;
 		}
 		newBody.GetComponent<ScriptBody_Default>().health = health;
+		
+		RectTransform rectTransform = GameObject.Find("Body Cooldown Bar").GetComponent<RectTransform>();
+		rectTransform.sizeDelta = new Vector2(1800,rectTransform.sizeDelta.y);
 		TransmitBody(bodyResource);
 		TransmitHealth(health);
     }

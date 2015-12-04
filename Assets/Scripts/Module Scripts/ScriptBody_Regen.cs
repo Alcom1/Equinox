@@ -14,6 +14,7 @@ public class ScriptBody_Regen : ScriptBody_Default
 		if(health > STARTING_HEALTH) {
 			health = STARTING_HEALTH;
 			parentCore.TransmitHealth(health);
+			parentCore.maxHealth = STARTING_HEALTH;
 		}
 	}
     
