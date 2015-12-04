@@ -25,6 +25,14 @@ public class ScriptEngi_Default : MonoBehaviour
     {
         //Lerp rate
         lerpRate = 1;
+
+        subStart();
+    }
+
+    //Sub-start for inheritance
+    public virtual void subStart()
+    {
+
     }
 
     // Update is called once per frame
@@ -131,6 +139,14 @@ public class ScriptEngi_Default : MonoBehaviour
         {
             rb.velocity = rb.velocity.normalized * maxSpeed * bounceMultiplier;
         }
+
+        subMoveManipulate();
+    }
+
+    //Sub-manipulate for inheritance
+    public virtual void subMoveManipulate()
+    {
+
     }
 
     //Sets lerping to zero to cause collision disorientation.
@@ -138,5 +154,13 @@ public class ScriptEngi_Default : MonoBehaviour
     {
         lerpRate = 0;
         rb.velocity *= bounceMultiplier;
+
+        subDisorient();
+    }
+
+    //Sub-disorient for inheritance
+    public virtual void subDisorient()
+    {
+
     }
 }
