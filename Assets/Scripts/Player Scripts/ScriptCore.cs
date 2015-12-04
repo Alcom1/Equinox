@@ -22,8 +22,14 @@ public class ScriptCore : NetworkBehaviour
 	
 	[SyncVar]
 	public bool shieldsUp = false;
+	
+	[SyncVar (hook="SyncScore")]
+	public int oppScore = 0;
 
     private GameObject projectilePrefab;     //Projectile prefab derived from weapon.
+	
+	public Sprite playerPointFilled;
+	public Sprite enemyPointFilled;
 
     // Use this for initialization
     void Start()
@@ -57,6 +63,11 @@ public class ScriptCore : NetworkBehaviour
     //Spawn or be at spawning position
     public void Spawn()
     {
+		//when you respawn, opp is 1 pt closer to winning
+		//need to figure out how to record own score (or update score of opp)
+		oppScore++;
+		UpdateScore();
+		
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
         if (players.Length > 1)
@@ -89,6 +100,24 @@ public class ScriptCore : NetworkBehaviour
             this.transform.position = spawns[0].transform.position;
             this.transform.rotation = spawns[0].transform.rotation;
         }
+    }
+	
+	public void UpdateScore() {
+		if(oppScore <= 1) {
+			return;
+		}
+		if(isLocalPlayer) {
+			GameObject.Find("Enemy Point Box "+(7-oppScore)).GetComponent<Image>().sprite = enemyPointFilled;
+		}
+		else {
+			GameObject.Find("Player Point Box "+oppScore).GetComponent<Image>().sprite = playerPointFilled;
+		}
+	}
+	[Client]
+    void SyncScore(int score)
+    {
+		oppScore = score;
+		UpdateScore();
     }
 
     //Generates a new body module

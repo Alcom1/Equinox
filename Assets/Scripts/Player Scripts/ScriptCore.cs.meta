@@ -1,10 +1,14 @@
 fileFormatVersion: 2
 guid: 6e1744e90aedc4945a99d6431a23f31f
-timeCreated: 1444637909
+timeCreated: 1449252937
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - rb: {instanceID: 0}
+  - playerPointFilled: {fileID: 21300000, guid: c7571c659f6224c9e9a41921c532ce56,
+      type: 3}
+  - enemyPointFilled: {fileID: 21300000, guid: 89b93a942dd2e47bf8c5a1d5c356da7d, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
