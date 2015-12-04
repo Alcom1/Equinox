@@ -4,6 +4,8 @@ using UnityEngine.Networking;
 
 public class Provider_Engi : ProviderScript
 {
+    public Vector3 specialTransform;
+
     // Use this for initialization
     void Start()
     {
@@ -13,6 +15,8 @@ public class Provider_Engi : ProviderScript
             this.transform.rotation);
         visual.transform.localScale = new Vector3(2.4f, 2.4f, 2.4f);
         visual.transform.Translate(new Vector3(0, 0, 2.8f));
+        visual.transform.Translate(specialTransform);
+        print(specialTransform);
         visual.transform.parent = this.transform;
     }
 
