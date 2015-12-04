@@ -8,9 +8,17 @@ public class ProviderScript : NetworkBehaviour
     public string objectName;
     protected bool isColliding;       //True while colliding. Prevents double collisions.
 
+	void Start()
+	{
+		Spawn();
+	}
+	
     void Update()
     {
         isColliding = false;
+		if() {
+			Spawn();
+		}
     }
 
 	public void Spawn() {

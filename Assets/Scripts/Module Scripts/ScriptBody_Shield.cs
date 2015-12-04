@@ -15,19 +15,21 @@ public class ScriptBody_Shield : ScriptBody_Default
 		if( isLocalPlayerDerived )
 		{
 			//link shield activation to Q
-			if (Input.GetKey("Q") && timeLeft <= 0)
+			if (Input.GetKey(KeyCode.Q) && timeLeft <= 0)
 			{
 				shielding = duration;
 				timeLeft = cooldown;
+				//sync enabled
+				parentCore.shieldsUp = true;
 			}
 			
 			if( shielding <= Time.deltaTime ) {
 				//shield fade animation
+				//sync disabled
+				parentCore.shieldsUp = false;
 			}
 			
-			shielding -= Time.deltaTime;
-			//sync shield time
-			
+			shielding -= Time.deltaTime;			
 			timeLeft -= cooldown;
 			
 			if( timeLeft <= 0 )

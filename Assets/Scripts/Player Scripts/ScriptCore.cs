@@ -19,6 +19,9 @@ public class ScriptCore : NetworkBehaviour
 	[SyncVar (hook="SyncHealth")]
     public float health;                          //Current health
     private float maxHealth;
+	
+	[SyncVar]
+	public bool shieldsUp = false;
 
     private GameObject projectilePrefab;     //Projectile prefab derived from weapon.
 

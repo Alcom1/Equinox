@@ -62,6 +62,14 @@ public class NetworkManagerCustom: NetworkManager
         else 
         {
 			SetupChatSceneButtons ();
+			/*GameObject[] providers = GameObject.FindGameObjectsWithTag("Provider");
+			Debug.Log(providers.Length);
+			int count = 0;
+			foreach(GameObject provider in providers) {
+				provider.GetComponent<ProviderScript>().Spawn();
+				print(count);
+				count++;
+			}*/
 		}
 	}
 	
@@ -82,6 +90,7 @@ public class NetworkManagerCustom: NetworkManager
 		//GameObject.Find ("btnDisconnect").GetComponent<Button> ().onClick.RemoveAllListeners ();
 		//GameObject.Find ("btnDisconnect").GetComponent<Button> ().onClick.AddListener (NetworkManager.singleton.StopHost);
 	}
+	
 	/* FOR PROVIDER SPAWNING ON DELAY
 	List<ProviderScript> providerScripts = new List<ProviderScript>();
 	private float maxCountdown = 5;
