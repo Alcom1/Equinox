@@ -10,6 +10,16 @@ public class ScriptBody_Shield : ScriptBody_Default
 	private float duration = 1.5f;
 	private float shielding = 0;
 	
+	void Start()
+	{
+		if (isLocalPlayerDerived)
+		{
+			MeshRenderer render = gameObject.GetComponentInChildren<MeshRenderer>();
+			render.enabled = false;
+		}
+		
+	}
+	
 	void Update()
 	{
 		if( isLocalPlayerDerived )

@@ -30,6 +30,12 @@ public class ScriptBody_Default : NetworkBehaviour
         //set parentCore to Player's ScriptCore
 		parentCore = this.gameObject.transform.parent.GetComponent<ScriptCore>();
 
+		if (isLocalPlayerDerived)
+		{
+			MeshRenderer render = gameObject.GetComponentInChildren<MeshRenderer>();
+			render.enabled = false;
+		}
+
     }
 
     public void CheckCamera()
