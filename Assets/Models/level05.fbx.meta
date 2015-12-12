@@ -1,24 +1,35 @@
 fileFormatVersion: 2
-guid: 44641b3c7353f4439a4e8da2ea406e05
-timeCreated: 1448938338
+guid: d14b36840d0d1417494aad7f2fc239f9
+timeCreated: 1449879502
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: engine1
-    100002: engine2
-    100004: //RootNode
-    400000: engine1
-    400002: engine2
-    400004: //RootNode
-    2300000: engine1
-    2300002: engine2
-    3300000: engine1
-    3300002: engine2
-    4300000: engine1
-    4300002: engine2
-    7400000: Idle
-    7400002: Action
+    100000: Level01:Level01:Level01:Level01:Arena
+    100002: //RootNode
+    100004: Middle_Pillar
+    100006: Middle_Pillar_Bot
+    100008: Middle_Pillar_Middle
+    100010: Middle_Pillar_Top
+    400000: Level01:Level01:Level01:Level01:Arena
+    400002: //RootNode
+    400004: Middle_Pillar
+    400006: Middle_Pillar_Bot
+    400008: Middle_Pillar_Middle
+    400010: Middle_Pillar_Top
+    2300000: Level01:Level01:Level01:Level01:Arena
+    2300002: Middle_Pillar_Bot
+    2300004: Middle_Pillar_Middle
+    2300006: Middle_Pillar_Top
+    3300000: Level01:Level01:Level01:Level01:Arena
+    3300002: Middle_Pillar_Bot
+    3300004: Middle_Pillar_Middle
+    3300006: Middle_Pillar_Top
+    4300000: Middle_Pillar_Middle
+    4300002: Middle_Pillar_Top
+    4300004: Middle_Pillar_Bot
+    4300006: Level01:Level01:Level01:Level01:Arena
+    7400000: Action
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -41,42 +52,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
-      takeName: Take 001
-      firstFrame: 1
-      lastFrame: 1
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: engine1
-        weight: 1
-      - path: engine2
-        weight: 1
-      maskType: 0
-      maskSource: {instanceID: 0}
-    - serializedVersion: 16
       name: Action
       takeName: Take 001
-      firstFrame: 2
-      lastFrame: 61
+      firstFrame: 1
+      lastFrame: 500
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -98,9 +77,15 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: engine1
+      - path: Level01:Level01:Level01:Level01:Arena
         weight: 1
-      - path: engine2
+      - path: Middle_Pillar
+        weight: 1
+      - path: Middle_Pillar/Middle_Pillar_Bot
+        weight: 1
+      - path: Middle_Pillar/Middle_Pillar_Middle
+        weight: 1
+      - path: Middle_Pillar/Middle_Pillar_Top
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
