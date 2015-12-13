@@ -114,7 +114,7 @@ public class ScriptCore : NetworkBehaviour
 			GameObject.Find("Player Point Box "+oppScore).GetComponent<Image>().sprite = playerPointFilled;
 		}
 		//check for end of game
-		Debug.Log(oppScore + ' || true = local ' + (!isLocalPlayer));
+		Debug.Log(oppScore + " || true = local " + (!isLocalPlayer));
 	}
 	[Client]
     void SyncScore(int score)
