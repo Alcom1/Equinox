@@ -20,7 +20,7 @@ public class ScriptCore : NetworkBehaviour
     public float health;                          //Current health
     public float maxHealth;
 	
-	[SyncVar]
+	[SyncVar (hook="SyncShield")]
 	public bool shieldsUp = false;
 	
 	[SyncVar (hook="SyncScore")]
@@ -37,6 +37,7 @@ public class ScriptCore : NetworkBehaviour
         //Disable collision forces on all non-local players. Collision physics should be client-side only.
         if (isLocalPlayer)
         {
+			GameObject.Find("Hit").SetActive(false);
             rb.isKinematic = false;
             UnityEngine.Cursor.visible = false;
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
@@ -337,6 +338,7 @@ public class ScriptCore : NetworkBehaviour
 	//pass along to body script
 	public void LoseHealth(Component bulletScript, float damage)
     {
+		GameObject.Find("Hit").SetActive(true);
 		foreach (Transform child in transform)
         {
             if (child.tag == "Body")
@@ -344,6 +346,8 @@ public class ScriptCore : NetworkBehaviour
 				child.GetComponent<ScriptBody_Default>().LoseHealth(bulletScript,damage);
             }
         }
+		
+		GameObject.Find("Hit").SetActive(false);
 	}
 	
 	    //Server set new health
@@ -382,6 +386,22 @@ public class ScriptCore : NetworkBehaviour
 		if (!isLocalPlayer)
         {
 			GameObject.Find("TextHealthOpponent").GetComponent<Text>().text = "Opponent's Health: " + health;
+		}
+    }
+	
+	//Sync shield
+    [Client]
+    void SyncShield(bool isUp)
+    {
+		shieldsUp = isUp;
+		if (!isLocalPlayer)
+        {
+			if(isUp) {
+				//activate shield display
+			}
+			else {
+				//deactivate shield display
+			}
 		}
     }
 }

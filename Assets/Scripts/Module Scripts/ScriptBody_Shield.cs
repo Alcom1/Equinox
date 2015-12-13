@@ -7,11 +7,12 @@ public class ScriptBody_Shield : ScriptBody_Default
 {
 	private float cooldown = 20;
 	private float timeLeft = 0;
-	private float duration = 1.5f;
+	private float duration = 3f;
 	private float shielding = 0;
 	
 	void Start()
 	{
+		parentCore = this.gameObject.transform.parent.GetComponent<ScriptCore>();
 		if (isLocalPlayerDerived)
 		{
 			MeshRenderer render = gameObject.GetComponentInChildren<MeshRenderer>();
@@ -29,16 +30,18 @@ public class ScriptBody_Shield : ScriptBody_Default
 			//link shield activation to Q
 			if (Input.GetKey(KeyCode.Q) && timeLeft <= 0)
 			{
+				Debug.Log("Shield Up");
 				shielding = duration;
 				timeLeft = cooldown;
 				//sync enabled
 				parentCore.shieldsUp = true;
 			}
 			
-			if( shielding <= Time.deltaTime ) {
+			if( shielding <= Time.deltaTime && parentCore.shieldsUp ) {
 				//shield fade animation
 				//sync disabled
 				parentCore.shieldsUp = false;
+				Debug.Log("Shield Down");
 			}
 			
 			shielding -= Time.deltaTime;
