@@ -18,12 +18,19 @@ public class ScriptEngi_Default : MonoBehaviour
     public float lerpMultiplier;                //Multiplier for velocity lerping.
     public float bounceMultiplier;              //Multiplier for bounce effect.
 
+    private Vector3 lerpDir;                    //Direction to move and lerp in.
     private float lerpRate;                     //Scale (0-1) of lerping rigidbody velocity to forward
+
+    public float bounceCut;
+    public float bounceRaise;
+    public float minBounceMultiplier;
+    private float maxBounceMultiplier;
 
     // Use this for initialization
     void Start()
     {
-        //Lerp rate
+        //Init stuff
+        lerpDir = transform.forward;
         lerpRate = 1;
 
         subStart();
@@ -32,7 +39,7 @@ public class ScriptEngi_Default : MonoBehaviour
     //Sub-start for inheritance
     public virtual void subStart()
     {
-
+        maxBounceMultiplier = bounceMultiplier;
     }
 
     // Update is called once per frame
@@ -109,9 +116,9 @@ public class ScriptEngi_Default : MonoBehaviour
     void moveThrust()
     {
         //Key input for accelerate and deaccelerate
-        if (Input.GetKey("w") && rb.velocity.magnitude < maxSpeed)
+        if ((Input.GetKey("w") || Input.GetKey("d") || Input.GetKey("a")) && rb.velocity.magnitude < maxSpeed)
         {
-            rb.AddForce(transform.forward * Time.deltaTime * accelRate);
+            rb.AddForce(lerpDir * Time.deltaTime * accelRate);
         }
         else if (Input.GetKey("s"))
         {
@@ -131,8 +138,29 @@ public class ScriptEngi_Default : MonoBehaviour
         if (lerpRate > 1)
             lerpRate = 1f;
 
-        //Lerp velocity to forward direction
-        rb.velocity = Vector3.Lerp(rb.velocity, transform.forward * rb.velocity.magnitude, lerpMultiplier * lerpRate);
+
+        //Lerp velocity
+        if (Input.GetKey("w") || Input.GetKey("d") || Input.GetKey("a"))
+        {
+            lerpDir = Vector3.zero;
+
+            if (Input.GetKey("w"))
+            {
+                lerpDir += transform.forward;
+            }
+            if (Input.GetKey("d"))
+            {
+                lerpDir += transform.right;
+            }
+            if (Input.GetKey("a"))
+            {
+                lerpDir += -transform.right;
+            }
+
+            lerpDir = lerpDir.normalized;
+        }
+
+        rb.velocity = Vector3.Lerp(rb.velocity, lerpDir * rb.velocity.magnitude, lerpMultiplier * lerpRate);
 
         //Limit velocity to max speed after a single bounce. Prevents chaining bounces to get ludicrous speed.
         if(rb.velocity.magnitude > maxSpeed * bounceMultiplier)
@@ -146,7 +174,10 @@ public class ScriptEngi_Default : MonoBehaviour
     //Sub-manipulate for inheritance
     public virtual void subMoveManipulate()
     {
+        bounceMultiplier += bounceRaise * Time.deltaTime;
 
+        if (bounceMultiplier > maxBounceMultiplier)
+            bounceMultiplier = maxBounceMultiplier;
     }
 
     //Sets lerping to zero to cause collision disorientation.
@@ -161,6 +192,9 @@ public class ScriptEngi_Default : MonoBehaviour
     //Sub-disorient for inheritance
     public virtual void subDisorient()
     {
+        bounceMultiplier *= bounceCut;
 
+        if (bounceMultiplier < minBounceMultiplier)
+            bounceMultiplier = minBounceMultiplier;
     }
 }

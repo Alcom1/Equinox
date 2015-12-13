@@ -16,6 +16,12 @@ public class ScriptBody_Regen : ScriptBody_Default
 			parentCore.TransmitHealth(health);
 			parentCore.maxHealth = STARTING_HEALTH;
 		}
+
+		if (isLocalPlayerDerived)
+		{
+			MeshRenderer render = gameObject.GetComponentInChildren<MeshRenderer>();
+			render.enabled = false;
+		}
 	}
     
 	void Update()
