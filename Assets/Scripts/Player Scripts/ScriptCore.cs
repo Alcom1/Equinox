@@ -34,6 +34,8 @@ public class ScriptCore : NetworkBehaviour
 	public Sprite loseMessage;
 	
 	private GameObject hit;
+	private float timeHoldingEscape = 0;
+	private float threshhold = 2;
 
     // Use this for initialization
     void Start()
@@ -66,6 +68,16 @@ public class ScriptCore : NetworkBehaviour
 		if(UnityEngine.Cursor.lockState != CursorLockMode.Locked) {
             UnityEngine.Cursor.visible = false;
 			UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+		}
+		
+		if (Input.GetKey(KeyCode.Escape)) {
+			timeHoldingEscape += Time.deltaTime;
+			if(timeHoldingEscape > threshhold) {
+				GameObject.Find("NetManager").GetComponent<NetworkManagerCustom>().Disconnect();
+			}
+		}
+		if (Input.GetKeyUp(KeyCode.Escape)) {
+			timeHoldingEscape = 0;
 		}
     }
 
