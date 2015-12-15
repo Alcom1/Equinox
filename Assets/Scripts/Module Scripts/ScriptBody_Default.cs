@@ -49,6 +49,7 @@ public class ScriptBody_Default : NetworkBehaviour
 	 //Lose and display health, return if died or not
     public bool LoseHealth(Component bulletScript, float damage)
     {
+		bool died = false;
         if (isLocalPlayerDerived)
         {
             health -= damage;
@@ -58,11 +59,12 @@ public class ScriptBody_Default : NetworkBehaviour
             {
                 //do something
                 health = STARTING_HEALTH;
-				return true;
+				died = true;
             }
+			
 			parentCore.TransmitHealth(health);
         }
-		return false;
+		return died;
     }
 	protected void GainHealth(float healing)
     {

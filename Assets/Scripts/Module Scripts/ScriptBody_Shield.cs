@@ -12,6 +12,7 @@ public class ScriptBody_Shield : ScriptBody_Default
 	
 	void Start()
 	{
+		STARTING_HEALTH = 10;
 		parentCore = this.gameObject.transform.parent.GetComponent<ScriptCore>();
 		if (isLocalPlayerDerived)
 		{
@@ -61,6 +62,7 @@ public class ScriptBody_Shield : ScriptBody_Default
 	
 	public bool LoseHealth(Component bulletScript, float damage)
     {
+		bool died = false;
         if (isLocalPlayerDerived && shielding <= 0)
         {
             health -= damage;
@@ -71,10 +73,11 @@ public class ScriptBody_Shield : ScriptBody_Default
                 //do something
                 parentCore.Spawn();
                 health = STARTING_HEALTH;
-				return true;
+				died = true;
             }
+			
 			parentCore.TransmitHealth(health);
         }
-		return false;
+		return died;
     }
 }

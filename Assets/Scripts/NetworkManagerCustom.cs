@@ -50,6 +50,9 @@ public class NetworkManagerCustom: NetworkManager
 	public void Disconnect ()
 	{
 		NetworkManager.singleton.StopHost ();
+		
+		UnityEngine.Cursor.visible = true;
+		UnityEngine.Cursor.lockState = CursorLockMode.None;
 	}
 	
 	//When a level loads, setup cooresponding UI buttons

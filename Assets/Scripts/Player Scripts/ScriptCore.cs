@@ -26,6 +26,9 @@ public class ScriptCore : NetworkBehaviour
 	[SyncVar (hook="SyncScore")]
 	public int oppScore = 0;
 
+	[SyncVar (hook="SyncExplosion")]
+	public Vector3 explosionLocation;
+	
     private GameObject projectilePrefab;     //Projectile prefab derived from weapon.
 	
 	public Sprite playerPointFilled;
@@ -180,10 +183,6 @@ public class ScriptCore : NetworkBehaviour
 		
 		if(maxHealth == 8) {
 			health += 2;
-		}
-		maxHealth = newBody.GetComponent<ScriptBody_Default>().StartingHealth;
-        if( health > maxHealth ) {
-			health = maxHealth;
 		}
 		newBody.GetComponent<ScriptBody_Default>().health = health;
 		
@@ -380,7 +379,7 @@ public class ScriptCore : NetworkBehaviour
 				bool died = child.GetComponent<ScriptBody_Default>().LoseHealth(bulletScript,damage);
 				
 				if( died ) {
-					CmdExplode(transform.position);
+					TransmitExplosion(transform.position);
 					Spawn();
 				}
             }
@@ -397,11 +396,26 @@ public class ScriptCore : NetworkBehaviour
 	}
 	
 	[Command]
-	void CmdExplode(Vector3 location) {
+	void CmdSendExplosionToServer(Vector3 location) {
 		print("Boom!");
+		explosionLocation = location;
+	}
+	[Client]
+    public void TransmitExplosion(Vector3 location)
+    {
+        if (isLocalPlayer)// && CheckIfNewHealth(aHealth, newHealth))
+        {
+            CmdSendExplosionToServer(location);
+        }
+    }
+	[Client]
+    void SyncExplosion(Vector3 location)
+    {
+		explosionLocation = location;
+		
 		GameObject instance = (GameObject)Instantiate(Resources.Load("Death Explosion"));
 		instance.transform.position = location;
-	}
+    }
 	
 	    //Server set new health
     [Command]
@@ -416,7 +430,14 @@ public class ScriptCore : NetworkBehaviour
     {
         if (isLocalPlayer)// && CheckIfNewHealth(aHealth, newHealth))
         {
-            GameObject.Find("TextHealth").GetComponent<Text>().text = "Health: " + newHealth;                //UI display
+            GameObject.Find("TextHealth").GetComponent<Text>().text = ""+newHealth;                //UI display
+			
+			RectTransform rectTransform = GameObject.Find("Health Bar").GetComponent<RectTransform>();
+			rectTransform.sizeDelta = new Vector2(180*newHealth,rectTransform.sizeDelta.y);
+			
+			rectTransform = GameObject.Find("Health Bar Fill").GetComponent<RectTransform>();
+			rectTransform.sizeDelta = new Vector2(180*newHealth,rectTransform.sizeDelta.y);
+			
             CmdSendNewHealthToServer(newHealth);
         }
     }
@@ -438,7 +459,12 @@ public class ScriptCore : NetworkBehaviour
 		health = newHealth;
 		if (!isLocalPlayer)
         {
-			GameObject.Find("TextHealthOpponent").GetComponent<Text>().text = "Opponent's Health: " + health;
+			GameObject.Find("TextHealthOpponent").GetComponent<Text>().text = ""+newHealth;
+			
+			RectTransform rectTransform = GameObject.Find("Enemy Health Bar").GetComponent<RectTransform>();
+			rectTransform.sizeDelta = new Vector2(180*newHealth,rectTransform.sizeDelta.y);
+			rectTransform = GameObject.Find("Enemy Health Bar Fill").GetComponent<RectTransform>();
+			rectTransform.sizeDelta = new Vector2(180*newHealth,rectTransform.sizeDelta.y);
 		}
     }
 	
