@@ -19,6 +19,7 @@ public class ScriptBody_Shield : ScriptBody_Default
 			render.enabled = false;
 		}
 		
+		GameObject.Find("Shield Ability").GetComponent<MeshRenderer>().enabled = false;
 	}
 	
 	void Update()
@@ -35,6 +36,7 @@ public class ScriptBody_Shield : ScriptBody_Default
 				timeLeft = cooldown;
 				//sync enabled
 				parentCore.shieldsUp = true;
+				GameObject.Find("Shield Ability").GetComponent<MeshRenderer>().enabled = true;
 			}
 			
 			if( shielding <= Time.deltaTime && parentCore.shieldsUp ) {
@@ -42,6 +44,7 @@ public class ScriptBody_Shield : ScriptBody_Default
 				//sync disabled
 				parentCore.shieldsUp = false;
 				Debug.Log("Shield Down");
+				GameObject.Find("Shield Ability").GetComponent<MeshRenderer>().enabled = false;
 			}
 			
 			shielding -= Time.deltaTime;

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class Provider_Weap : ProviderScript
 {
@@ -21,9 +22,6 @@ public class Provider_Weap : ProviderScript
             return;
 
         isColliding = true;
-		
-		//show what got picked up
-		//GameObject.Find("").GetComponent<Text>().text = description;
 
         if (
             other.tag == "Body" ||
@@ -36,6 +34,8 @@ public class Provider_Weap : ProviderScript
             //this.gameObject.SetActive(false);
 			if(other.transform.parent.GetComponent<ScriptCore>().isLocalPlayer) {
 				Spawn();
+				//show what got picked up
+				GameObject.Find("Pickup Text").GetComponent<Text>().text = "Last Pickup: "+description;
 			}
         }
     }

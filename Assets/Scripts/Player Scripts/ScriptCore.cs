@@ -62,7 +62,10 @@ public class ScriptCore : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-
+		if(UnityEngine.Cursor.lockState != CursorLockMode.Locked) {
+            UnityEngine.Cursor.visible = false;
+			UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+		}
     }
 
     //Spawn or be at spawning position
