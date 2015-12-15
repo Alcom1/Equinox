@@ -11,6 +11,9 @@ public class ScriptBody_Regen : ScriptBody_Default
     {
 		parentCore = this.gameObject.transform.parent.GetComponent<ScriptCore>();
         STARTING_HEALTH = 8;
+		
+		RectTransform rectTransform = GameObject.Find("Health Bar").GetComponent<RectTransform>();
+		rectTransform.sizeDelta = new Vector2(180*STARTING_HEALTH,rectTransform.sizeDelta.y);
 		if(health > STARTING_HEALTH) {
 			health = STARTING_HEALTH;
 			parentCore.TransmitHealth(health);

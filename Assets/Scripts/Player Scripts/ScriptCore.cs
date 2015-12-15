@@ -432,10 +432,7 @@ public class ScriptCore : NetworkBehaviour
         {
             GameObject.Find("TextHealth").GetComponent<Text>().text = ""+newHealth;                //UI display
 			
-			RectTransform rectTransform = GameObject.Find("Health Bar").GetComponent<RectTransform>();
-			rectTransform.sizeDelta = new Vector2(180*newHealth,rectTransform.sizeDelta.y);
-			
-			rectTransform = GameObject.Find("Health Bar Fill").GetComponent<RectTransform>();
+			RectTransform rectTransform = GameObject.Find("Health Bar Fill").GetComponent<RectTransform>();
 			rectTransform.sizeDelta = new Vector2(180*newHealth,rectTransform.sizeDelta.y);
 			
             CmdSendNewHealthToServer(newHealth);
@@ -461,9 +458,7 @@ public class ScriptCore : NetworkBehaviour
         {
 			GameObject.Find("TextHealthOpponent").GetComponent<Text>().text = ""+newHealth;
 			
-			RectTransform rectTransform = GameObject.Find("Enemy Health Bar").GetComponent<RectTransform>();
-			rectTransform.sizeDelta = new Vector2(180*newHealth,rectTransform.sizeDelta.y);
-			rectTransform = GameObject.Find("Enemy Health Bar Fill").GetComponent<RectTransform>();
+			RectTransform rectTransform = GameObject.Find("Enemy Health Bar Fill").GetComponent<RectTransform>();
 			rectTransform.sizeDelta = new Vector2(180*newHealth,rectTransform.sizeDelta.y);
 		}
     }
