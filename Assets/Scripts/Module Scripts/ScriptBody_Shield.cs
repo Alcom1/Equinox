@@ -56,20 +56,22 @@ public class ScriptBody_Shield : ScriptBody_Default
 		}
 	}
 	
-	public void LoseHealth(Component bulletScript, float damage)
+	public bool LoseHealth(Component bulletScript, float damage)
     {
         if (isLocalPlayerDerived && shielding <= 0)
         {
             health -= damage;
             print("lost health!");
+            NetworkServer.Destroy(bulletScript.gameObject);
             if (health <= 0)
             {
                 //do something
                 parentCore.Spawn();
                 health = STARTING_HEALTH;
+				return true;
             }
-            NetworkServer.Destroy(bulletScript.gameObject);
 			parentCore.TransmitHealth(health);
         }
+		return false;
     }
 }

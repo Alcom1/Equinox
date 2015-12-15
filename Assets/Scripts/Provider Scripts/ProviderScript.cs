@@ -7,6 +7,7 @@ public class ProviderScript : NetworkBehaviour
     public GameObject visualPrefab;
     public string objectName;
     protected bool isColliding;       //True while colliding. Prevents double collisions.
+	public string description;
 
 	void Start()
 	{

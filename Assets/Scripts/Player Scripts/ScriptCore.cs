@@ -30,6 +30,8 @@ public class ScriptCore : NetworkBehaviour
 	
 	public Sprite playerPointFilled;
 	public Sprite enemyPointFilled;
+	
+	private GameObject hit;
 
     // Use this for initialization
     void Start()
@@ -37,7 +39,9 @@ public class ScriptCore : NetworkBehaviour
         //Disable collision forces on all non-local players. Collision physics should be client-side only.
         if (isLocalPlayer)
         {
-			GameObject.Find("Hit").SetActive(false);
+			hit = GameObject.Find("Hit");
+			hit = GameObject.Find("Hit");
+			hit.SetActive(false);
             rb.isKinematic = false;
             UnityEngine.Cursor.visible = false;
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
@@ -70,7 +74,9 @@ public class ScriptCore : NetworkBehaviour
 		UpdateScore();
 		
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-
+		//tell other client where to explode
+		
+		
         if (players.Length > 1)
         {
             foreach (GameObject player in players)
@@ -108,10 +114,10 @@ public class ScriptCore : NetworkBehaviour
 			return;
 		}
 		if(isLocalPlayer) {
-			GameObject.Find("Enemy Point Box "+(7-oppScore)).GetComponent<Image>().sprite = enemyPointFilled;
+			GameObject.Find("Enemy Point Box "+(oppScore-1)).GetComponent<Image>().sprite = enemyPointFilled;
 		}
 		else {
-			GameObject.Find("Player Point Box "+oppScore).GetComponent<Image>().sprite = playerPointFilled;
+			GameObject.Find("Player Point Box "+(oppScore-1)).GetComponent<Image>().sprite = playerPointFilled;
 		}
 		//check for end of game
 		Debug.Log(oppScore + " || true = local " + (!isLocalPlayer));
@@ -340,16 +346,35 @@ public class ScriptCore : NetworkBehaviour
 	//pass along to body script
 	public void LoseHealth(Component bulletScript, float damage)
     {
-		GameObject.Find("Hit").SetActive(true);
+		hit.SetActive(true);
 		foreach (Transform child in transform)
         {
             if (child.tag == "Body")
             {
-				child.GetComponent<ScriptBody_Default>().LoseHealth(bulletScript,damage);
+				bool died = child.GetComponent<ScriptBody_Default>().LoseHealth(bulletScript,damage);
+				
+				if( died ) {
+					CmdExplode(transform.position);
+					Spawn();
+				}
             }
         }
 		
-		GameObject.Find("Hit").SetActive(false);
+		StartCoroutine(HideHitAfterTime(0.2f));
+	}
+	IEnumerator HideHitAfterTime(float time)
+	{
+		yield return new WaitForSeconds(time);
+	 
+		// Code to execute after the delay
+		hit.SetActive(false);
+	}
+	
+	[Command]
+	void CmdExplode(Vector3 location) {
+		print("Boom!");
+		GameObject instance = (GameObject)Instantiate(Resources.Load("Death Explosion"));
+		instance.transform.position = location;
 	}
 	
 	    //Server set new health

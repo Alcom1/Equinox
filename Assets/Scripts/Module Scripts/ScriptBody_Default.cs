@@ -46,22 +46,23 @@ public class ScriptBody_Default : NetworkBehaviour
         }
     }
 	
-	 //Lose and display health
-    public void LoseHealth(Component bulletScript, float damage)
+	 //Lose and display health, return if died or not
+    public bool LoseHealth(Component bulletScript, float damage)
     {
         if (isLocalPlayerDerived)
         {
             health -= damage;
             print("lost health!");
+            NetworkServer.Destroy(bulletScript.gameObject);
             if (health <= 0)
             {
                 //do something
-                parentCore.Spawn();
                 health = STARTING_HEALTH;
+				return true;
             }
-            NetworkServer.Destroy(bulletScript.gameObject);
 			parentCore.TransmitHealth(health);
         }
+		return false;
     }
 	protected void GainHealth(float healing)
     {

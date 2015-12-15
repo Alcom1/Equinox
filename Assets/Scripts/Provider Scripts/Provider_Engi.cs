@@ -26,6 +26,9 @@ public class Provider_Engi : ProviderScript
             return;
 
         isColliding = true;
+		
+		//show what got picked up
+		//GameObject.Find("").GetComponent<Text>().text = description;
 
         if (
             other.tag == "Body" ||
