@@ -41,6 +41,7 @@ public class Provider_Engi : ProviderScript
 				Spawn();
 				//show what got picked up
 				GameObject.Find("Pickup Text").GetComponent<Text>().text = "Last Pickup: "+description;
+				GameObject.Find("Engine Button").GetComponent<Image>().sprite = icon;
 			}
         }
     }

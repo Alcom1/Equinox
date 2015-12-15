@@ -30,6 +30,8 @@ public class ScriptCore : NetworkBehaviour
 	
 	public Sprite playerPointFilled;
 	public Sprite enemyPointFilled;
+	public Sprite winMessage;
+	public Sprite loseMessage;
 	
 	private GameObject hit;
 
@@ -39,7 +41,6 @@ public class ScriptCore : NetworkBehaviour
         //Disable collision forces on all non-local players. Collision physics should be client-side only.
         if (isLocalPlayer)
         {
-			hit = GameObject.Find("Hit");
 			hit = GameObject.Find("Hit");
 			hit.SetActive(false);
             rb.isKinematic = false;
@@ -124,6 +125,16 @@ public class ScriptCore : NetworkBehaviour
 		}
 		//check for end of game
 		Debug.Log(oppScore + " || true = local " + (!isLocalPlayer));
+		if(oppScore > 5) {
+			//opp won
+			if(isLocalPlayer) {
+				GameObject.Find("Crosshairs").GetComponent<Image>().sprite = loseMessage;
+			}
+			//you won
+			else {
+				GameObject.Find("Crosshairs").GetComponent<Image>().sprite = winMessage;
+			}
+		}
 	}
 	[Client]
     void SyncScore(int score)
@@ -426,12 +437,8 @@ public class ScriptCore : NetworkBehaviour
 		shieldsUp = isUp;
 		if (!isLocalPlayer)
         {
-			if(isUp) {
-				//activate shield display
-			}
-			else {
-				//deactivate shield display
-			}
+			//activate shield display
+			GameObject.Find("Shield Ability").GetComponent<MeshRenderer>().enabled = isUp;
 		}
     }
 }
