@@ -36,15 +36,19 @@ public class ScriptCore : NetworkBehaviour
 	public Sprite winMessage;
 	public Sprite loseMessage;
 	public Sprite quitImage;
+	private Sprite lastImage;
 	
 	private GameObject hit;
 	public GameObject shieldTint;
+	private GameObject crosshairs;
 	private float timeHoldingEscape = 0;
 	private float threshhold = 2;
+	private bool won = false;
 
     // Use this for initialization
     void Start()
     {
+		crosshairs = GameObject.Find("Crosshairs");
         //Disable collision forces on all non-local players. Collision physics should be client-side only.
         if (isLocalPlayer)
         {
@@ -52,6 +56,7 @@ public class ScriptCore : NetworkBehaviour
 			hit.SetActive(false);
 			shieldTint = GameObject.Find("Shield");
 			shieldTint.SetActive(false);
+			
             rb.isKinematic = false;
             UnityEngine.Cursor.visible = false;
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
@@ -82,11 +87,15 @@ public class ScriptCore : NetworkBehaviour
 			if(timeHoldingEscape > threshhold) {
 				GameObject.Find("NetManager").GetComponent<NetworkManagerCustom>().Disconnect();
 			}
-			GameObject.Find("Quitting").GetComponent<Image>().sprite = quitImage;
+			if(crosshairs.GetComponent<Image>().sprite != quitImage) {
+				lastImage = crosshairs.GetComponent<Image>().sprite;
+			}
+			crosshairs.GetComponent<Image>().sprite = quitImage;
+			print(lastImage);
 		}
 		if (Input.GetKeyUp(KeyCode.Escape)) {
 			timeHoldingEscape = 0;
-			GameObject.Find("Quitting").GetComponent<Image>().sprite = null;
+			crosshairs.GetComponent<Image>().sprite = lastImage;
 		}
     }
 
@@ -147,15 +156,13 @@ public class ScriptCore : NetworkBehaviour
 		}
 		//check for end of game
 		Debug.Log(oppScore + " || true = local " + (!isLocalPlayer));
-		if(oppScore > 5) {
+		if(isLocalPlayer && oppScore > 5) {
 			//opp won
-			if(isLocalPlayer) {
-				GameObject.Find("Crosshairs").GetComponent<Image>().sprite = loseMessage;
-			}
+			crosshairs.GetComponent<Image>().sprite = loseMessage;
+		}
+		else if(!isLocalPlayer && oppScore == 5) {
 			//you won
-			else {
-				GameObject.Find("Crosshairs").GetComponent<Image>().sprite = winMessage;
-			}
+			crosshairs.GetComponent<Image>().sprite = winMessage;
 		}
 	}
 	[Command]
