@@ -7,26 +7,24 @@ public class ScriptBody_Shield : ScriptBody_Default
 {
 	private float cooldown = 20;
 	private float timeLeft = 0;
-	private float duration = 3f;
+	private float duration = 3;
 	private float shielding = 0;
 	
 	void Start()
 	{
 		STARTING_HEALTH = 10;
 		parentCore = this.gameObject.transform.parent.GetComponent<ScriptCore>();
+		parentCore.maxHealth = STARTING_HEALTH;
 		if (isLocalPlayerDerived)
 		{
 			MeshRenderer render = gameObject.GetComponentInChildren<MeshRenderer>();
 			render.enabled = false;
-			 RectTransform rectTransform = GameObject.Find("Health Bar").GetComponent<RectTransform>();
-			rectTransform.sizeDelta = new Vector2(180*STARTING_HEALTH,rectTransform.sizeDelta.y);
 		}
-		else {
-			RectTransform rectTransform = GameObject.Find("Enemy Health Bar").GetComponent<RectTransform>();
-			rectTransform.sizeDelta = new Vector2(180*STARTING_HEALTH,rectTransform.sizeDelta.y);
-		}
-		
-		GameObject.Find("Shield Ability").GetComponent<MeshRenderer>().enabled = false;
+		foreach (Transform child in transform)
+        {
+            if (child.tag == "Shield")
+                child.GetComponent<MeshRenderer>().enabled = false;
+        }
 	}
 	
 	void Update()
@@ -41,17 +39,30 @@ public class ScriptBody_Shield : ScriptBody_Default
 				Debug.Log("Shield Up");
 				shielding = duration;
 				timeLeft = cooldown;
+				isShielded = true;
 				//sync enabled
 				parentCore.shieldsUp = true;
-				GameObject.Find("Shield Ability").GetComponent<MeshRenderer>().enabled = true;
+				parentCore.TransmitShield(true);
+				foreach (Transform child in transform)
+				{
+					if (child.tag == "Shield") {
+						child.GetComponent<MeshRenderer>().enabled = true;
+					}
+				}
 			}
 			
-			if( shielding <= Time.deltaTime && parentCore.shieldsUp ) {
+			if( shielding <= Time.deltaTime && isShielded ) {
 				//shield fade animation
 				//sync disabled
 				parentCore.shieldsUp = false;
+				parentCore.TransmitShield(false);
+				isShielded = false;
 				Debug.Log("Shield Down");
-				GameObject.Find("Shield Ability").GetComponent<MeshRenderer>().enabled = false;
+				foreach (Transform child in transform)
+				{
+					if (child.tag == "Shield")
+						child.GetComponent<MeshRenderer>().enabled = false;
+				}
 			}
 			
 			shielding -= Time.deltaTime;
@@ -65,25 +76,4 @@ public class ScriptBody_Shield : ScriptBody_Default
 			}
 		}
 	}
-	
-	public bool LoseHealth(Component bulletScript, float damage)
-    {
-		bool died = false;
-        if (isLocalPlayerDerived && shielding <= 0)
-        {
-            health -= damage;
-            print("lost health!");
-            NetworkServer.Destroy(bulletScript.gameObject);
-            if (health <= 0)
-            {
-                //do something
-                parentCore.Spawn();
-                health = STARTING_HEALTH;
-				died = true;
-            }
-			
-			parentCore.TransmitHealth(health);
-        }
-		return died;
-    }
 }

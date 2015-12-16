@@ -37,6 +37,7 @@ public class ScriptCore : NetworkBehaviour
 	public Sprite loseMessage;
 	
 	private GameObject hit;
+	public GameObject shieldTint;
 	private float timeHoldingEscape = 0;
 	private float threshhold = 2;
 
@@ -48,6 +49,8 @@ public class ScriptCore : NetworkBehaviour
         {
 			hit = GameObject.Find("Hit");
 			hit.SetActive(false);
+			shieldTint = GameObject.Find("Shield");
+			shieldTint.SetActive(false);
             rb.isKinematic = false;
             UnityEngine.Cursor.visible = false;
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
@@ -397,7 +400,6 @@ public class ScriptCore : NetworkBehaviour
 	
 	[Command]
 	void CmdSendExplosionToServer(Vector3 location) {
-		print("Boom!");
 		explosionLocation = location;
 	}
 	[Client]
@@ -433,8 +435,15 @@ public class ScriptCore : NetworkBehaviour
             GameObject.Find("TextHealth").GetComponent<Text>().text = ""+newHealth;                //UI display
 			
 			RectTransform rectTransform = GameObject.Find("Health Bar Fill").GetComponent<RectTransform>();
-			rectTransform.sizeDelta = new Vector2(180*newHealth,rectTransform.sizeDelta.y);
+			if(maxHealth == 0) {
+				maxHealth = 10;
+			}
+			float dif = 280*(1-newHealth/maxHealth);
+			print( "new health: "+newHealth+"\nmaxHealth: "+maxHealth);
+			rectTransform.anchoredPosition = new Vector2(dif,rectTransform.anchoredPosition.y);
 			
+			rectTransform = GameObject.Find("Player Mask").GetComponent<RectTransform>();
+			rectTransform.anchoredPosition = new Vector2(-dif,rectTransform.anchoredPosition.y);
             CmdSendNewHealthToServer(newHealth);
         }
     }
@@ -457,21 +466,53 @@ public class ScriptCore : NetworkBehaviour
 		if (!isLocalPlayer)
         {
 			GameObject.Find("TextHealthOpponent").GetComponent<Text>().text = ""+newHealth;
+			if(maxHealth == 0) {
+				maxHealth = 10;
+			}
+			float dif = 210*(1-newHealth/maxHealth);
 			
 			RectTransform rectTransform = GameObject.Find("Enemy Health Bar Fill").GetComponent<RectTransform>();
-			rectTransform.sizeDelta = new Vector2(180*newHealth,rectTransform.sizeDelta.y);
+			rectTransform.anchoredPosition = new Vector2(dif,rectTransform.anchoredPosition.y);
+			
+			rectTransform = GameObject.Find("Enemy Mask").GetComponent<RectTransform>();
+			rectTransform.anchoredPosition = new Vector2(-dif,rectTransform.anchoredPosition.y);
 		}
     }
 	
+	[Command]
+    void CmdSendShieldToServer(bool isUp)
+    {
+        shieldsUp = isUp;
+    }
+	[Client]
+    public void TransmitShield(bool isUp)
+    {
+        if (isLocalPlayer)
+        {
+			shieldTint.SetActive(isUp);
+            CmdSendShieldToServer(isUp);
+        }
+    }
 	//Sync shield
     [Client]
     void SyncShield(bool isUp)
     {
 		shieldsUp = isUp;
+		print("Shields up: "+isUp);
 		if (!isLocalPlayer)
         {
 			//activate shield display
-			GameObject.Find("Shield Ability").GetComponent<MeshRenderer>().enabled = isUp;
+			foreach (Transform child in transform)
+			{
+				if(child.tag == "Body") {
+					foreach (Transform grandchild in child.transform)
+					{
+						if (grandchild.tag == "Shield") {
+							grandchild.GetComponent<MeshRenderer>().enabled = isUp;
+						}
+					}
+				}
+			}
 		}
     }
 }

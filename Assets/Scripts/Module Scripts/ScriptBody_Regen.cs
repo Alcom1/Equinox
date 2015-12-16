@@ -22,12 +22,6 @@ public class ScriptBody_Regen : ScriptBody_Default
 		{
 			MeshRenderer render = gameObject.GetComponentInChildren<MeshRenderer>();
 			render.enabled = false;
-			RectTransform rectTransform = GameObject.Find("Health Bar").GetComponent<RectTransform>();
-			rectTransform.sizeDelta = new Vector2(180*STARTING_HEALTH,rectTransform.sizeDelta.y);
-		}
-		else {
-			RectTransform rectTransform = GameObject.Find("Enemy Health Bar").GetComponent<RectTransform>();
-			rectTransform.sizeDelta = new Vector2(180*STARTING_HEALTH,rectTransform.sizeDelta.y);
 		}
 	}
     

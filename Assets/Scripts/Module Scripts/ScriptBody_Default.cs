@@ -23,23 +23,19 @@ public class ScriptBody_Default : NetworkBehaviour
 	protected ScriptCore parentCore;
     //HUD elements
     protected Text displayHealth;
+	protected bool isShielded = false;
 
     // Use this for initialization
     void Start()
     {
         //set parentCore to Player's ScriptCore
 		parentCore = this.gameObject.transform.parent.GetComponent<ScriptCore>();
+		parentCore.maxHealth = STARTING_HEALTH;
 
 		if (isLocalPlayerDerived)
 		{
 			MeshRenderer render = gameObject.GetComponentInChildren<MeshRenderer>();
 			render.enabled = false;
-			RectTransform rectTransform = GameObject.Find("Health Bar").GetComponent<RectTransform>();
-			rectTransform.sizeDelta = new Vector2(180*STARTING_HEALTH,rectTransform.sizeDelta.y);
-		}
-		else {
-			RectTransform rectTransform = GameObject.Find("Enemy Health Bar").GetComponent<RectTransform>();
-			rectTransform.sizeDelta = new Vector2(180*STARTING_HEALTH,rectTransform.sizeDelta.y);
 		}
     }
 
@@ -55,10 +51,9 @@ public class ScriptBody_Default : NetworkBehaviour
     public bool LoseHealth(Component bulletScript, float damage)
     {
 		bool died = false;
-        if (isLocalPlayerDerived)
+        if (isLocalPlayerDerived && !isShielded)
         {
             health -= damage;
-            print("lost health!");
             NetworkServer.Destroy(bulletScript.gameObject);
             if (health <= 0)
             {
@@ -76,7 +71,6 @@ public class ScriptBody_Default : NetworkBehaviour
         if (isLocalPlayerDerived)
         {
             health += healing;
-            print("gained health!");
 			parentCore.TransmitHealth(health);
         }
     }
