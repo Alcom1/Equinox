@@ -13,13 +13,17 @@ public class ScriptBody_Shield : ScriptBody_Default
 	void Start()
 	{
 		STARTING_HEALTH = 10;
-		RectTransform rectTransform = GameObject.Find("Health Bar").GetComponent<RectTransform>();
-		rectTransform.sizeDelta = new Vector2(180*STARTING_HEALTH,rectTransform.sizeDelta.y);
 		parentCore = this.gameObject.transform.parent.GetComponent<ScriptCore>();
 		if (isLocalPlayerDerived)
 		{
 			MeshRenderer render = gameObject.GetComponentInChildren<MeshRenderer>();
 			render.enabled = false;
+			 RectTransform rectTransform = GameObject.Find("Health Bar").GetComponent<RectTransform>();
+			rectTransform.sizeDelta = new Vector2(180*STARTING_HEALTH,rectTransform.sizeDelta.y);
+		}
+		else {
+			RectTransform rectTransform = GameObject.Find("Enemy Health Bar").GetComponent<RectTransform>();
+			rectTransform.sizeDelta = new Vector2(180*STARTING_HEALTH,rectTransform.sizeDelta.y);
 		}
 		
 		GameObject.Find("Shield Ability").GetComponent<MeshRenderer>().enabled = false;

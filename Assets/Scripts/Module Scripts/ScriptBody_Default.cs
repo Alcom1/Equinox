@@ -30,14 +30,17 @@ public class ScriptBody_Default : NetworkBehaviour
         //set parentCore to Player's ScriptCore
 		parentCore = this.gameObject.transform.parent.GetComponent<ScriptCore>();
 
-		RectTransform rectTransform = GameObject.Find("Health Bar").GetComponent<RectTransform>();
-		rectTransform.sizeDelta = new Vector2(180*STARTING_HEALTH,rectTransform.sizeDelta.y);
 		if (isLocalPlayerDerived)
 		{
 			MeshRenderer render = gameObject.GetComponentInChildren<MeshRenderer>();
 			render.enabled = false;
+			RectTransform rectTransform = GameObject.Find("Health Bar").GetComponent<RectTransform>();
+			rectTransform.sizeDelta = new Vector2(180*STARTING_HEALTH,rectTransform.sizeDelta.y);
 		}
-
+		else {
+			RectTransform rectTransform = GameObject.Find("Enemy Health Bar").GetComponent<RectTransform>();
+			rectTransform.sizeDelta = new Vector2(180*STARTING_HEALTH,rectTransform.sizeDelta.y);
+		}
     }
 
     public void CheckCamera()
