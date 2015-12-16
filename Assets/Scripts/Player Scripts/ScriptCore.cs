@@ -82,7 +82,7 @@ public class ScriptCore : NetworkBehaviour
 			UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 		}
 		
-		if (Input.GetKey(KeyCode.Escape)) {
+		if (Input.GetKey(KeyCode.Escape) && isLocalPlayer) {
 			timeHoldingEscape += Time.deltaTime;
 			if(timeHoldingEscape > threshhold) {
 				GameObject.Find("NetManager").GetComponent<NetworkManagerCustom>().Disconnect();
@@ -93,7 +93,7 @@ public class ScriptCore : NetworkBehaviour
 			crosshairs.GetComponent<Image>().sprite = quitImage;
 			print(lastImage);
 		}
-		if (Input.GetKeyUp(KeyCode.Escape)) {
+		if (Input.GetKeyUp(KeyCode.Escape) && isLocalPlayer) {
 			timeHoldingEscape = 0;
 			crosshairs.GetComponent<Image>().sprite = lastImage;
 		}
@@ -160,7 +160,7 @@ public class ScriptCore : NetworkBehaviour
 			//opp won
 			crosshairs.GetComponent<Image>().sprite = loseMessage;
 		}
-		else if(!isLocalPlayer && oppScore == 5) {
+		else if(!isLocalPlayer && oppScore > 5) {
 			//you won
 			crosshairs.GetComponent<Image>().sprite = winMessage;
 		}
