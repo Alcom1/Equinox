@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Provider_Weap : ProviderScript
 {
+	public Sprite crosshair;
     // Use this for initialization
     void Start()
     {
@@ -37,6 +38,7 @@ public class Provider_Weap : ProviderScript
 				//show what got picked up
 				GameObject.Find("Pickup Text").GetComponent<Text>().text = "Last Pickup: "+description;
 				GameObject.Find("Weapon Button").GetComponent<Image>().sprite = icon;
+				GameObject.Find("Crosshairs").GetComponent<Image>().sprite = crosshair;
 			}
         }
     }
