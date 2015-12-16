@@ -35,6 +35,7 @@ public class ScriptCore : NetworkBehaviour
 	public Sprite enemyPointFilled;
 	public Sprite winMessage;
 	public Sprite loseMessage;
+	public Sprite quitImage;
 	
 	private GameObject hit;
 	public GameObject shieldTint;
@@ -81,9 +82,11 @@ public class ScriptCore : NetworkBehaviour
 			if(timeHoldingEscape > threshhold) {
 				GameObject.Find("NetManager").GetComponent<NetworkManagerCustom>().Disconnect();
 			}
+			GameObject.Find("Quitting").GetComponent<Image>().sprite = quitImage;
 		}
 		if (Input.GetKeyUp(KeyCode.Escape)) {
 			timeHoldingEscape = 0;
+			GameObject.Find("Quitting").GetComponent<Image>().sprite = null;
 		}
     }
 
@@ -93,6 +96,7 @@ public class ScriptCore : NetworkBehaviour
 		//when you respawn, opp is 1 pt closer to winning
 		//need to figure out how to record own score (or update score of opp)
 		oppScore++;
+		TransmitScore(oppScore);
 		UpdateScore();
 		
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -154,6 +158,16 @@ public class ScriptCore : NetworkBehaviour
 			}
 		}
 	}
+	[Command]
+	void CmdSendScoreToServer(int score) {
+		oppScore = score;
+	}
+	[Client]
+    void TransmitScore(int score)
+    {
+		if( isLocalPlayer )
+			CmdSendScoreToServer(score);
+    }
 	[Client]
     void SyncScore(int score)
     {
@@ -374,21 +388,23 @@ public class ScriptCore : NetworkBehaviour
 	//pass along to body script
 	public void LoseHealth(Component bulletScript, float damage)
     {
-		hit.SetActive(true);
-		foreach (Transform child in transform)
-        {
-            if (child.tag == "Body")
-            {
-				bool died = child.GetComponent<ScriptBody_Default>().LoseHealth(bulletScript,damage);
-				
-				if( died ) {
-					TransmitExplosion(transform.position);
-					Spawn();
+		if(isLocalPlayer) {
+			hit.SetActive(true);
+			foreach (Transform child in transform)
+			{
+				if (child.tag == "Body")
+				{
+					bool died = child.GetComponent<ScriptBody_Default>().LoseHealth(bulletScript,damage);
+					
+					if( died ) {
+						TransmitExplosion(transform.position);
+						Spawn();
+					}
 				}
-            }
-        }
-		
-		StartCoroutine(HideHitAfterTime(0.2f));
+			}
+			
+			StartCoroutine(HideHitAfterTime(0.2f));
+		};
 	}
 	IEnumerator HideHitAfterTime(float time)
 	{
