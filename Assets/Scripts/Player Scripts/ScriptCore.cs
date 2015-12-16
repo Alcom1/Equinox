@@ -432,8 +432,7 @@ public class ScriptCore : NetworkBehaviour
     {
         if (isLocalPlayer)// && CheckIfNewHealth(aHealth, newHealth))
         {
-            GameObject.Find("TextHealth").GetComponent<Text>().text = ""+newHealth;                //UI display
-			
+			//UI Display
 			RectTransform rectTransform = GameObject.Find("Health Bar Fill").GetComponent<RectTransform>();
 			if(maxHealth == 0) {
 				maxHealth = 10;
@@ -465,7 +464,6 @@ public class ScriptCore : NetworkBehaviour
 		health = newHealth;
 		if (!isLocalPlayer)
         {
-			GameObject.Find("TextHealthOpponent").GetComponent<Text>().text = ""+newHealth;
 			if(maxHealth == 0) {
 				maxHealth = 10;
 			}
